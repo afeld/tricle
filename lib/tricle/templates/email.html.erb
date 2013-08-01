@@ -4,8 +4,8 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <% @values.each do |value| %>
-      <%= value %>
+    <% @metrics.each do |metric| %>
+      <%= metric.for_range(Time.now, Time.now) %>
     <% end %>
   </body>
 </html>

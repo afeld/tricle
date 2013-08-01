@@ -1,5 +1,13 @@
 module Tricle
   class Mailer < ActionMailer::Base
+    attr_reader :report_instance
+
+    def initialize(*args)
+      @report_instance = self.report.new
+      super(*args)
+    end
+
+
     def frequency
       raise Tricle::AbstractMethodError.new
     end
@@ -12,15 +20,9 @@ module Tricle
       "Your #{self.class.name.titleize}"
     end
 
-    def metrics
-      self.report.new.metrics
-    end
 
-    def values
-      self.metrics.map do |metric|
-        # TODO pass the times in for real
-        metric.new.for_range(Time.now, Time.now)
-      end
+    def metric_instances
+      self.report_instance.metric_instances
     end
 
     def email(options = {})
@@ -29,7 +31,7 @@ module Tricle
         template_path: 'templates'
       }.merge(options)
 
-      @values = self.values
+      @metrics = self.metric_instances
 
       mail(options)
     end
