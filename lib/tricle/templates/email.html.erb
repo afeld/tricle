@@ -6,8 +6,11 @@
   <body>
     <table>
       <tr>
-        <th><!--Name--></th>
-        <th>Value</th>
+        <th rowspan="2"><!--Name--></th>
+        <th>Last week (<%= format_date(beginning_of_week.prev_week) %> – <%= format_date(beginning_of_week) %>)</th>
+      </tr>
+      <tr>
+        <th>Total</th>
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
@@ -15,7 +18,7 @@
           <td><%= metric.last_week %></td>
         </tr>
         <tr>
-          <td><%= metric.total %></td></td>
+          <td><%= metric.total %></td>
         </tr>
       <% end %>
     </table>
