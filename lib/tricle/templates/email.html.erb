@@ -11,8 +11,11 @@
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
-          <td><%= metric.title %></td>
+          <th rowspan="2"><%= metric.title %></th>
           <td><%= metric.last_week %></td>
+        </tr>
+        <tr>
+          <td><%= metric.total %></td></td>
         </tr>
       <% end %>
     </table>

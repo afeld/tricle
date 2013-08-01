@@ -1,4 +1,4 @@
-Name,Value
+Name,Last Week,Total
 <% @metrics.each do |metric| %>
-<%= metric.title %>,<%= metric.last_week %>
+<%= metric.title %>,<%= metric.last_week %>,<%= metric.total %>
 <% end %>
