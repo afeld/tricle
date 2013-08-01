@@ -103,10 +103,56 @@ e.g.
 class ArtsyInsights < Tricle::Report
 
   def metrics
-    [ NewUsers ]
+    [NewUsers]
   end
 
 end
 ```
 
 The subject line will be based on the Report class name.
+
+### Mailers
+
+Mailers specify how a particular Report should be sent.
+
+```ruby
+class MyMailer < Tricle::Mailer
+
+  # @return [:daily, :weekly]
+  def frequency
+    # ...
+  end
+
+  # @return [Tricle::Report]
+  def report
+    # ...
+  end
+
+  # @return [Array<String>]
+  def recipients
+    # ...
+  end
+
+end
+```
+
+e.g.
+
+```ruby
+# mailers/weekly_insights.rb
+class WeeklyInsights < Tricle::Mailer
+
+  def frequency
+    :weekly
+  end
+
+  def report
+    ArtsyInsights
+  end
+
+  def recipients
+    ["theteam@mycompany.com", "theboss@mycompany.com"]
+  end
+
+end
+```
