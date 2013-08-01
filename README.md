@@ -30,10 +30,10 @@ For each metric you want to report, create a new subclass of `Tricle::Metric` th
 class MyMetric < Tricle::Metric
 
   # Retrieve the value of this metric for the provided time period.
-  # Generally this will be the number added/removed.
+  # Generally this will be the count/value added/removed.
   #
   # @param start_at [Time]
-  # @param end_at [Time]
+  # @param end_at [Time] non-inclusive
   # @return [Fixnum]
   def for_range(start_at, end_at)
     # ...
@@ -41,7 +41,7 @@ class MyMetric < Tricle::Metric
 
   # Retrieve the cumulative value for this metric.
   #
-  # @return [Fixnum]
+  # @return [Fixnum] the grand total
   def total
     # ...
   end
@@ -55,12 +55,10 @@ ActiveRecord example:
 # metrics/new_users.rb
 class NewUsers < Tricle::Metric
 
-  # Retrieve the number of users added between the provided times.
   def for_range(start_at, end_at)
     self.users.where('created_at >= ? AND created_at < ?', start_at, end_at).count
   end
 
-  # Grand total User count.
   def total
     self.users.count
   end
@@ -85,7 +83,7 @@ Reports assemble ordered lists of Metrics.
 ```ruby
 class MyReport < Tricle::Report
 
-  # @return [Array<Tricle::Metric>]
+  # @return [Array<Class>] a list of Metric subclasses to be included
   def metrics
     [
       # MyMetric1,
@@ -118,18 +116,19 @@ Mailers specify how a particular Report should be sent.
 ```ruby
 class MyMailer < Tricle::Mailer
 
+  # accepts the same options as ActionMailer... see "Default Hash" at
+  # http://rubydoc.info/gems/actionmailer/ActionMailer/Base
+  default(
+    # ...
+  )
+
   # @return [:daily, :weekly]
   def frequency
     # ...
   end
 
-  # @return [Tricle::Report]
+  # @return [Class] a Report subclass
   def report
-    # ...
-  end
-
-  # @return [Array<String>]
-  def recipients
     # ...
   end
 
@@ -142,16 +141,17 @@ e.g.
 # mailers/weekly_insights.rb
 class WeeklyInsights < Tricle::Mailer
 
+  default(
+    to: ['theteam@mycompany.com', 'theboss@mycompany.com'],
+    from: 'noreply@mycompany.com'
+  )
+
   def frequency
     :weekly
   end
 
   def report
     ArtsyInsights
-  end
-
-  def recipients
-    ["theteam@mycompany.com", "theboss@mycompany.com"]
   end
 
 end
