@@ -1,3 +1,4 @@
+Name,Value
 <% @metrics.each do |metric| %>
-<%= metric.for_range(Time.now, Time.now) %>
+<%= metric.title %>,<%= metric.last_week %>
 <% end %>

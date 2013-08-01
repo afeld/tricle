@@ -48,7 +48,9 @@ describe Tricle::Mailer do
     it "should include the values from the Report" do
       deliver
       message.parts.each do |part|
-        part.body.raw_source.should include('1234')
+        source = part.body.raw_source
+        source.should include('Test Metric')
+        source.should include('1234')
       end
     end
   end

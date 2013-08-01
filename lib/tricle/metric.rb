@@ -1,5 +1,10 @@
 module Tricle
   class Metric
+
+    def title
+      self.class.name.titleize
+    end
+
     def for_range(start_at, end_at)
       raise Tricle::AbstractMethodError.new
     end
