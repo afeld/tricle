@@ -116,6 +116,12 @@ Mailers specify how a particular Report should be sent.
 ```ruby
 class MyMailer < Tricle::Mailer
 
+  # accepts the same options as ActionMailer... see "Default Hash" at
+  # http://rubydoc.info/gems/actionmailer/ActionMailer/Base
+  default(
+    # ...
+  )
+
   # @return [:daily, :weekly]
   def frequency
     # ...
@@ -123,11 +129,6 @@ class MyMailer < Tricle::Mailer
 
   # @return [Class] a Report subclass
   def report
-    # ...
-  end
-
-  # @return [Array<String>] a list of email addresses
-  def recipients
     # ...
   end
 
@@ -140,16 +141,17 @@ e.g.
 # mailers/weekly_insights.rb
 class WeeklyInsights < Tricle::Mailer
 
+  default(
+    to: ['theteam@mycompany.com', 'theboss@mycompany.com'],
+    from: 'noreply@mycompany.com'
+  )
+
   def frequency
     :weekly
   end
 
   def report
     ArtsyInsights
-  end
-
-  def recipients
-    ["theteam@mycompany.com", "theboss@mycompany.com"]
   end
 
 end

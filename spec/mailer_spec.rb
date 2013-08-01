@@ -2,11 +2,10 @@ require 'spec_helper'
 
 describe Tricle::Mailer do
   class TestInsights < Tricle::Mailer
-    default from: 'sender@test.com'
-
-    def recipients
-      ['recipient1@test.com', 'recipient2@test.com']
-    end
+    default(
+      to: ['recipient1@test.com', 'recipient2@test.com'],
+      from: 'sender@test.com'
+    )
   end
 
   describe '#deliver' do
@@ -14,11 +13,6 @@ describe Tricle::Mailer do
       TestInsights.deliver
       ActionMailer::Base.deliveries.length.should eq(1)
       ActionMailer::Base.deliveries.last.subject.should eq("Your Test Insights")
-    end
-
-    it "should send to all the recipients" do
-      TestInsights.deliver
-      ActionMailer::Base.deliveries.last.to.should eq(['recipient1@test.com', 'recipient2@test.com'])
     end
   end
 end
