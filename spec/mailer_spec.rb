@@ -9,10 +9,22 @@ describe Tricle::Mailer do
   end
 
   describe '#deliver' do
-    it "should set the subject based on the class name" do
+    def deliver
       TestInsights.deliver
       ActionMailer::Base.deliveries.length.should eq(1)
-      ActionMailer::Base.deliveries.last.subject.should eq("Your Test Insights")
+    end
+
+    let(:message) { ActionMailer::Base.deliveries.last }
+
+    it "should respect all the options in the 'default hash'" do
+      deliver
+      message.to.should eq(['recipient1@test.com', 'recipient2@test.com'])
+      message.from.should eq(['sender@test.com'])
+    end
+
+    it "should set the subject based on the class name" do
+      deliver
+      message.subject.should eq("Your Test Insights")
     end
   end
 end
