@@ -33,5 +33,11 @@ module Tricle
     def last_week
       self.weeks_ago(1)
     end
+
+
+    def week_average_this_quarter
+      total = (1..13).reduce(0){|sum, n| sum + self.weeks_ago(n) }
+      total / 13.0
+    end
   end
 end
