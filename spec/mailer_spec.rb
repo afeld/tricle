@@ -26,7 +26,7 @@ describe Tricle::Mailer do
       message.parts.each do |part|
         source = part.body.raw_source
         source.should include('Test Metric')
-        source.should include('1234')
+        source.should match(/\b13\b/) # last week
       end
     end
   end
