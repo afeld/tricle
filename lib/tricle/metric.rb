@@ -40,10 +40,14 @@ module Tricle
       self.weeks_ago(1)
     end
 
+    def weeks_average(past_num_weeks)
+      weeks_range = 1..past_num_weeks
+      total = weeks_range.reduce(0){|sum, n| sum + self.weeks_ago(n) }
+      total.to_f / weeks_range.size
+    end
 
     def week_average_this_quarter
-      total = (1..13).reduce(0){|sum, n| sum + self.weeks_ago(n) }
-      total / 13.0
+      self.weeks_average(13)
     end
   end
 end
