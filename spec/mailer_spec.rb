@@ -8,9 +8,9 @@ describe Tricle::Mailer do
     )
   end
 
-  describe '#deliver' do
+  describe '#email' do
     def deliver
-      TestInsights.deliver
+      TestInsights.email.deliver
       ActionMailer::Base.deliveries.length.should eq(1)
     end
 

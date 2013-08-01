@@ -8,9 +8,17 @@ module Tricle
       raise Tricle::AbstractMethodError.new
     end
 
-    def deliver
-      subject = "Your #{self.class.name.titleize}"
-      mail(subject: subject, body: '').deliver
+    def subject
+      "Your #{self.class.name.titleize}"
+    end
+
+    def email(options = {})
+      options = {
+        subject: self.subject,
+        template_path: 'templates'
+      }.merge(options)
+
+      mail(options)
     end
   end
 end
