@@ -1,6 +1,12 @@
 module Tricle
   class Metric
 
+    def initialize
+      # TODO allow Time to be passed in so it can be frozen
+      @now = Time.now
+    end
+
+
     def title
       self.class.name.titleize
     end
@@ -15,7 +21,7 @@ module Tricle
 
 
     def days_ago(n)
-      start_at = Time.now.beginning_of_day.days_ago(n)
+      start_at = @now.beginning_of_day.days_ago(n)
       end_at = start_at + 1.day
       self.for_range(start_at, end_at)
     end
@@ -25,7 +31,7 @@ module Tricle
     end
 
     def weeks_ago(n)
-      start_at = Time.now.beginning_of_week.weeks_ago(n)
+      start_at = @now.beginning_of_week.weeks_ago(n)
       end_at = start_at + 7.days
       self.for_range(start_at, end_at)
     end
