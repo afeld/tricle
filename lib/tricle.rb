@@ -1,5 +1,6 @@
-require "tricle/version"
+require 'action_mailer'
+
+Dir[File.dirname(__FILE__) + '/tricle/**/*.rb'].each {|file| require file }
 
 module Tricle
-  # Your code goes here...
 end

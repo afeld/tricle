@@ -7,7 +7,8 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.setup
 
-require 'action_mailer'
+require_relative '../lib/tricle'
+
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
