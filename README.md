@@ -33,7 +33,7 @@ class MyMetric < Tricle::Metric
   # Generally this will be the count/value added/removed.
   #
   # @param start_at [Time]
-  # @param end_at [Time]
+  # @param end_at [Time] non-inclusive
   # @return [Fixnum]
   def for_range(start_at, end_at)
     # ...
