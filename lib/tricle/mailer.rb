@@ -3,6 +3,7 @@ module Tricle
     include ActiveSupport::DescendantsTracker
 
     attr_reader :report_instance
+    helper Tricle::Helpers::EmailHelper
 
     def initialize(*args)
       @report_instance = self.report.new
