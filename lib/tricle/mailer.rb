@@ -11,10 +11,6 @@ module Tricle
     end
 
 
-    def frequency
-      raise Tricle::AbstractMethodError.new
-    end
-
     def report
       raise Tricle::AbstractMethodError.new
     end
@@ -37,6 +33,18 @@ module Tricle
       @metrics = self.metric_instances
 
       mail(options)
+    end
+
+    class << self
+      def send_all
+        mailers = Tricle::Mailer.descendants
+        puts "Sending #{mailers.size} emails..."
+        mailers.each do |klass|
+          puts "Sending #{klass.name}..."
+          klass.email.deliver
+        end
+        puts "Done."
+      end
     end
   end
 end
