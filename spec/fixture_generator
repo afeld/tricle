@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+require 'active_support/all'
+
+end_at = Time.now.beginning_of_week
+filename = File.join(File.dirname(__FILE__), 'fixtures', 'weeks.csv')
+CSV.open(filename, 'wb') do |csv|
+  (-12..0).each do |n|
+    week_start_at = end_at - (n + 1).weeks
+    week_end_at = end_at - n.weeks
+    csv << [week_start_at, week_end_at, rand(100)]
+  end
+end

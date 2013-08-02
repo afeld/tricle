@@ -2,33 +2,9 @@ require 'spec_helper'
 
 describe Tricle::Mailer do
 
-  class TestMetric < Tricle::Metric
-    def for_range(start_at, end_at)
-      1234
-    end
-  end
-
-  class TestReport < Tricle::Report
-    def metrics
-      [TestMetric]
-    end
-  end
-
-  class TestInsights < Tricle::Mailer
-    default(
-      to: ['recipient1@test.com', 'recipient2@test.com'],
-      from: 'sender@test.com'
-    )
-
-    def report
-      TestReport
-    end
-  end
-
-
   describe '#email' do
     def deliver
-      TestInsights.email.deliver
+      TestMailer.email.deliver
       ActionMailer::Base.deliveries.length.should eq(1)
     end
 
@@ -42,7 +18,7 @@ describe Tricle::Mailer do
 
     it "should set the subject based on the class name" do
       deliver
-      message.subject.should eq("Your Test Insights")
+      message.subject.should eq("Your Test Mailer")
     end
 
     it "should include the values from the Report" do

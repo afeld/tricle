@@ -7,8 +7,12 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.setup
 
-require_relative '../lib/tricle'
 require 'timecop'
+
+require_relative '../lib/tricle'
+require_relative 'app/test_metric'
+require_relative 'app/test_report'
+require_relative 'app/test_mailer'
 
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
