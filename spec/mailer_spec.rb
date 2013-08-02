@@ -24,12 +24,15 @@ describe Tricle::Mailer do
     it "should include the values from the Report in the HTML part" do
       deliver
       source = message.html_part.body.to_s
-      # source = part.body.raw_source
       source.should include('Test Metric')
       source.should match(/\b62\b/) # last week
       source.should match(/\b787\b/) # total
     end
 
-    it "should include something(?) in the text part"
+    it "should link to the Issues page in the text part" do
+      deliver
+      source = message.text_part.body.to_s
+      source.should include('github.com/artsy/tricle')
+    end
   end
 end
