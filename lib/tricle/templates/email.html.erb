@@ -12,9 +12,9 @@
         <th>Quarterly average</th>
       </tr>
       <tr>
-        <th>(<%= format_date(weeks_ago(1)) %> – <%= format_date(beginning_of_week) %>)</th>
-        <th>(<%= format_date(weeks_ago(2)) %> – <%= format_date(weeks_ago(1)) %>)</th>
-        <th>(<%= format_date(weeks_ago(13)) %> – <%= format_date(beginning_of_week) %>)</th>
+        <th><%= last_week_dates_str %></th>
+        <th><%= previous_week_dates_str %></th>
+        <th><%= quarter_dates_str %></th>
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
