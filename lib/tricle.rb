@@ -1,6 +1,7 @@
 require 'action_mailer'
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
+require 'active_support/descendants_tracker'
 
 dir = File.dirname(__FILE__)
 Dir[File.join(dir, 'tricle', '**', '*.rb')].each do |file|

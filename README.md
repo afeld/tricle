@@ -156,3 +156,45 @@ class WeeklyInsights < Tricle::Mailer
 
 end
 ```
+
+### Previewing
+
+Since you'd probably like to preview your mailers before sending them, set up the `Tricle::MailPreview` Rack app (which uses [MailView](https://github.com/37signals/mail_view)).
+
+#### Within a Rails app
+
+```ruby
+# config/initializers/tricle.rb
+require 'tricle/mail_preview'
+
+# config/routes.rb
+if Rails.env.development?
+  mount MailPreview => 'mail_view'
+end
+```
+
+and navigate to [localhost:3000/mail_view](http://localhost:3000/mail_view).
+
+#### Standalone
+
+1. Create a `config.ru` file:
+
+    ```ruby
+    require 'tricle'
+
+    # require all Mailers
+    Dir[File.join(File.dirname(__FILE__), 'mailers', '**', '*.rb')].each{|file| require file }
+
+    require 'tricle/mail_preview'
+
+    run Tricle::MailPreview
+    ```
+
+2. Run the Rack app:
+
+    ```bash
+    gem install shotgun
+    shotgun
+    ```
+
+3. Navigate to [localhost:3000](http://localhost:3000).
