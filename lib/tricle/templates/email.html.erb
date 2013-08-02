@@ -6,13 +6,27 @@
   <body>
     <table>
       <tr>
-        <th><!--Name--></th>
-        <th>Value</th>
+        <th rowspan="2"><!--Name--></th>
+        <th>Last week</th>
+        <th>Previous week</th>
+        <th>Quarterly average</th>
+      </tr>
+      <tr>
+        <th>(<%= format_date(weeks_ago(1)) %> – <%= format_date(beginning_of_week) %>)</th>
+        <th>(<%= format_date(weeks_ago(2)) %> – <%= format_date(weeks_ago(1)) %>)</th>
+        <th>(<%= format_date(weeks_ago(13)) %> – <%= format_date(beginning_of_week) %>)</th>
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
-          <td><%= metric.title %></td>
+          <th rowspan="2"><%= metric.title %></th>
           <td><%= metric.last_week %></td>
+          <td><%= percent_change(metric.last_week, metric.weeks_ago(2)) %></td>
+          <td><%= percent_change(metric.last_week, metric.week_average_this_quarter) %></td>
+        </tr>
+        <tr>
+          <td><%= metric.total %> (total)</td>
+          <td><%= metric.weeks_ago(2) %></td>
+          <td><%= metric.week_average_this_quarter.round %></td>
         </tr>
       <% end %>
     </table>
