@@ -7,18 +7,22 @@
     <table>
       <tr>
         <th rowspan="2"><!--Name--></th>
-        <th>Last week (<%= format_date(beginning_of_week.prev_week) %> – <%= format_date(beginning_of_week) %>)</th>
+        <th>Last week</th>
+        <th>Previous week</th>
       </tr>
       <tr>
-        <th>Total</th>
+        <th>(<%= format_date(weeks_ago(1)) %> – <%= format_date(beginning_of_week) %>)</th>
+        <th>(<%= format_date(weeks_ago(2)) %> – <%= format_date(weeks_ago(1)) %>)</th>
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
           <th rowspan="2"><%= metric.title %></th>
           <td><%= metric.last_week %></td>
+          <td><%= fraction(metric.last_week, metric.weeks_ago(2)) %></td>
         </tr>
         <tr>
-          <td><%= metric.total %></td>
+          <td><%= metric.total %> (total)</td>
+          <td><%= metric.weeks_ago(2) %></td>
         </tr>
       <% end %>
     </table>
