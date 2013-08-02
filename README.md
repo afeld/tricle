@@ -6,15 +6,28 @@ Automated metrics reporting via email.  It's datastore-agnostic, so you can quer
 
 ### Gem
 
-This gem can be used within an existing project (e.g. a Rails app), or standalone.  In either case, add this line to your Gemfile:
+This gem can be used within an existing project (e.g. a Rails app), or standalone.
 
 ```ruby
+# Gemfile
 gem 'tricle'
+
+# Rakefile
+require 'tricle/tasks'
+
+# your/config/file.rb
+# unless you already have ActionMailer set up
+ActionMailer::Base.raise_delivery_errors = true
+ActionMailer::Base.smtp_settings = {
+  # ...
+}
 ```
 
-You'll also need to [configure ActiveMailer](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) if your project doesn't include this already.  Next, execute:
+[See here](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) for more ActionMailer configuration details.  Finally, execute:
 
-    $ bundle
+```bash
+bundle
+```
 
 ### Cron
 
@@ -121,11 +134,6 @@ class MyMailer < Tricle::Mailer
   default(
     # ...
   )
-
-  # @return [:daily, :weekly]
-  def frequency
-    # ...
-  end
 
   # @return [Class] a Report subclass
   def report
