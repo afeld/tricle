@@ -13,8 +13,9 @@ module Tricle
         date.strftime('%-m/%-d/%y')
       end
 
-      def fraction(numerator, denominator)
-        sprintf('%.1f%', (numerator / denominator.to_f) * 100.0)
+      def percent_change(new_val, old_val)
+        fraction = (new_val - old_val) / old_val.to_f
+        sprintf('%.1f%', fraction * 100.0)
       end
     end
   end

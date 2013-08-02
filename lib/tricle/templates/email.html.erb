@@ -20,8 +20,8 @@
         <tr>
           <th rowspan="2"><%= metric.title %></th>
           <td><%= metric.last_week %></td>
-          <td><%= fraction(metric.last_week, metric.weeks_ago(2)) %></td>
-          <td><%= fraction(metric.last_week, metric.week_average_this_quarter) %></td>
+          <td><%= percent_change(metric.last_week, metric.weeks_ago(2)) %></td>
+          <td><%= percent_change(metric.last_week, metric.week_average_this_quarter) %></td>
         </tr>
         <tr>
           <td><%= metric.total %> (total)</td>
