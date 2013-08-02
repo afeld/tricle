@@ -1,5 +1,7 @@
 module Tricle
   class Mailer < ActionMailer::Base
+    include ActiveSupport::DescendantsTracker
+
     attr_reader :report_instance
 
     def initialize(*args)
