@@ -26,13 +26,15 @@ module Tricle
 
     def email(options = {})
       options = {
-        subject: self.subject,
-        template_path: 'templates'
+        subject: self.subject
       }.merge(options)
 
       @metrics = self.metric_instances
 
-      mail(options)
+      mail(options) do |format|
+        format.html { render 'templates/email' }
+        format.text { render 'templates/email' }
+      end
     end
 
     class << self
