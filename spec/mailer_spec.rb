@@ -21,14 +21,15 @@ describe Tricle::Mailer do
       message.subject.should eq("Your Test Mailer")
     end
 
-    it "should include the values from the Report" do
+    it "should include the values from the Report in the HTML part" do
       deliver
-      message.parts.each do |part|
-        source = part.body.raw_source
-        source.should include('Test Metric')
-        source.should match(/\b62\b/) # last week
-        source.should match(/\b787\b/) # total
-      end
+      source = message.html_part.body.to_s
+      # source = part.body.raw_source
+      source.should include('Test Metric')
+      source.should match(/\b62\b/) # last week
+      source.should match(/\b787\b/) # total
     end
+
+    it "should include something(?) in the text part"
   end
 end
