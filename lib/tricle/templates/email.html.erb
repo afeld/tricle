@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <th><!--Name--></th>
+        <th>Value</th>
+      </tr>
+      <% @metrics.each do |metric| %>
+        <tr>
+          <td><%= metric.title %></td>
+          <td><%= metric.last_week %></td>
+        </tr>
+      <% end %>
+    </table>
+  </body>
+</html>

@@ -7,7 +7,9 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.setup
 
-require 'action_mailer'
+require_relative '../lib/tricle'
+require 'timecop'
+
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -18,6 +20,7 @@ RSpec.configure do |config|
   ActionMailer::Base.delivery_method = :test
   config.before do
     ActionMailer::Base.deliveries.clear
+    Timecop.return
   end
 
   # Run specs in random order to surface order dependencies. If you find an
