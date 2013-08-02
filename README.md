@@ -29,10 +29,6 @@ ActionMailer::Base.smtp_settings = {
 bundle
 ```
 
-### Cron
-
-TODO
-
 ## Usage
 
 ### Metrics
@@ -206,3 +202,15 @@ and navigate to [localhost:3000/mail_view](http://localhost:3000/mail_view).
     ```
 
 3. Navigate to [localhost:3000](http://localhost:3000).
+
+## Deploying
+
+To send all Tricle emails, run
+
+```bash
+rake tricle:emails:send
+```
+
+### Cron Setup
+
+TODO
