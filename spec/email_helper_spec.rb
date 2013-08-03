@@ -19,10 +19,12 @@ describe Tricle::EmailHelper do
     end
   end
 
-  describe "#single_week_date_str" do
+  describe "#single_week_dates_cell" do
     it "should not include the last day of the week" do
       start_at = Time.new(2013, 7, 22) # a Monday
-      helper.single_week_date_str(start_at).should eq('(7/22/13 - 7/28/13)')
+      markup = helper.single_week_dates_cell(start_at)
+      markup.should include('7/22/13')
+      markup.should include('7/28/13')
     end
   end
 end

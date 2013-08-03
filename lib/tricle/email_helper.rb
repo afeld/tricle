@@ -24,24 +24,29 @@ module Tricle
       %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val.round}</div></td>].html_safe
     end
 
-    def dates_str(start_at, end_at)
-      "(#{ self.format_date(start_at) } - #{ self.format_date(end_at) })"
+    def dates_range_str(start_at, end_at)
+      "#{ self.format_date(start_at) } - #{ self.format_date(end_at) }"
     end
 
-    def single_week_date_str(start_at)
-      dates_str(start_at, start_at.end_of_week)
+    def dates_cell(start_at, end_at)
+      range = dates_range_str(start_at, end_at)
+      "<div>(#{range})</div>".html_safe
     end
 
-    def last_week_dates_str
-      single_week_date_str(weeks_ago(1))
+    def single_week_dates_cell(start_at)
+      dates_cell(start_at, start_at.end_of_week)
     end
 
-    def previous_week_dates_str
-      single_week_date_str(weeks_ago(2))
+    def last_week_dates_cell
+      single_week_dates_cell(weeks_ago(1))
     end
 
-    def quarter_dates_str
-      dates_str(weeks_ago(13), weeks_ago(1).end_of_week)
+    def previous_week_dates_cell
+      single_week_dates_cell(weeks_ago(2))
+    end
+
+    def quarter_dates_cell
+      dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
     end
   end
 end

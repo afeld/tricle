@@ -9,15 +9,15 @@
         <th><!--Title--></th>
         <th>
           <div>Last week</div>
-          <div><%= last_week_dates_str %></div>
+          <%= last_week_dates_cell %>
         </th>
         <th>
           <div>Previous week</div>
-          <div><%= previous_week_dates_str %></div>
+          <%= previous_week_dates_cell %>
         </th>
         <th>
           <div>Quarterly average</div>
-          <div><%= quarter_dates_str %></div>
+          <%= quarter_dates_cell %>
         </th>
       </tr>
       <% @metrics.each do |metric| %>
