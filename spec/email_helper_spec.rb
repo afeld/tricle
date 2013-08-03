@@ -13,6 +13,12 @@ describe Tricle::EmailHelper do
     end
   end
 
+  describe "#percent_change" do
+    it "prefix positive values with a +" do
+      helper.percent_change(110, 100).should eq('+10.0%')
+    end
+  end
+
   describe "#single_week_date_str" do
     it "should not include the last day of the week" do
       start_at = Time.new(2013, 7, 22) # a Monday

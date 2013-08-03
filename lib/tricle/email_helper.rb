@@ -15,7 +15,7 @@ module Tricle
 
     def percent_change(new_val, old_val)
       fraction = (new_val - old_val) / old_val.to_f
-      sprintf('%.1f%', fraction * 100.0)
+      sprintf('%+.1f%', fraction * 100.0)
     end
 
     def dates_str(start_at, end_at)
