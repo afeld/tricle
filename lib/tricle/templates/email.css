@@ -14,6 +14,10 @@ td {
   text-align: right;
 }
 
+.date-range {
+  font-size: 13px;
+}
+
 td {
   border: 1px solid #c7c7c7;
 }

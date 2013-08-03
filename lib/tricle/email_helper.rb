@@ -30,7 +30,7 @@ module Tricle
 
     def dates_cell(start_at, end_at)
       range = dates_range_str(start_at, end_at)
-      "<div>(#{range})</div>".html_safe
+      %[<div class="date-range">(#{range})</div>].html_safe
     end
 
     def single_week_dates_cell(start_at)
