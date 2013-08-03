@@ -18,6 +18,12 @@ module Tricle
       sprintf('%+.1f%', fraction * 100.0)
     end
 
+    def percent_change_cell(new_val, old_val)
+      cls = (new_val >= old_val) ? 'positive' : 'negative'
+      pct_str = percent_change(new_val, old_val)
+      "<td class=\"#{cls}\">#{pct_str}</td>".html_safe
+    end
+
     def dates_str(start_at, end_at)
       "(#{ self.format_date(start_at) } - #{ self.format_date(end_at) })"
     end

@@ -5,23 +5,23 @@
   </head>
   <body>
     <table>
-      <tr>
-        <th rowspan="2"><!--Name--></th>
+      <tr class="heading-row">
+        <th rowspan="2"><!--Title--></th>
         <th>Last week</th>
         <th>Previous week</th>
         <th>Quarterly average</th>
       </tr>
-      <tr>
+      <tr class="date-row">
         <th><%= last_week_dates_str %></th>
         <th><%= previous_week_dates_str %></th>
         <th><%= quarter_dates_str %></th>
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
-          <th rowspan="2"><%= metric.title %></th>
+          <th rowspan="2" class="metric-title"><%= metric.title %></th>
           <td><%= number_with_delimiter(metric.last_week) %></td>
-          <td><%= percent_change(metric.last_week, metric.weeks_ago(2)) %></td>
-          <td><%= percent_change(metric.last_week, metric.week_average_this_quarter) %></td>
+          <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+          <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
         </tr>
         <tr>
           <td><%= number_with_delimiter(metric.total) %> (total)</td>

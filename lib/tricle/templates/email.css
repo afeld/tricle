@@ -1,0 +1,31 @@
+table {
+  border-collapse: collapse;
+}
+
+.heading-row th {
+  padding-top: 10px;
+}
+
+.date-row th {
+  padding: 0 10px 10px;
+}
+
+.metric-title {
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #c7c7c7;
+  padding: 10px;
+}
+
+.positive {
+  background-color: #e4ffea;
+  color: green;
+}
+
+.negative {
+  background-color: #ffe3e4;
+  color: #c21717;
+}

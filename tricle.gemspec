@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "actionmailer", "~> 4.0"
   spec.add_dependency "activesupport", "~> 4.0"
   spec.add_dependency "mail_view", "~> 1.0"
+  spec.add_dependency "nokogiri", "~> 1.6"
+  spec.add_dependency "premailer", "~> 1.7"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "guard", "~> 1.8"
