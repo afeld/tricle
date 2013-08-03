@@ -21,7 +21,7 @@ module Tricle
     def percent_change_cell(new_val, old_val)
       cls = (new_val >= old_val) ? 'positive' : 'negative'
       pct_str = percent_change(new_val, old_val)
-      "<td class=\"#{cls}\">#{pct_str}</td>".html_safe
+      %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val.round}</div></td>].html_safe
     end
 
     def dates_str(start_at, end_at)

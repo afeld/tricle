@@ -6,27 +6,29 @@
   <body>
     <table>
       <tr class="heading-row">
-        <th rowspan="2"><!--Title--></th>
-        <th>Last week</th>
-        <th>Previous week</th>
-        <th>Quarterly average</th>
-      </tr>
-      <tr class="date-row">
-        <th><%= last_week_dates_str %></th>
-        <th><%= previous_week_dates_str %></th>
-        <th><%= quarter_dates_str %></th>
+        <th><!--Title--></th>
+        <th>
+          <div>Last week</div>
+          <div><%= last_week_dates_str %></div>
+        </th>
+        <th>
+          <div>Previous week</div>
+          <div><%= previous_week_dates_str %></div>
+        </th>
+        <th>
+          <div>Quarterly average</div>
+          <div><%= quarter_dates_str %></div>
+        </th>
       </tr>
       <% @metrics.each do |metric| %>
         <tr>
-          <th rowspan="2" class="metric-title"><%= metric.title %></th>
-          <td><%= number_with_delimiter(metric.last_week) %></td>
+          <th class="metric-title"><%= metric.title %></th>
+          <td>
+            <div><%= number_with_delimiter(metric.last_week) %></div>
+            <div><%= number_with_delimiter(metric.total) %> (total)</div>
+          </td>
           <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
           <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
-        </tr>
-        <tr>
-          <td><%= number_with_delimiter(metric.total) %> (total)</td>
-          <td><%= number_with_delimiter(metric.weeks_ago(2)) %></td>
-          <td><%= number_with_delimiter(metric.week_average_this_quarter.round) %></td>
         </tr>
       <% end %>
     </table>

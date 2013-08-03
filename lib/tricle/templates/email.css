@@ -7,22 +7,14 @@ th {
   padding-right: 10px;
 }
 
-.heading-row th {
-  padding-top: 10px;
-}
-
-.date-row th {
-  padding-bottom: 10px;
-}
-
 th,
 td {
+  padding: 10px;
   text-align: right;
 }
 
 td {
   border: 1px solid #c7c7c7;
-  padding: 10px;
 }
 
 .positive {
