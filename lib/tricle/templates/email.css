@@ -1,5 +1,6 @@
 table {
   border-collapse: collapse;
+  line-height: 1.2;
 }
 
 th {
@@ -15,6 +16,10 @@ td {
 
 td {
   border: 1px solid #c7c7c7;
+}
+
+td div:first-child {
+  font-size: 20px;
 }
 
 .positive {
