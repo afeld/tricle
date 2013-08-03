@@ -19,14 +19,14 @@
       <% @metrics.each do |metric| %>
         <tr>
           <th rowspan="2"><%= metric.title %></th>
-          <td><%= metric.last_week %></td>
+          <td><%= number_with_delimiter(metric.last_week) %></td>
           <td><%= percent_change(metric.last_week, metric.weeks_ago(2)) %></td>
           <td><%= percent_change(metric.last_week, metric.week_average_this_quarter) %></td>
         </tr>
         <tr>
-          <td><%= metric.total %> (total)</td>
-          <td><%= metric.weeks_ago(2) %></td>
-          <td><%= metric.week_average_this_quarter.round %></td>
+          <td><%= number_with_delimiter(metric.total) %> (total)</td>
+          <td><%= number_with_delimiter(metric.weeks_ago(2)) %></td>
+          <td><%= number_with_delimiter(metric.week_average_this_quarter.round) %></td>
         </tr>
       <% end %>
     </table>
