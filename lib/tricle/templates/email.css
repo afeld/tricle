@@ -2,17 +2,22 @@ table {
   border-collapse: collapse;
 }
 
+th {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .heading-row th {
   padding-top: 10px;
 }
 
 .date-row th {
-  padding: 0 10px 10px;
+  padding-bottom: 10px;
 }
 
-.metric-title {
-  padding: 10px;
-  text-align: left;
+th,
+td {
+  text-align: right;
 }
 
 td {
