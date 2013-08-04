@@ -8,29 +8,46 @@ module Tricle
       date.strftime('%-m/%-d/%y')
     end
 
+    def number_with_delimiter(number)
+      # from http://stackoverflow.com/a/11466770/358804
+      number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+    end
+
     def percent_change(new_val, old_val)
       fraction = (new_val - old_val) / old_val.to_f
-      sprintf('%.1f%', fraction * 100.0)
+      sprintf('%+.1f%', fraction * 100.0)
     end
 
-    def dates_str(start_at, end_at)
-      "(#{ self.format_date(start_at) } - #{ self.format_date(end_at) })"
+    def percent_change_cell(new_val, old_val)
+      cls = (new_val >= old_val) ? 'positive' : 'negative'
+      pct_str = percent_change(new_val, old_val)
+      old_val_str = number_with_delimiter(old_val.round)
+      %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val_str}</div></td>].html_safe
     end
 
-    def single_week_date_str(start_at)
-      dates_str(start_at, start_at.end_of_week)
+    def dates_range_str(start_at, end_at)
+      "#{ self.format_date(start_at) } - #{ self.format_date(end_at) }"
     end
 
-    def last_week_dates_str
-      single_week_date_str(weeks_ago(1))
+    def dates_cell(start_at, end_at)
+      range = dates_range_str(start_at, end_at)
+      %[<div class="date-range">(#{range})</div>].html_safe
     end
 
-    def previous_week_dates_str
-      single_week_date_str(weeks_ago(2))
+    def single_week_dates_cell(start_at)
+      dates_cell(start_at, start_at.end_of_week)
     end
 
-    def quarter_dates_str
-      dates_str(weeks_ago(13), weeks_ago(1).end_of_week)
+    def last_week_dates_cell
+      single_week_dates_cell(weeks_ago(1))
+    end
+
+    def previous_week_dates_cell
+      single_week_dates_cell(weeks_ago(2))
+    end
+
+    def quarter_dates_cell
+      dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
     end
   end
 end
