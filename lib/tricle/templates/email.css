@@ -1,0 +1,38 @@
+table {
+  border-collapse: collapse;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+th {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: right;
+}
+
+.date-range {
+  font-size: 13px;
+}
+
+td {
+  border: 1px solid #c7c7c7;
+}
+
+td div:first-child {
+  font-size: 20px;
+}
+
+.positive {
+  background-color: #e4ffea;
+  color: green;
+}
+
+.negative {
+  background-color: #ffe3e4;
+  color: #c21717;
+}
