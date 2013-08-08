@@ -1,5 +1,5 @@
 require 'rake'
-require_relative '../tricle'
+require_relative '../tricle.rb'
 
 namespace :tricle do
   namespace :emails do

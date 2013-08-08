@@ -1,4 +1,4 @@
-require_relative 'helpers/email_helper'
+require_relative 'helpers/email_helper.rb'
 
 module Tricle
   class Mailer < ActionMailer::Base
