@@ -1,4 +1,4 @@
-# Tricle [![Build Status](https://travis-ci.org/artsy/tricle.png?branch=master)](https://travis-ci.org/artsy/tricle) [![Code Climate](https://codeclimate.com/repos/5203cb78f3ea001e86000c37/badges/db3b841286dc0725d64f/gpa.png)](https://codeclimate.com/repos/5203cb78f3ea001e86000c37/feed)
+# Tricle [![Build Status](https://travis-ci.org/artsy/tricle.png?branch=master)](https://travis-ci.org/artsy/tricle) [![Code Climate](https://codeclimate.com/github/artsy/tricle.png)](https://codeclimate.com/github/artsy/tricle)
 
 Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need.
 
