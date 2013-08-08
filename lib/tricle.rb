@@ -2,6 +2,7 @@ require 'action_mailer'
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
 require 'active_support/descendants_tracker'
+require 'premailer'
 
 EXCLUDED_FILES = %w(mail_preview.rb tasks.rb).to_set.freeze
 
