@@ -1,3 +1,5 @@
+require_relative 'email_helper'
+
 module Tricle
   class Mailer < ActionMailer::Base
     include ActiveSupport::DescendantsTracker
