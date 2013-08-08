@@ -4,10 +4,14 @@ require 'active_support/core_ext/numeric/time'
 require 'active_support/descendants_tracker'
 require 'premailer'
 
+EXCLUDED_FILES = %w(mail_preview.rb tasks.rb).to_set.freeze
+
 dir = File.dirname(__FILE__)
-Dir[File.join(dir, 'tricle', '**', '*.rb')].each do |file|
+# ensure the files always load in a consistent order
+Dir[File.join(dir, 'tricle', '**', '*.rb')].sort.each do |file|
   # MailPreview should be require'd explcitly
-  require file unless file.end_with?('mail_preview.rb')
+  basename = File.basename(file)
+  require file unless EXCLUDED_FILES.include?(basename)
 end
 
 ActionMailer::Base.view_paths = File.join(dir, 'tricle')
