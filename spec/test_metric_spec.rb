@@ -2,11 +2,6 @@ require 'spec_helper'
 
 # test the tests
 describe TestMetric do
-  before do
-    # Thurs, Aug 1st, 1am
-    Timecop.freeze(Time.new(2013, 8, 1, 1, 0, 0, '-04:00'))
-  end
-
   let(:metric) { TestMetric.new }
 
   describe "#weeks_ago" do
