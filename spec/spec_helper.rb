@@ -9,10 +9,10 @@ Bundler.setup
 
 require 'timecop'
 
-require_relative '../lib/tricle.rb'
-require_relative 'app/test_metric.rb'
-require_relative 'app/test_report.rb'
-require_relative 'app/test_mailer.rb'
+require_relative '../lib/tricle'
+require_relative 'app/test_metric'
+require_relative 'app/test_report'
+require_relative 'app/test_mailer'
 
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
