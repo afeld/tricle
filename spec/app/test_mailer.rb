@@ -4,7 +4,5 @@ class TestMailer < Tricle::Mailer
     from: 'sender@test.com'
   )
 
-  def report
-    TestReport
-  end
+  metric TestMetric
 end

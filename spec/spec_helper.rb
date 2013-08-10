@@ -11,7 +11,6 @@ require 'timecop'
 
 require_relative '../lib/tricle'
 require_relative 'app/test_metric'
-require_relative 'app/test_report'
 require_relative 'app/test_mailer'
 
 

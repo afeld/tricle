@@ -21,7 +21,7 @@ describe Tricle::Mailer do
       message.subject.should eq("Your Test Mailer")
     end
 
-    it "should include the values from the Report in the HTML part" do
+    it "should include the Metric values in the HTML part" do
       deliver
       source = message.html_part.body.to_s
       source.should include('Test Metric')
