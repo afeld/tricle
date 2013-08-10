@@ -4,29 +4,19 @@ module Tricle
   class Mailer < ActionMailer::Base
     include ActiveSupport::DescendantsTracker
 
-    attr_reader :report_instance
+    class_attribute :metrics
     helper Tricle::EmailHelper
 
     CSS = File.read(File.join(File.dirname(__FILE__), 'templates', 'email.css')).freeze
 
-
-    def initialize(*args)
-      @report_instance = self.report.new
-      super(*args)
-    end
-
-
-    def report
-      raise Tricle::AbstractMethodError.new
-    end
 
     def subject
       "Your #{self.class.name.titleize}"
     end
 
 
-    def metric_instances
-      self.report_instance.metric_instances
+    def metrics
+      self.class.metrics.map{|m| m.new }
     end
 
     def premailer(message)
@@ -40,7 +30,7 @@ module Tricle
         subject: self.subject
       }.merge(options)
 
-      @metrics = self.metric_instances
+      @metrics = self.metrics
 
       message = mail(options) do |format|
         format.html { render 'templates/email' }
@@ -51,6 +41,14 @@ module Tricle
     end
 
     class << self
+      def inherited(klass)
+        klass.metrics = []
+      end
+
+      def metric(klass)
+        self.metrics << klass
+      end
+
       def send_all
         mailers = Tricle::Mailer.descendants
         puts "Sending #{mailers.size} emails..."
