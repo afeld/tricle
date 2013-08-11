@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Tricle::VERSION
   spec.authors       = ["Aidan Feldman"]
   spec.email         = ["aidan.feldman@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Automated metrics reporting via email}
+  spec.summary       = %q{A datastore-agnostic mailer where you can define custom metrics, where you can query SQL, MongoDB, external APIs, etc. to generate the stats you need.  It can be used within a larger project (e.g. Rails), or standalone.}
+  spec.homepage      = "https://github.com/artsy/tricle"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
