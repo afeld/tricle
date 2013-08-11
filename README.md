@@ -33,7 +33,7 @@ bundle
 
 ### Metrics
 
-For each metric you want to report, create a new subclass of `Tricle::Metric` that implements `#for_range`:
+For each metric you want to report, create a new subclass of `Tricle::Metric` that implements `#for_range` and `#total`:
 
 ```ruby
 class MyMetric < Tricle::Metric
@@ -75,6 +75,7 @@ class NewUsers < Tricle::Metric
 
   private
 
+  # You can add whatever helper methods in that class that you need.
   def users
     # non-deleted Users
     User.where(deleted_at: nil)
@@ -83,44 +84,9 @@ class NewUsers < Tricle::Metric
 end
 ```
 
-You can also add whatever helper methods in that class that you need.
-
-### Reports
-
-Reports assemble ordered lists of Metrics.
-
-```ruby
-class MyReport < Tricle::Report
-
-  # @return [Array<Class>] a list of Metric subclasses to be included
-  def metrics
-    [
-      # MyMetric1,
-      # MyMetric2,
-      # ...
-    ]
-  end
-
-end
-```
-
-e.g.
-
-```ruby
-class ArtsyInsights < Tricle::Report
-
-  def metrics
-    [NewUsers]
-  end
-
-end
-```
-
-The subject line will be based on the Report class name.
-
 ### Mailers
 
-Mailers specify how a particular Report should be sent.
+Mailers specify how a particular set of Metrics should be sent.  You can define one or multiple, to send different metrics to different groups of people.
 
 ```ruby
 class MyMailer < Tricle::Mailer
@@ -131,10 +97,9 @@ class MyMailer < Tricle::Mailer
     # ...
   )
 
-  # @return [Class] a Report subclass
-  def report
-    # ...
-  end
+  metric MyMetric1
+  metric MyMetric2
+  # ...
 
 end
 ```
@@ -154,12 +119,12 @@ class WeeklyInsights < Tricle::Mailer
     :weekly
   end
 
-  def report
-    ArtsyInsights
-  end
+  metric NewUsers
 
 end
 ```
+
+The subject line will be based on the Mailer class name.
 
 ### Previewing
 
