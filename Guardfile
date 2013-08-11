@@ -1,4 +1,4 @@
-guard :rspec do
+guard :rspec, all_on_start: true do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/}) { 'spec' }
   watch('spec/spec_helper.rb') { 'spec' }
