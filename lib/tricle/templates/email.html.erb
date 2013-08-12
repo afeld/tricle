@@ -20,7 +20,7 @@
           <%= quarter_dates_cell %>
         </th>
       </tr>
-      <% @metrics.each do |metric| %>
+      <% @report.metric_instances.each do |metric| %>
         <tr>
           <th class="metric-title"><%= metric.title %></th>
           <td>
