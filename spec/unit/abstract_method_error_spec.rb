@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../lib/tricle/abstract_method_error'
 
 describe Tricle::AbstractMethodError do
   class TestAbstractMethod

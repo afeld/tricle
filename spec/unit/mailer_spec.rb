@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative '../../lib/tricle/mailer'
+require_relative '../app/group_test_mailer'
+require_relative '../app/test_mailer'
 
 describe Tricle::Mailer do
   def deliver(klass)

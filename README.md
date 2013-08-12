@@ -152,27 +152,10 @@ and navigate to [localhost:3000/mail_view](http://localhost:3000/mail_view).
 
 #### Standalone
 
-1. Create a `config.ru` file:
-
-    ```ruby
-    require 'tricle'
-
-    # require all Mailers
-    Dir[File.join(File.dirname(__FILE__), 'mailers', '**', '*.rb')].each{|file| require file }
-
-    require 'tricle/mail_preview'
-
-    run Tricle::MailPreview
-    ```
-
-2. Run the Rack app:
-
-    ```bash
-    gem install shotgun
-    shotgun
-    ```
-
-3. Navigate to [localhost:3000](http://localhost:3000).
+```bash
+bundle exec rake tricle:preview
+open http://localhost:8080
+```
 
 ## Deploying
 

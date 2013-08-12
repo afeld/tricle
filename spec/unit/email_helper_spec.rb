@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../lib/tricle/email_helper'
 
 describe Tricle::EmailHelper do
   class HelperTester

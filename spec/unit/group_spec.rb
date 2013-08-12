@@ -1,4 +1,6 @@
 require 'spec_helper'
+require_relative '../../lib/tricle/group'
+require_relative '../app/test_metric'
 
 describe Tricle::Group do
   let(:group) { Tricle::Group.new }

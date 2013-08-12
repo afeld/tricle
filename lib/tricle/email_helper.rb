@@ -1,3 +1,6 @@
+require 'active_support/core_ext/date/calculations'
+require 'active_support/core_ext/numeric/time'
+
 module Tricle
   module EmailHelper
     def weeks_ago(n)
