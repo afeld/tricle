@@ -3,13 +3,14 @@ require 'active_support/descendants_tracker'
 require 'premailer'
 
 require_relative 'email_helper'
+require_relative 'report'
 
 
 module Tricle
   class Mailer < ActionMailer::Base
     include ActiveSupport::DescendantsTracker
 
-    class_attribute :metrics
+    class_attribute :report
     helper Tricle::EmailHelper
     self.view_paths = File.dirname(__FILE__)
 
@@ -18,11 +19,6 @@ module Tricle
 
     def subject
       "Your #{self.class.name.titleize}"
-    end
-
-
-    def metrics
-      self.class.metrics.map{|m| m.new }
     end
 
     def premailer(message)
@@ -36,7 +32,7 @@ module Tricle
         subject: self.subject
       }.merge(options)
 
-      @metrics = self.metrics
+      @report = self.report
 
       message = mail(options) do |format|
         format.html { render 'templates/email' }
@@ -48,12 +44,17 @@ module Tricle
 
     class << self
       def inherited(klass)
-        klass.metrics = []
+        klass.report = Tricle::Report.new
         super(klass)
       end
 
+      def group(title)
+        self.report.add_group(title)
+        yield if block_given?
+      end
+
       def metric(klass)
-        self.metrics << klass
+        self.report.add_metric(klass)
       end
 
       def send_all
