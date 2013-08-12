@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 2.14"
+  spec.add_development_dependency "ruby_gntp"
   spec.add_development_dependency "shotgun"
   spec.add_development_dependency "timecop", "~> 0.6.2"
 end
