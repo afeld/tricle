@@ -1,4 +1,9 @@
+require 'action_mailer'
+require 'active_support/descendants_tracker'
+require 'premailer'
+
 require_relative 'email_helper'
+
 
 module Tricle
   class Mailer < ActionMailer::Base
@@ -6,6 +11,7 @@ module Tricle
 
     class_attribute :metrics
     helper Tricle::EmailHelper
+    self.view_paths = File.dirname(__FILE__)
 
     CSS = File.read(File.join(File.dirname(__FILE__), 'templates', 'email.css')).freeze
 

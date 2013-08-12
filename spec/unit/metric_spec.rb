@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../lib/tricle/metric'
 
 describe Tricle::Metric do
   before do

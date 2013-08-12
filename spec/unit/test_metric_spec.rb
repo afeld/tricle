@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../app/test_metric'
 
 # test the tests
 describe TestMetric do
