@@ -1,3 +1,5 @@
+require_relative 'group'
+
 # internal representation of the data displayed in the Mailer
 module Tricle
   class Report
