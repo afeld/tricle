@@ -23,7 +23,7 @@ ActionMailer::Base.smtp_settings = {
 }
 ```
 
-[See here](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) for more ActionMailer configuration details.  Finally, execute:
+See [the ActionMailer guide](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) for configuration details.  Finally, execute:
 
 ```bash
 bundle
@@ -101,6 +101,16 @@ class MyMailer < Tricle::Mailer
   metric MyMetric2
   # ...
 
+  # optional: metrics can be grouped
+  group "Group 1 Name" do
+    metric MyMetric3
+    # ...
+  end
+  group "Group 2 Name" do
+    metric MyMetric4
+    # ...
+  end
+
 end
 ```
 
@@ -114,10 +124,6 @@ class WeeklyInsights < Tricle::Mailer
     to: ['theteam@mycompany.com', 'theboss@mycompany.com'],
     from: 'noreply@mycompany.com'
   )
-
-  def frequency
-    :weekly
-  end
 
   metric NewUsers
 
