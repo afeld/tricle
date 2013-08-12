@@ -41,6 +41,11 @@ module Tricle
         klass.report = Tricle::Report.new
       end
 
+      def group(title)
+        self.report.add_group(title)
+        yield if block_given?
+      end
+
       def metric(klass)
         self.report.add_metric(klass)
       end

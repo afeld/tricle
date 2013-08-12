@@ -4,33 +4,36 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <table>
-      <tr class="heading-row">
-        <th><!--Title--></th>
-        <th>
-          <div>Last week</div>
-          <%= last_week_dates_cell %>
-        </th>
-        <th>
-          <div>Previous week</div>
-          <%= previous_week_dates_cell %>
-        </th>
-        <th>
-          <div>Quarterly average</div>
-          <%= quarter_dates_cell %>
-        </th>
-      </tr>
-      <% @report.metric_instances.each do |metric| %>
-        <tr>
-          <th class="metric-title"><%= metric.title %></th>
-          <td>
-            <div><%= number_with_delimiter(metric.last_week) %></div>
-            <div><%= number_with_delimiter(metric.total) %> (total)</div>
-          </td>
-          <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-          <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+    <% @report.groups.each do |group| %>
+      <h2><%= group.title %></h2>
+      <table>
+        <tr class="heading-row">
+          <th><!--Title--></th>
+          <th>
+            <div>Last week</div>
+            <%= last_week_dates_cell %>
+          </th>
+          <th>
+            <div>Previous week</div>
+            <%= previous_week_dates_cell %>
+          </th>
+          <th>
+            <div>Quarterly average</div>
+            <%= quarter_dates_cell %>
+          </th>
         </tr>
-      <% end %>
-    </table>
+        <% group.metric_instances.each do |metric| %>
+          <tr>
+            <th class="metric-title"><%= metric.title %></th>
+            <td>
+              <div><%= number_with_delimiter(metric.last_week) %></div>
+              <div><%= number_with_delimiter(metric.total) %> (total)</div>
+            </td>
+            <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+            <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   </body>
 </html>

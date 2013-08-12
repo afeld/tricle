@@ -1,14 +1,20 @@
 # internal representation of the data displayed in the Mailer
 module Tricle
   class Report
-    attr_reader :metric_instances
+    attr_reader :groups
 
     def initialize
-      @metric_instances = []
+      @groups = []
+    end
+
+    def add_group(title=nil)
+      self.groups << Tricle::Group.new(title)
     end
 
     def add_metric(klass)
-      self.metric_instances << klass.new
+      self.add_group if self.groups.empty?
+      # TODO don't assume they want to add this metric to the last group?
+      self.groups.last.add_metric(klass)
     end
   end
 end
