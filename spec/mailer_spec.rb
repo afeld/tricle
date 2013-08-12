@@ -38,7 +38,8 @@ describe Tricle::Mailer do
   describe '.group' do
     it "should include the group title" do
       deliver(GroupTestMailer)
-      markup.should include("Test Group")
+      markup.should include("Test Group 1")
+      markup.should include("Test Group 2")
       markup.should include("Test Metric")
     end
   end
