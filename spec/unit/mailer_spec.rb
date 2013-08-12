@@ -3,6 +3,13 @@ require_relative '../../lib/tricle/mailer'
 require_relative '../app/test_mailer'
 
 describe Tricle::Mailer do
+  describe ".send_all" do
+    it "should .deliver all defined mailers" do
+      Tricle::Mailer.send_all
+      ActionMailer::Base.deliveries.length.should eq(1)
+    end
+  end
+
   describe '#email' do
     def deliver
       TestMailer.email.deliver
