@@ -39,6 +39,7 @@ module Tricle
     class << self
       def inherited(klass)
         klass.report = Tricle::Report.new
+        super(klass)
       end
 
       def group(title)
