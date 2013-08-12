@@ -1,4 +1,6 @@
 require 'spec_helper'
+require_relative '../../lib/tricle/mailer'
+require_relative '../app/test_mailer'
 
 describe Tricle::Mailer do
   describe ".send_all" do
@@ -27,7 +29,7 @@ describe Tricle::Mailer do
       message.subject.should eq("Your Test Mailer")
     end
 
-    it "should include the values from the Report in the HTML part" do
+    it "should include the Metric values in the HTML part" do
       deliver
       source = message.html_part.body.to_s
       source.should include('Test Metric')
