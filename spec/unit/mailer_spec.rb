@@ -46,4 +46,11 @@ describe Tricle::Mailer do
       markup.should include("Test Metric")
     end
   end
+
+  describe ".send_all" do
+    it "should .deliver all defined mailers" do
+      Tricle::Mailer.send_all
+      ActionMailer::Base.deliveries.length.should eq(2)
+    end
+  end
 end
