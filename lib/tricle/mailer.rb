@@ -49,6 +49,7 @@ module Tricle
     class << self
       def inherited(klass)
         klass.metrics = []
+        super(klass)
       end
 
       def metric(klass)
