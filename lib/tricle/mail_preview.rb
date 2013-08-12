@@ -1,4 +1,5 @@
 require 'mail_view'
+require_relative 'mailer'
 
 module Tricle
   class MailPreview < MailView

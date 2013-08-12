@@ -1,4 +1,5 @@
 require 'csv'
+require_relative '../../lib/tricle/metric'
 
 class TestMetric < Tricle::Metric
   attr_accessor :data_by_start_on, :total
