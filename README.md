@@ -38,8 +38,8 @@ For each metric you want to report, create a new subclass of `Tricle::Metric` th
 ```ruby
 class MyMetric < Tricle::Metric
 
-  # Retrieve the value of this metric for the provided time period.
-  # Generally this will be the count/value added/removed.
+  # Retrieve the value of this metric for the provided time period. Generally
+  # this will be the count/value added/removed.
   #
   # @param start_at [Time]
   # @param end_at [Time] non-inclusive
@@ -48,10 +48,19 @@ class MyMetric < Tricle::Metric
     # ...
   end
 
-  # Retrieve the cumulative value for this metric.
+  # Retrieve the cumulative value for this metric. Not necessary if #items is
+  # defined.
   #
   # @return [Fixnum] the grand total
   def total
+    # ...
+  end
+
+  # Optional: only necessary if using `list` for this
+  # Metric within your Mailer.
+  #
+  # @return [Array]
+  def items
     # ...
   end
 
@@ -110,6 +119,10 @@ class MyMailer < Tricle::Mailer
     metric MyMetric4
     # ...
   end
+
+  # optional: list the items for the specified Metric
+  list MyMetric2
+  # ...
 
 end
 ```

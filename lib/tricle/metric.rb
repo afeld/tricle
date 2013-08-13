@@ -1,5 +1,6 @@
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
+require_relative 'abstract_method_error'
 
 module Tricle
   class Metric
@@ -19,6 +20,10 @@ module Tricle
     end
 
     def total
+      self.each.size
+    end
+
+    def items
       raise Tricle::AbstractMethodError.new
     end
 

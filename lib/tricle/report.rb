@@ -1,22 +1,38 @@
 require_relative 'group'
+require_relative 'list'
 
 # internal representation of the data displayed in the Mailer
 module Tricle
   class Report
-    attr_reader :groups
+    attr_reader :sections
 
     def initialize
-      @groups = []
+      @sections = []
+    end
+
+    def add_section(section)
+      self.sections << section
+      section
     end
 
     def add_group(title=nil)
-      self.groups << Tricle::Group.new(title)
+      group = Tricle::Group.new(title)
+      self.add_section(group)
     end
 
     def add_metric(klass)
-      self.add_group if self.groups.empty?
+      last_section = self.sections.last
+      unless last_section.is_a?(Tricle::Group)
+        last_section = self.add_group
+      end
+
       # TODO don't assume they want to add this metric to the last group?
-      self.groups.last.add_metric(klass)
+      last_section.add_metric(klass)
+    end
+
+    def add_list(klass)
+      list = Tricle::List.new(klass)
+      self.add_section(list)
     end
   end
 end

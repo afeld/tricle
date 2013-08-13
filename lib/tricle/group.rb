@@ -1,5 +1,7 @@
+require_relative 'section'
+
 module Tricle
-  class Group
+  class Group < Section
     attr_reader :metric_instances, :title
 
     def initialize(title=nil)

@@ -8,4 +8,7 @@ class TestMailer < Tricle::Mailer
   )
 
   metric TestMetric
+
+  list TestMetric
+
 end

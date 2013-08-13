@@ -1,6 +1,7 @@
 require 'spec_helper'
 require_relative '../../lib/tricle/mailer'
 require_relative '../app/group_test_mailer'
+require_relative '../app/list_test_mailer'
 require_relative '../app/test_mailer'
 
 describe Tricle::Mailer do
@@ -47,10 +48,17 @@ describe Tricle::Mailer do
     end
   end
 
+  describe '.list' do
+    it "should include the list title" do
+      deliver(ListTestMailer)
+      markup.should include("Test Metric")
+    end
+  end
+
   describe ".send_all" do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
-      ActionMailer::Base.deliveries.length.should eq(2)
+      ActionMailer::Base.deliveries.length.should eq(3)
     end
   end
 end

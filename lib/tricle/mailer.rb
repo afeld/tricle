@@ -57,6 +57,10 @@ module Tricle
         self.report.add_metric(klass)
       end
 
+      def list(klass)
+        self.report.add_list(klass)
+      end
+
       def send_all
         mailers = Tricle::Mailer.descendants
         puts "Sending #{mailers.size} emails..."
