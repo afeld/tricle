@@ -121,7 +121,9 @@ class MyMailer < Tricle::Mailer
   end
 
   # optional: list the items for the specified Metric
-  list MyMetric2
+  list MyMetric2 do |item|
+    # return the HTML string for each particular item
+  end
   # ...
 
 end
@@ -139,6 +141,14 @@ class WeeklyInsights < Tricle::Mailer
   )
 
   metric NewUsers
+
+  list NewUsers do |user|
+    <<-MARKUP
+      <h3>#{user.name}</h3>
+      <div>#{user.location}</div>
+      <a href="mailto:#{user.email}>#{user.email}</a>
+    MARKUP
+  end
 
 end
 ```

@@ -7,11 +7,7 @@
     <% @report.sections.each do |section| %>
       <h2><%= section.title %></h2>
       <% if section.is_a?(Tricle::List) %>
-        <ul>
-          <% section.items.each do |item| %>
-            <li><%= item %></li>
-          <% end %>
-        </ul>
+        <%= section.items_markup.html_safe %>
       <% else %>
         <table>
           <tr class="heading-row">

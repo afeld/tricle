@@ -52,10 +52,11 @@ describe Tricle::Mailer do
     it "should include the list title" do
       deliver(ListTestMailer)
       markup.should include("Test Metric")
+      markup.should match(%r{<li>96.0</li>\s*<li>83.0</li>\s*<li>82.0</li>})
     end
   end
 
-  describe ".send_all" do
+  describe '.send_all' do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
       ActionMailer::Base.deliveries.length.should eq(3)

@@ -30,8 +30,8 @@ module Tricle
       last_section.add_metric(klass)
     end
 
-    def add_list(klass)
-      list = Tricle::List.new(klass)
+    def add_list(klass, &block)
+      list = Tricle::List.new(klass, &block)
       self.add_section(list)
     end
   end
