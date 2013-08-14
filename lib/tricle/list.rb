@@ -21,7 +21,7 @@ module Tricle
       markup = ''
       self.items.each do |item|
         val = self.block.call(item)
-        markup << "<tr><td colspan=\"4\">#{val}</td></tr>"
+        markup << %{<tr><td class="list-item" colspan="4">#{val}</td></tr>}
       end
 
       markup
