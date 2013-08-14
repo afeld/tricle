@@ -52,7 +52,8 @@ describe Tricle::Mailer do
     it "should include the list title" do
       deliver(ListTestMailer)
       markup.should include("Test Metric")
-      markup.should match(%r{<li>96.0</li>\s*<li>83.0</li>\s*<li>82.0</li>})
+      markup.should include('83.0')
+      markup.should include('82.0')
     end
   end
 

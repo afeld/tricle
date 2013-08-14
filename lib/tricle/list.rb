@@ -18,12 +18,11 @@ module Tricle
     end
 
     def items_markup
-      markup = "<ul>"
+      markup = ''
       self.items.each do |item|
         val = self.block.call(item)
-        markup << "<li>#{val}</li>"
+        markup << "<tr><td colspan=\"4\">#{val}</td></tr>"
       end
-      markup << "</ul>"
 
       markup
     end

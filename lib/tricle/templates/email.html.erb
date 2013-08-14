@@ -4,13 +4,15 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <% @report.sections.each do |section| %>
-      <h2><%= section.title %></h2>
-      <% if section.is_a?(Tricle::List) %>
-        <%= section.items_markup.html_safe %>
-      <% else %>
-        <table>
-          <tr class="heading-row">
+    <table>
+      <% @report.sections.each do |section| %>
+        <tr>
+          <th class="section-heading" colspan="4"><%= section.title %></th>
+        </tr>
+        <% if section.is_a?(Tricle::List) %>
+          <%= section.items_markup.html_safe %>
+        <% else %>
+          <tr>
             <th><!--Title--></th>
             <th>
               <div>Last week</div>
@@ -36,8 +38,8 @@
               <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
             </tr>
           <% end %>
-        </table>
+        <% end %>
       <% end %>
-    <% end %>
+    </table>
   </body>
 </html>

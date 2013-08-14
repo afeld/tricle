@@ -9,6 +9,11 @@ th {
   padding-right: 10px;
 }
 
+.section-heading {
+  font-size: 22px;
+  text-align: left;
+}
+
 th,
 td {
   padding: 10px;
