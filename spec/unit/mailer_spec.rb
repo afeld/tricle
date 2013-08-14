@@ -1,10 +1,10 @@
 require 'spec_helper'
-require_relative '../../lib/tricle/mailer'
+require_relative '../../lib/tricle/mailer/base'
 require_relative '../app/group_test_mailer'
 require_relative '../app/list_test_mailer'
 require_relative '../app/test_mailer'
 
-describe Tricle::Mailer do
+describe Tricle::Mailer::Base do
   def deliver(klass)
     klass.email.deliver
     ActionMailer::Base.deliveries.length.should eq(1)
@@ -59,7 +59,7 @@ describe Tricle::Mailer do
 
   describe '.send_all' do
     it "should .deliver all defined mailers" do
-      Tricle::Mailer.send_all
+      Tricle::Mailer::Base.send_all
       ActionMailer::Base.deliveries.length.should eq(3)
     end
   end

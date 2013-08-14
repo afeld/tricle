@@ -107,7 +107,7 @@ end
 Mailers specify how a particular set of Metrics should be sent.  You can define one or multiple, to send different metrics to different groups of people.
 
 ```ruby
-class MyMailer < Tricle::Mailer
+class MyMailer < Tricle::Mailer::Weekly
 
   # accepts the same options as ActionMailer... see "Default Hash" at
   # http://rubydoc.info/gems/actionmailer/ActionMailer/Base
@@ -142,7 +142,7 @@ e.g.
 
 ```ruby
 # mailers/weekly_insights.rb
-class WeeklyInsights < Tricle::Mailer
+class WeeklyInsights < Tricle::Mailer::Weekly
 
   default(
     to: ['theteam@mycompany.com', 'theboss@mycompany.com'],
