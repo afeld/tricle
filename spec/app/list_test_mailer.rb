@@ -1,3 +1,4 @@
+require_relative '../../lib/tricle/mailer'
 require_relative 'test_metric'
 
 class ListTestMailer < Tricle::Mailer
