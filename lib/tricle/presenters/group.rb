@@ -1,15 +1,18 @@
+require_relative 'metric'
+
 module Tricle
   module Presenters
     class Group
-      attr_reader :metric_instances, :title
+      attr_reader :metric_presenters, :title
 
       def initialize(title=nil)
         @title = title
-        @metric_instances = []
+        @metric_presenters = []
       end
 
       def add_metric(klass)
-        self.metric_instances << klass.new
+        presenter = Tricle::Presenters::Metric.new(klass)
+        self.metric_presenters << presenter
       end
     end
   end

@@ -11,9 +11,9 @@ describe Tricle::Presenters::Report do
       report.add_metric(TestMetric)
       report.groups.size.should eq(1)
 
-      metrics = report.groups.first.metric_instances
-      metrics.size.should eq(1)
-      metrics.first.should be_a(TestMetric)
+      presenters = report.groups.first.metric_presenters
+      presenters.size.should eq(1)
+      presenters.first.metric.should be_a(TestMetric)
     end
   end
 end
