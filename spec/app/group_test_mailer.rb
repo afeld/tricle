@@ -1,3 +1,5 @@
+require_relative 'test_metric'
+
 class GroupTestMailer < Tricle::Mailer
   default(to: 'recipient1@test.com', from: 'sender@test.com')
 
