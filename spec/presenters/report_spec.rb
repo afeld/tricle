@@ -1,7 +1,9 @@
 require 'spec_helper'
 
-describe Tricle::Report do
-  let(:report) { Tricle::Report.new }
+require_relative '../../lib/tricle/presenters/report'
+
+describe Tricle::Presenters::Report do
+  let(:report) { Tricle::Presenters::Report.new }
 
   describe '#add_metric' do
     it "should add a new group if none are present" do

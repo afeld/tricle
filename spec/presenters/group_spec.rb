@@ -1,9 +1,9 @@
 require 'spec_helper'
-require_relative '../../lib/tricle/group'
+require_relative '../../lib/tricle/presenters/group'
 require_relative '../app/test_metric'
 
-describe Tricle::Group do
-  let(:group) { Tricle::Group.new }
+describe Tricle::Presenters::Group do
+  let(:group) { Tricle::Presenters::Group.new }
 
   describe '#add_metric' do
     it "should add a new metric instance" do
