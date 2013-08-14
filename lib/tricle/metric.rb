@@ -15,15 +15,15 @@ module Tricle
       self.class.name.titleize
     end
 
-    def for_range(start_at, end_at)
-      raise Tricle::AbstractMethodError.new
+    def size_for_range(start_at, end_at)
+      self.items_for_range(start_at, end_at).size
     end
 
     def total
-      self.items.size
+      raise Tricle::AbstractMethodError.new
     end
 
-    def items
+    def items_for_range(start_at, end_at)
       raise Tricle::AbstractMethodError.new
     end
 
@@ -31,7 +31,7 @@ module Tricle
     def days_ago(n)
       start_at = @now.beginning_of_day.days_ago(n)
       end_at = start_at + 1.day
-      self.for_range(start_at, end_at)
+      self.size_for_range(start_at, end_at)
     end
 
     def yesterday
@@ -41,7 +41,7 @@ module Tricle
     def weeks_ago(n)
       start_at = @now.beginning_of_week.weeks_ago(n)
       end_at = start_at + 7.days
-      self.for_range(start_at, end_at)
+      self.size_for_range(start_at, end_at)
     end
 
     def last_week

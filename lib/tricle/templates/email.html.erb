@@ -10,7 +10,7 @@
           <th class="section-heading" colspan="4"><%= section.title %></th>
         </tr>
         <% if section.is_a?(Tricle::List) %>
-          <%= section.items_markup.html_safe %>
+          <%= list_markup(section) %>
         <% else %>
           <tr>
             <th><!--Title--></th>

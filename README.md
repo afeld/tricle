@@ -33,34 +33,35 @@ bundle
 
 ### Metrics
 
-For each metric you want to report, create a new subclass of `Tricle::Metric` that implements `#for_range` and `#total`:
+For each metric you want to report, create a new subclass of `Tricle::Metric` that implements `#size_for_range` and `#total`:
 
 ```ruby
 class MyMetric < Tricle::Metric
 
   # Retrieve the value of this metric for the provided time period. Generally
-  # this will be the count/value added/removed.
+  # this will be the count/value added/removed. Not necessary if #items_for_range
+  # is defined.
   #
   # @param start_at [Time]
   # @param end_at [Time] non-inclusive
   # @return [Fixnum]
-  def for_range(start_at, end_at)
+  def size_for_range(start_at, end_at)
     # ...
   end
 
-  # Retrieve the cumulative value for this metric. Not necessary if #items is
-  # defined.
+  # Retrieve the cumulative value for this metric.
   #
   # @return [Fixnum] the grand total
   def total
     # ...
   end
 
-  # Optional: only necessary if using `list` for this
-  # Metric within your Mailer.
+  # Optional: only necessary if using `list` for this Metric within your Mailer.
   #
-  # @return [Array]
-  def items
+  # @param start_at [Time]
+  # @param end_at [Time] non-inclusive
+  # @return [Enumerator]
+  def items_for_range(start_at, end_at)
     # ...
   end
 
@@ -73,16 +74,24 @@ ActiveRecord example:
 # metrics/new_users.rb
 class NewUsers < Tricle::Metric
 
-  def for_range(start_at, end_at)
-    self.users.where('created_at >= ? AND created_at < ?', start_at, end_at).count
+  def size_for_range(start_at, end_at)
+    self.for_range(start_at, end_at).size
   end
 
   def total
     self.users.count
   end
 
+  def items_for_range(start_at, end_at)
+    self.for_range(start_at, end_at)
+  end
+
 
   private
+
+  def for_range(start_at, end_at)
+    self.users.where('created_at >= ? AND created_at < ?', start_at, end_at)
+  end
 
   # You can add whatever helper methods in that class that you need.
   def users

@@ -13,13 +13,10 @@ module Tricle
       self.metric.title
     end
 
-    def items
-      self.metric.items
-    end
-
-    def items_markup
+    def items_markup(start_at, end_at)
       markup = ''
-      self.items.each do |item|
+      items = self.metric.items_for_range(start_at, end_at)
+      items.each do |item|
         val = self.block.call(item)
         markup << %{<tr><td class="list-item" colspan="4">#{val}</td></tr>}
       end
