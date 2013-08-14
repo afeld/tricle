@@ -20,7 +20,7 @@ module Tricle
     end
 
     def total
-      self.each.size
+      self.items.size
     end
 
     def items
