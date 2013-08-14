@@ -17,8 +17,12 @@ module Tricle
     end
 
     def percent_change(new_val, old_val)
-      fraction = (new_val - old_val) / old_val.to_f
-      sprintf('%+.1f%', fraction * 100.0)
+      if old_val == 0
+        new_val >= 0 ? '+' : '-'
+      else
+        fraction = (new_val - old_val) / old_val.to_f
+        sprintf('%+.1f%', fraction * 100.0)
+      end
     end
 
     def percent_change_cell(new_val, old_val)
