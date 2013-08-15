@@ -3,7 +3,7 @@ require 'active_support/descendants_tracker'
 require 'premailer'
 
 require_relative 'email_helper'
-require_relative 'report'
+require_relative 'presenters/report'
 
 
 module Tricle
@@ -44,7 +44,7 @@ module Tricle
 
     class << self
       def inherited(klass)
-        klass.report = Tricle::Report.new
+        klass.report = Tricle::Presenters::Report.new
         super(klass)
       end
 
