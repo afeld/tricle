@@ -9,6 +9,11 @@ th {
   padding-right: 10px;
 }
 
+.section-heading {
+  font-size: 22px;
+  text-align: left;
+}
+
 th,
 td {
   padding: 10px;
@@ -21,6 +26,10 @@ td {
 
 td {
   border: 1px solid #c7c7c7;
+}
+
+.list-item {
+  text-align: left;
 }
 
 td div:first-child {

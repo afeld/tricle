@@ -2,7 +2,7 @@ require 'csv'
 require_relative '../../lib/tricle/metric'
 
 class TestMetric < Tricle::Metric
-  attr_accessor :data_by_start_on, :total
+  attr_accessor :data_by_start_on, :list, :total
 
   def initialize
     super
@@ -24,8 +24,13 @@ class TestMetric < Tricle::Metric
     end
   end
 
-  def for_range(start_at, end_at)
+  def size_for_range(start_at, end_at)
     start_on = start_at.to_date
     self.data_by_start_on[start_on]
+  end
+
+  def items_for_range(start_at, end_at)
+    # TODO make this accurate
+    self.data_by_start_on.values
   end
 end

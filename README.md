@@ -33,18 +33,19 @@ bundle
 
 ### Metrics
 
-For each metric you want to report, create a new subclass of `Tricle::Metric` that implements `#for_range` and `#total`:
+For each metric you want to report, create a new subclass of `Tricle::Metric` that implements `#size_for_range` and `#total`:
 
 ```ruby
 class MyMetric < Tricle::Metric
 
-  # Retrieve the value of this metric for the provided time period.
-  # Generally this will be the count/value added/removed.
+  # Retrieve the value of this metric for the provided time period. Generally
+  # this will be the count/value added/removed. Not necessary if #items_for_range
+  # is defined.
   #
   # @param start_at [Time]
   # @param end_at [Time] non-inclusive
   # @return [Fixnum]
-  def for_range(start_at, end_at)
+  def size_for_range(start_at, end_at)
     # ...
   end
 
@@ -52,6 +53,15 @@ class MyMetric < Tricle::Metric
   #
   # @return [Fixnum] the grand total
   def total
+    # ...
+  end
+
+  # Optional: only necessary if using `list` for this Metric within your Mailer.
+  #
+  # @param start_at [Time]
+  # @param end_at [Time] non-inclusive
+  # @return [Enumerator]
+  def items_for_range(start_at, end_at)
     # ...
   end
 
@@ -64,16 +74,24 @@ ActiveRecord example:
 # metrics/new_users.rb
 class NewUsers < Tricle::Metric
 
-  def for_range(start_at, end_at)
-    self.users.where('created_at >= ? AND created_at < ?', start_at, end_at).count
+  def size_for_range(start_at, end_at)
+    self.size_for_range(start_at, end_at).size
   end
 
   def total
     self.users.count
   end
 
+  def items_for_range(start_at, end_at)
+    self.size_for_range(start_at, end_at)
+  end
+
 
   private
+
+  def size_for_range(start_at, end_at)
+    self.users.where('created_at >= ? AND created_at < ?', start_at, end_at)
+  end
 
   # You can add whatever helper methods in that class that you need.
   def users
@@ -111,6 +129,12 @@ class MyMailer < Tricle::Mailer
     # ...
   end
 
+  # optional: list the items for the specified Metric
+  list MyMetric2 do |item|
+    # return the HTML string for each particular item
+  end
+  # ...
+
 end
 ```
 
@@ -126,6 +150,14 @@ class WeeklyInsights < Tricle::Mailer
   )
 
   metric NewUsers
+
+  list NewUsers do |user|
+    <<-MARKUP
+      <h3>#{user.name}</h3>
+      <div>#{user.location}</div>
+      <a href="mailto:#{user.email}>#{user.email}</a>
+    MARKUP
+  end
 
 end
 ```

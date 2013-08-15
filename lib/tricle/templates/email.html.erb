@@ -4,36 +4,42 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <% @report.groups.each do |group| %>
-      <h2><%= group.title %></h2>
-      <table>
-        <tr class="heading-row">
-          <th><!--Title--></th>
-          <th>
-            <div>Last week</div>
-            <%= last_week_dates_cell %>
-          </th>
-          <th>
-            <div>Previous week</div>
-            <%= previous_week_dates_cell %>
-          </th>
-          <th>
-            <div>Quarterly average</div>
-            <%= quarter_dates_cell %>
-          </th>
+    <table>
+      <% @report.sections.each do |section| %>
+        <tr>
+          <th class="section-heading" colspan="4"><%= section.title %></th>
         </tr>
-        <% group.metric_presenters.each do |metric| %>
+        <% if section.is_a?(Tricle::List) %>
+          <%= list_markup(section) %>
+        <% else %>
           <tr>
-            <th class="metric-title"><%= metric.title %></th>
-            <td>
-              <div><%= number_with_delimiter(metric.last_week) %></div>
-              <div><%= number_with_delimiter(metric.total) %> (total)</div>
-            </td>
-            <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-            <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+            <th><!--Title--></th>
+            <th>
+              <div>Last week</div>
+              <%= last_week_dates_cell %>
+            </th>
+            <th>
+              <div>Previous week</div>
+              <%= previous_week_dates_cell %>
+            </th>
+            <th>
+              <div>Quarterly average</div>
+              <%= quarter_dates_cell %>
+            </th>
           </tr>
+          <% section.metric_presenters.each do |metric| %>
+            <tr>
+              <th class="metric-title"><%= metric.title %></th>
+              <td>
+                <div><%= number_with_delimiter(metric.last_week) %></div>
+                <div><%= number_with_delimiter(metric.total) %> (total)</div>
+              </td>
+              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+            </tr>
+          <% end %>
         <% end %>
-      </table>
-    <% end %>
+      <% end %>
+    </table>
   </body>
 </html>

@@ -52,5 +52,11 @@ module Tricle
     def quarter_dates_cell
       dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
     end
+
+    def list_markup(list)
+      start_at = self.weeks_ago(1).to_time
+      end_at = start_at + 7.days
+      list.items_markup(start_at, end_at).html_safe
+    end
   end
 end
