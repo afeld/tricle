@@ -2,17 +2,12 @@ require 'action_mailer'
 require 'active_support/descendants_tracker'
 require 'premailer'
 
-require_relative '../email_helper'
-require_relative '../presenters/report'
-
-
 module Tricle
   module Mailer
     class Base < ActionMailer::Base
       include ActiveSupport::DescendantsTracker
 
       class_attribute :report
-      helper Tricle::EmailHelper
       self.view_paths = File.join(File.dirname(__FILE__), '..')
 
       CSS = File.read(File.join(File.dirname(__FILE__), '..', 'templates', 'email.css')).freeze
@@ -44,8 +39,13 @@ module Tricle
       end
 
       class << self
+        def report_class
+          freq = self.name.split('::').last
+          Tricle::Presenters::Report.const_get(freq)
+        end
+
         def inherited(klass)
-          klass.report = Tricle::Presenters::Report.new
+          klass.report = self.report_class.new
           super(klass)
         end
 

@@ -8,5 +8,4 @@ class TestMailer < Tricle::Mailer::Weekly
   )
 
   metric TestMetric
-
 end

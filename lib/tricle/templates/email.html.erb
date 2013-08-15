@@ -10,32 +10,32 @@
           <th class="section-heading" colspan="4"><%= section.title %></th>
         </tr>
         <% if section.is_a?(Tricle::List) %>
-          <%= list_markup(section) %>
+          <%= @report.list_markup(section) %>
         <% else %>
           <tr>
             <th><!--Title--></th>
             <th>
               <div>Last week</div>
-              <%= last_week_dates_cell %>
+              <%= @report.last_week_dates_cell %>
             </th>
             <th>
               <div>Previous week</div>
-              <%= previous_week_dates_cell %>
+              <%= @report.previous_week_dates_cell %>
             </th>
             <th>
               <div>Quarterly average</div>
-              <%= quarter_dates_cell %>
+              <%= @report.quarter_dates_cell %>
             </th>
           </tr>
           <% section.metric_presenters.each do |metric| %>
             <tr>
               <th class="metric-title"><%= metric.title %></th>
               <td>
-                <div><%= number_with_delimiter(metric.last_week) %></div>
-                <div><%= number_with_delimiter(metric.total) %> (total)</div>
+                <div><%= @report.number_with_delimiter(metric.last_week) %></div>
+                <div><%= @report.number_with_delimiter(metric.total) %> (total)</div>
               </td>
-              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <%= @report.percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+              <%= @report.percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
             </tr>
           <% end %>
         <% end %>
