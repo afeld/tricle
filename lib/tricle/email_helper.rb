@@ -4,7 +4,7 @@ require 'active_support/core_ext/numeric/time'
 module Tricle
   module EmailHelper
     def weeks_ago(n)
-      Date.today.beginning_of_week.weeks_ago(n)
+      @report.weeks_ago(n)
     end
 
     def format_date(date)

@@ -37,6 +37,10 @@ module Tricle
         list = Tricle::List.new(klass, &block)
         self.add_section(list)
       end
+
+      def weeks_ago(n)
+        self.now.beginning_of_week.weeks_ago(n)
+      end
     end
   end
 end
