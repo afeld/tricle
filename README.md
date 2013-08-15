@@ -75,7 +75,7 @@ ActiveRecord example:
 class NewUsers < Tricle::Metric
 
   def size_for_range(start_at, end_at)
-    self.for_range(start_at, end_at).size
+    self.size_for_range(start_at, end_at).size
   end
 
   def total
@@ -83,13 +83,13 @@ class NewUsers < Tricle::Metric
   end
 
   def items_for_range(start_at, end_at)
-    self.for_range(start_at, end_at)
+    self.size_for_range(start_at, end_at)
   end
 
 
   private
 
-  def for_range(start_at, end_at)
+  def size_for_range(start_at, end_at)
     self.users.where('created_at >= ? AND created_at < ?', start_at, end_at)
   end
 

@@ -6,10 +6,6 @@ class TestMetric < Tricle::Metric
 
   def initialize
     super
-
-    # Thurs, Aug 1st, 1am
-    @now = Time.new(2013, 8, 1, 1, 0, 0, '-04:00')
-
     self.load_data
   end
 

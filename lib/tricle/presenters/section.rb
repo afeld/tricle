@@ -1,4 +1,4 @@
-require_relative 'abstract_method_error'
+require_relative '../abstract_method_error'
 
 module Tricle
   class Section

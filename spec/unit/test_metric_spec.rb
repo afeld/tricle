@@ -1,19 +1,20 @@
 require 'spec_helper'
 require_relative '../app/test_metric'
+require_relative '../../lib/tricle/presenters/metric'
 
 # test the tests
 describe TestMetric do
-  let(:metric) { TestMetric.new }
+  let(:presenter) { Tricle::Presenters::Metric.new(TestMetric) }
 
-  describe "#weeks_ago" do
+  describe '#weeks_ago' do
     it "should start and end on Monday" do
-      metric.weeks_ago(3).should eq(51)
+      presenter.weeks_ago(3).should eq(51)
     end
   end
 
-  describe "#last_week" do
+  describe '#last_week' do
     it "should start and end on Monday" do
-      metric.last_week.should eq(62)
+      presenter.last_week.should eq(62)
     end
   end
 end

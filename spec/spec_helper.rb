@@ -10,6 +10,11 @@ Bundler.setup
 require 'action_mailer'
 require 'timecop'
 
+require_relative 'config/timecop'
+
+# TODO find a less heavy-handed way of handling this
+reset_time
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
@@ -19,7 +24,7 @@ RSpec.configure do |config|
   ActionMailer::Base.delivery_method = :test
   config.before do
     ActionMailer::Base.deliveries.clear
-    Timecop.return
+    reset_time
   end
 
   # Run specs in random order to surface order dependencies. If you find an
