@@ -15,8 +15,20 @@ describe Tricle::EmailHelper do
   end
 
   describe "#percent_change" do
-    it "prefix positive values with a +" do
+    it "should prefix positive values with a +" do
       helper.percent_change(110, 100).should eq('+10.0%')
+    end
+
+    it "should prefix negative values with a -" do
+      helper.percent_change(90, 100).should eq('-10.0%')
+    end
+
+    it "should handle a zero as the old value with positive change" do
+      helper.percent_change(10, 0).should eq('+')
+    end
+
+    it "should handle a zero as the old value with negative change" do
+      helper.percent_change(-20, 0).should eq('-')
     end
   end
 
