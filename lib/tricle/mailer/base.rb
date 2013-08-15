@@ -63,15 +63,17 @@ module Tricle
         end
 
         def send_all
-          mailers = Tricle::Mailer::Base.descendants
+          mailers = Tricle::Mailer::Base.mailers
           puts "Sending #{mailers.size} emails..."
           mailers.each do |klass|
-            unless klass == Tricle::Mailer::Weekly
-              puts "Sending #{klass.name}..."
-              klass.email.deliver
-            end
+            puts "Sending #{klass.name}..."
+            klass.email.deliver
           end
           puts "Done."
+        end
+
+        def mailers
+          self.descendants.reject { |klass| klass == Tricle::Mailer::Weekly }
         end
       end
     end
