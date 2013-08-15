@@ -1,8 +1,9 @@
 require_relative 'metric'
+require_relative 'section'
 
 module Tricle
   module Presenters
-    class Group
+    class Group < Section
       attr_reader :metric_presenters, :title
 
       def initialize(title=nil)

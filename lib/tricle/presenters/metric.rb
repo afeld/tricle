@@ -20,7 +20,7 @@ module Tricle
       def days_ago(n)
         start_at = self.now.beginning_of_day.days_ago(n)
         end_at = start_at + 1.day
-        self.metric.for_range(start_at, end_at)
+        self.metric.size_for_range(start_at, end_at)
       end
 
       def yesterday
@@ -30,7 +30,7 @@ module Tricle
       def weeks_ago(n)
         start_at = self.now.beginning_of_week.weeks_ago(n)
         end_at = start_at + 7.days
-        self.metric.for_range(start_at, end_at)
+        self.metric.size_for_range(start_at, end_at)
       end
 
       def last_week

@@ -10,10 +10,10 @@ Bundler.setup
 require 'action_mailer'
 require 'timecop'
 
-# need to freeze the time for the TestMetric
+require_relative 'config/timecop'
+
 # TODO find a less heavy-handed way of handling this
-NOW = Time.new(2013, 8, 1, 1, 0, 0, '-04:00').freeze
-Timecop.freeze(NOW.dup)
+reset_time
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -24,7 +24,7 @@ RSpec.configure do |config|
   ActionMailer::Base.delivery_method = :test
   config.before do
     ActionMailer::Base.deliveries.clear
-    Timecop.freeze(NOW.dup)
+    reset_time
   end
 
   # Run specs in random order to surface order dependencies. If you find an
