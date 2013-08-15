@@ -3,10 +3,9 @@ module Tricle
     class Metric
       attr_reader :metric, :now
 
-      def initialize(klass)
+      def initialize(klass, now)
         @metric = klass.new
-        # TODO allow Time to be passed in so it can be frozen
-        @now = Time.now
+        @now = now
       end
 
       def title

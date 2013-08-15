@@ -3,7 +3,7 @@ require_relative '../../lib/tricle/presenters/group'
 require_relative '../app/test_metric'
 
 describe Tricle::Presenters::Group do
-  let(:group) { Tricle::Presenters::Group.new }
+  let(:group) { Tricle::Presenters::Group.new(Time.now) }
 
   describe '#add_metric' do
     it "should add a new metric instance" do

@@ -2,7 +2,7 @@ require 'spec_helper'
 require_relative '../../lib/tricle/presenters/metric'
 
 describe Tricle::Presenters::Metric do
-  let(:presenter) { Tricle::Presenters::Metric.new(TestMetric) }
+  let(:presenter) { Tricle::Presenters::Metric.new(TestMetric, Time.now) }
   let(:metric) { presenter.metric }
 
   describe '#days_ago' do

@@ -4,7 +4,7 @@ require_relative '../../lib/tricle/presenters/metric'
 
 # test the tests
 describe TestMetric do
-  let(:presenter) { Tricle::Presenters::Metric.new(TestMetric) }
+  let(:presenter) { Tricle::Presenters::Metric.new(TestMetric, Time.now) }
 
   describe '#weeks_ago' do
     it "should start and end on Monday" do

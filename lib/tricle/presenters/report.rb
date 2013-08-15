@@ -5,9 +5,11 @@ require_relative 'list'
 module Tricle
   module Presenters
     class Report
-      attr_reader :sections
+      attr_reader :now, :sections
 
       def initialize
+        # freeze the current time so it's consistent across metrics
+        @now = Time.now
         @sections = []
       end
 
@@ -17,7 +19,7 @@ module Tricle
       end
 
       def add_group(title=nil)
-        group = Tricle::Presenters::Group.new(title)
+        group = Tricle::Presenters::Group.new(self.now, title)
         self.add_section(group)
       end
 
