@@ -1,4 +1,5 @@
 require_relative 'base'
+require_relative '../helper'
 
 module Tricle
   module Presenters
@@ -9,7 +10,7 @@ module Tricle
         end
 
         def single_week_dates_cell(start_at)
-          dates_cell(start_at, start_at.end_of_week)
+          Tricle::Presenters::Helper.dates_cell(start_at, start_at.end_of_week)
         end
 
         def last_week_dates_cell
@@ -21,7 +22,7 @@ module Tricle
         end
 
         def quarter_dates_cell
-          dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
+          Tricle::Presenters::Helper.dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
         end
 
         def list_markup(list)

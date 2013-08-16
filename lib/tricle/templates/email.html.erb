@@ -31,11 +31,11 @@
             <tr>
               <th class="metric-title"><%= metric.title %></th>
               <td>
-                <div><%= @report.number_with_delimiter(metric.last_week) %></div>
-                <div><%= @report.number_with_delimiter(metric.total) %> (total)</div>
+                <div><%= Tricle::Presenters::Helper.number_with_delimiter(metric.last_week) %></div>
+                <div><%= Tricle::Presenters::Helper.number_with_delimiter(metric.total) %> (total)</div>
               </td>
-              <%= @report.percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-              <%= @report.percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <%= Tricle::Presenters::Helper.percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+              <%= Tricle::Presenters::Helper.percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
             </tr>
           <% end %>
         <% end %>
