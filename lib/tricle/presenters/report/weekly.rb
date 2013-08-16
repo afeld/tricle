@@ -49,12 +49,6 @@ module Tricle
         def quarterly_average_header
           "<div>Quarterly average</div>#{self.quarter_dates_range}"
         end
-
-        def list_markup(list)
-          start_at = self.weeks_ago(1).to_time
-          end_at = start_at + 7.days
-          list.items_markup(start_at, end_at).html_safe
-        end
       end
     end
   end

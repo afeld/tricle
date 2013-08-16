@@ -35,7 +35,7 @@ module Tricle
         end
 
         def add_list(klass, &block)
-          list = Tricle::List.new(klass, &block)
+          list = Tricle::List.new(self.now, klass, &block)
           self.add_section(list)
         end
       end

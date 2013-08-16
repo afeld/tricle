@@ -4,9 +4,10 @@ module Tricle
   class List < Section
     attr_reader :block, :metric
 
-    def initialize(klass, &block)
+    def initialize(now, klass, &block)
       @metric = klass.new
       @block = block
+      super(now)
     end
 
     def title
@@ -22,6 +23,12 @@ module Tricle
       end
 
       markup
+    end
+
+    def list_markup
+      start_at = self.weeks_ago(1).to_time
+      end_at = start_at + 7.days
+      self.items_markup(start_at, end_at).html_safe
     end
   end
 end

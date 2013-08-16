@@ -10,7 +10,7 @@
           <th class="section-heading" colspan="4"><%= section.title %></th>
         </tr>
         <% if section.is_a?(Tricle::List) %>
-          <%= @report.list_markup(section) %>
+          <%= section.list_markup %>
         <% else %>
           <tr>
             <% @report.headers.each do |header| %>
