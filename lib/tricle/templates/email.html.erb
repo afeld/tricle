@@ -13,19 +13,9 @@
           <%= @report.list_markup(section) %>
         <% else %>
           <tr>
-            <th><!--Title--></th>
-            <th>
-              <div>Last week</div>
-              <%= @report.last_week_dates_cell %>
-            </th>
-            <th>
-              <div>Previous week</div>
-              <%= @report.previous_week_dates_cell %>
-            </th>
-            <th>
-              <div>Quarterly average</div>
-              <%= @report.quarter_dates_cell %>
-            </th>
+            <% @report.headers.each do |header| %>
+              <th><%= header.html_safe %></th>
+            <% end %>
           </tr>
           <% section.metric_presenters.each do |metric| %>
             <tr>
