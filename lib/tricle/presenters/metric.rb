@@ -1,3 +1,5 @@
+require_relative 'helper'
+
 module Tricle
   module Presenters
     class Metric
@@ -44,6 +46,40 @@ module Tricle
 
       def week_average_this_quarter
         self.weeks_average(13)
+      end
+
+
+      def title_cell
+        %[<th class="metric-title">#{self.title}</th>]
+      end
+
+      def last_week_cell
+        last_week_formatted = Tricle::Presenters::Helper.number_with_delimiter(self.last_week)
+        total_formatted = Tricle::Presenters::Helper.number_with_delimiter(self.total)
+
+        <<-MARKUP
+          <td>
+            <div>#{last_week_formatted}</div>
+            <div>#{total_formatted} (total)</div>
+          </td>
+        MARKUP
+      end
+
+      def previous_week_cell
+        Tricle::Presenters::Helper.percent_change_cell(self.last_week, self.weeks_ago(2))
+      end
+
+      def quarterly_average_cell
+        Tricle::Presenters::Helper.percent_change_cell(self.last_week, self.week_average_this_quarter)
+      end
+
+      def cells
+        [
+          self.title_cell,
+          self.last_week_cell,
+          self.previous_week_cell,
+          self.quarterly_average_cell
+        ]
       end
     end
   end

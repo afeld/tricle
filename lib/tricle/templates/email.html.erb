@@ -19,13 +19,9 @@
           </tr>
           <% section.metric_presenters.each do |metric| %>
             <tr>
-              <th class="metric-title"><%= metric.title %></th>
-              <td>
-                <div><%= Tricle::Presenters::Helper.number_with_delimiter(metric.last_week) %></div>
-                <div><%= Tricle::Presenters::Helper.number_with_delimiter(metric.total) %> (total)</div>
-              </td>
-              <%= Tricle::Presenters::Helper.percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-              <%= Tricle::Presenters::Helper.percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <% metric.cells.each do |cell| %>
+                <%= cell.html_safe %>
+              <% end %>
             </tr>
           <% end %>
         <% end %>
