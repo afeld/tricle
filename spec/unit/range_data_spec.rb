@@ -14,4 +14,17 @@ describe Tricle::RangeData do
       rd.count_for_range(11.days.ago, 3.days.ago).should eq(2)
     end
   end
+
+  describe '#items_for_range' do
+    it "should return the items for the days provided" do
+      items = rd.items_for_range(11.days.ago, 3.days.ago)
+      items.sort.should eq([5, 6])
+    end
+  end
+
+  describe '#total' do
+    it "should count all the items" do
+      rd.total.should eq(3)
+    end
+  end
 end

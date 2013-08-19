@@ -10,13 +10,21 @@ module Tricle
     end
 
     def count_for_range(low, high)
-      @data.reduce(0) { |sum, (key, values)|
+      self.items_for_range(low, high).size
+    end
+
+    def items_for_range(low, high)
+      @data.reduce([]) { |memo, (key, values)|
         if key >= low && key < high
-          sum + values.length
+          memo + values
         else
-          sum
+          memo
         end
       }
+    end
+
+    def total
+      @data.values.flatten.size
     end
   end
 end
