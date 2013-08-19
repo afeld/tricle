@@ -14,7 +14,7 @@ module Tricle
       @data.values.flatten
     end
 
-    def items_for_range(low, high, inclusive=false)
+    def items_for_range(low, high)
       @data.reduce([]) { |memo, (key, values)|
         if key >= low && key < high
           memo + values
