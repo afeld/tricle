@@ -1,3 +1,4 @@
+# TODO add this class to the README?
 module Tricle
   class RangeData
     def initialize
@@ -9,11 +10,11 @@ module Tricle
       @data[key] << val
     end
 
-    def count_for_range(low, high)
-      self.items_for_range(low, high).size
+    def all_items
+      @data.values.flatten
     end
 
-    def items_for_range(low, high)
+    def items_for_range(low, high, inclusive=false)
       @data.reduce([]) { |memo, (key, values)|
         if key >= low && key < high
           memo + values
@@ -21,10 +22,6 @@ module Tricle
           memo
         end
       }
-    end
-
-    def total
-      @data.values.flatten.size
     end
   end
 end

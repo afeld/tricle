@@ -1,8 +1,9 @@
 require 'csv'
 require_relative '../../lib/tricle/metric'
+require_relative '../../lib/tricle/range_data'
 
 class TestMetric < Tricle::Metric
-  attr_accessor :data_by_start_on, :list, :total
+  attr_accessor :data_by_start_on
 
   def initialize
     super
@@ -13,24 +14,26 @@ class TestMetric < Tricle::Metric
     filename = File.join(File.dirname(__FILE__), '..', 'fixtures', 'weeks.csv')
     data = CSV.read(filename)
 
-    self.data_by_start_on = {}
-    self.total = 0
+    self.data_by_start_on = Tricle::RangeData.new
 
     data.each do |row|
       start_on = Date.parse(row[0])
       val = row[2].to_i
-      self.total += val
-      self.data_by_start_on[start_on] = val
+      self.data_by_start_on.add(start_on, val)
     end
   end
 
   def size_for_range(start_at, end_at)
-    start_on = start_at.to_date
-    self.data_by_start_on[start_on]
+    self.items_for_range(start_at, end_at).reduce(&:+)
   end
 
   def items_for_range(start_at, end_at)
-    # TODO make this accurate
-    self.data_by_start_on.values
+    start_on = start_at.to_date
+    end_on = end_at.to_date
+    self.data_by_start_on.items_for_range(start_on, end_on)
+  end
+
+  def total
+    self.data_by_start_on.all_items.reduce(&:+)
   end
 end
