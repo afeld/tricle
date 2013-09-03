@@ -1,6 +1,8 @@
 # Tricle [![Build Status](https://travis-ci.org/artsy/tricle.png?branch=master)](https://travis-ci.org/artsy/tricle) [![Code Climate](https://codeclimate.com/github/artsy/tricle.png)](https://codeclimate.com/github/artsy/tricle)
 
-Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need.
+Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need.  See [here](https://github.com/afeld/tricle-afeld) for an example implementation ([live demo](http://tricle.afeld.me/weekly_metrics)).
+
+![screenshot](screenshot.png)
 
 ## Installation
 
@@ -10,7 +12,7 @@ This gem can be used within an existing project (e.g. a Rails app), or standalon
 
 ```ruby
 # Gemfile
-gem 'tricle'
+gem 'tricle', '~> 0.1.0'
 
 # Rakefile
 require 'tricle/tasks'
