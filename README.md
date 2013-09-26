@@ -1,4 +1,4 @@
-# Tricle [![Build Status](https://travis-ci.org/artsy/tricle.png?branch=master)](https://travis-ci.org/artsy/tricle) [![Code Climate](https://codeclimate.com/github/artsy/tricle.png)](https://codeclimate.com/github/artsy/tricle)
+# Tricle [![Build Status](https://travis-ci.org/afeld/tricle.png?branch=master)](https://travis-ci.org/afeld/tricle) [![Code Climate](https://codeclimate.com/github/afeld/tricle.png)](https://codeclimate.com/github/afeld/tricle)
 
 Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need.  See [here](https://github.com/afeld/tricle-afeld) for an example implementation ([live demo](http://tricle.afeld.me/weekly_metrics)).
 
