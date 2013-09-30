@@ -199,6 +199,12 @@ To send all Tricle emails, run
 rake tricle:emails:send
 ```
 
+To set a speficic time zone, use the `TZ` environment variable (see the list [here](http://en.wikipedia.org/wiki/List_of_tz_database_time_zones)).
+
+```bash
+TZ=UTC rake tricle:emails:send
+```
+
 ### Cron Setup
 
 TODO
