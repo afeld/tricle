@@ -12,10 +12,6 @@ module Tricle
       self.items_for_range(start_at, end_at).size
     end
 
-    def total
-      raise Tricle::AbstractMethodError.new
-    end
-
     def items_for_range(start_at, end_at)
       raise Tricle::AbstractMethodError.new
     end

@@ -32,7 +32,9 @@
               <th class="metric-title"><%= metric.title %></th>
               <td>
                 <div><%= number_with_delimiter(metric.last_week) %></div>
-                <div><%= number_with_delimiter(metric.total) %> (total)</div>
+                <% if metric.total? %>
+                  <div><%= number_with_delimiter(metric.total) %> (total)</div>
+                <% end %>
               </td>
               <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
               <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>

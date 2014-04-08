@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../../lib/tricle/mailer'
 require_relative '../app/group_test_mailer'
 require_relative '../app/list_test_mailer'
+require_relative '../app/no_total_test_mailer'
 require_relative '../app/test_mailer'
 
 describe Tricle::Mailer do
@@ -39,6 +40,12 @@ describe Tricle::Mailer do
     end
   end
 
+  it "should exclude the total if not defined" do
+    deliver(NoTotalTestMailer)
+    markup.should_not include('total')
+    markup.should_not match(/\b787\b/)
+  end
+
   describe '.group' do
     it "should include the group title" do
       deliver(GroupTestMailer)
@@ -60,7 +67,7 @@ describe Tricle::Mailer do
   describe '.send_all' do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
-      ActionMailer::Base.deliveries.length.should eq(3)
+      ActionMailer::Base.deliveries.length.should eq(4)
     end
   end
 end

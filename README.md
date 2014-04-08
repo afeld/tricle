@@ -51,14 +51,15 @@ class MyMetric < Tricle::Metric
     # ...
   end
 
-  # Retrieve the cumulative value for this metric.
+  # Optional: Retrieve the cumulative value for this metric. If not defined,
+  # the total won't be displayed in the mailer.
   #
   # @return [Fixnum] the grand total
   def total
     # ...
   end
 
-  # Optional: only necessary if using `list` for this Metric within your Mailer.
+  # Optional: Only necessary if using `list` for this Metric within your Mailer.
   #
   # @param start_at [Time]
   # @param end_at [Time] non-inclusive
@@ -73,7 +74,7 @@ end
 ActiveRecord example:
 
 ```ruby
-# metrics/new_users.rb
+# app/metrics/new_users.rb
 class NewUsers < Tricle::Metric
 
   def size_for_range(start_at, end_at)
@@ -139,7 +140,7 @@ end
 e.g.
 
 ```ruby
-# mailers/weekly_insights.rb
+# app/mailers/weekly_insights.rb
 class WeeklyInsights < Tricle::Mailer
 
   default(

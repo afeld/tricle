@@ -13,6 +13,10 @@ module Tricle
         self.metric.title
       end
 
+      def total?
+        self.metric.respond_to?(:total)
+      end
+
       def total
         self.metric.total
       end
