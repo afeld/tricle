@@ -26,18 +26,19 @@
               <div>Quarterly average</div>
               <%= quarter_dates_cell %>
             </th>
-            <th></th>
           </tr>
           <% section.metric_presenters.each do |metric| %>
             <tr>
-              <th class="metric-title"><%= metric.title %></th>
+              <th class="metric-title" rowspan="2"><%= metric.title %></th>
               <td>
                 <div><%= number_with_delimiter(metric.last_week) %></div>
                 <div><%= number_with_delimiter(metric.total) %> (total)</div>
               </td>
               <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
               <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
-              <td>
+            </tr>
+            <tr class="sparkline-row">
+              <td colspan="3">
                 <%= sparkline(metric) %>
               </td>
             </tr>
