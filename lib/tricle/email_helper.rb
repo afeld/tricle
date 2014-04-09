@@ -96,7 +96,7 @@ module Tricle
         dot_size: 4,
         height: 30,
         line_color: '#4A8FED',
-        step: 10
+        step: 30
       )
       base64 = Base64.encode64(blob)
       %[<img src="data:image/png;base64,#{base64}">].html_safe
