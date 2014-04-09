@@ -37,11 +37,12 @@
               <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
               <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
             </tr>
-            <tr class="sparkline-row">
+            <tr>
               <td colspan="3">
                 <%= sparkline(metric) %>
               </td>
             </tr>
+            <tr class="separator"></tr>
           <% end %>
         <% end %>
       <% end %>
