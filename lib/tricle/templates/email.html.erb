@@ -26,6 +26,7 @@
               <div>Quarterly average</div>
               <%= quarter_dates_cell %>
             </th>
+            <th></th>
           </tr>
           <% section.metrics.each do |metric| %>
             <tr>
@@ -36,8 +37,11 @@
                   <div><%= format_number(metric.total) %> (total)</div>
                 <% end %>
               </td>
-              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better) %>
-              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better) %>
+              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <td>
+                <%= sparkline(metric) %>
+              </td>
             </tr>
           <% end %>
         <% end %>
