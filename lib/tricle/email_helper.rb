@@ -1,5 +1,6 @@
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
+require 'sparklines'
 
 module Tricle
   module EmailHelper
@@ -61,6 +62,14 @@ module Tricle
       start_at = self.weeks_ago(1).to_time
       end_at = start_at + 7.days
       list.items_markup(start_at, end_at).html_safe
+    end
+
+    def sparkline(metric)
+      # http://bit.ly/1qnR55Y
+      values = metric.weekly_values(13)
+      blob = Sparklines.plot(values, height: 36, step: 5)
+      base64 = Base64.encode64(blob)
+      %[<img src="data:image/png;base64,#{base64}">].html_safe
     end
   end
 end

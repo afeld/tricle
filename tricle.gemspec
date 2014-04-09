@@ -24,6 +24,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "nokogiri", "~> 1.6"
   spec.add_dependency "premailer", "~> 1.7"
   spec.add_dependency "rack", "~> 1.1"
+  spec.add_dependency "rmagick", "~> 2.13.2"
+  spec.add_dependency "sparklines", "~> 0.5.2"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "debugger"
