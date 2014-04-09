@@ -67,7 +67,12 @@ module Tricle
     def sparkline(metric)
       # http://bit.ly/1qnR55Y
       values = metric.weekly_values(13)
-      blob = Sparklines.plot(values, height: 36, step: 5)
+      blob = Sparklines.plot(values,
+        dot_size: 4,
+        height: 30,
+        line_color: '#4A8FED',
+        step: 10
+      )
       base64 = Base64.encode64(blob)
       %[<img src="data:image/png;base64,#{base64}">].html_safe
     end
