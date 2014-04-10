@@ -73,8 +73,10 @@ module Tricle
         line_color: '#4A8FED',
         step: 30
       )
-      base64 = Base64.encode64(blob)
-      %[<img src="data:image/png;base64,#{base64}">].html_safe
+      attachment_title = "#{metric.title.underscore}.png"
+      attachments.inline[attachment_title] = blob
+      attachment_url = attachments[attachment_title].url
+      image_tag(attachment_url).html_safe
     end
   end
 end
