@@ -11,9 +11,15 @@ namespace :tricle do
   end
 
   namespace :emails do
-    desc "Send all emails"
-    task :send do
-      Tricle::Mailer.send_all
+    desc "Send a specific email, or all emails"
+    task :send, [:email_string] do |t, args|
+      if (str = args[:email_string])
+        str.split(":").each do |email_klass|
+          (email_klass.constantize).email.deliver
+        end
+      else
+        Tricle::Mailer.send_all
+      end
     end
   end
 end

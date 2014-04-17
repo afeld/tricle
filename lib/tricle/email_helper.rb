@@ -64,16 +64,32 @@ module Tricle
       list.items_markup(start_at, end_at).html_safe
     end
 
-    def sparkline(metric)
+    def last_week_sparkline(metric)
+      values = metric.daily_values(7)
+      get_sparkline(values, "#{metric.title} last week")
+    end
+
+    def previous_week_sparkline(metric)
+      values = metric.daily_values(14)[6..-1]
+      get_sparkline(values, "#{metric.title} prev week")
+    end
+
+    def last_quarter_sparkline(metric)
+      # daily_values and a smaller step size is used for a sparkline of
+      # the same length as the weekly ones, but without lost details
+      values = metric.daily_values(4 * 7)
+      get_sparkline(values, "#{metric.title} last quarter", step: 8)
+    end
+
+    def get_sparkline(values, title, options = {})
       # http://bit.ly/1qnR55Y
-      values = metric.weekly_values(13)
       blob = Sparklines.plot(values,
         dot_size: 4,
         height: 30,
         line_color: '#4A8FED',
-        step: 30
+        step: options[:step] || 30
       )
-      attachment_title = "#{metric.title.underscore}.png"
+      attachment_title = "#{title.underscore}.png"
       attachments.inline[attachment_title] = blob
       attachment_url = attachments[attachment_title].url
       image_tag(attachment_url).html_safe
