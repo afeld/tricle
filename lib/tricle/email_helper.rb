@@ -77,8 +77,8 @@ module Tricle
     def last_quarter_sparkline(metric)
       # daily_values and a smaller step size is used for a sparkline of
       # the same length as the weekly ones, but without lost details
-      values = metric.daily_values(13 * 7)
-      get_sparkline(values, "#{metric.title} last quarter", step: 8)
+      values = metric.weekly_values(13)
+      get_sparkline(values, "#{metric.title} last quarter", step: 15)
     end
 
     def get_sparkline(values, title, options = {})
