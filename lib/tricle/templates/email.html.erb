@@ -14,28 +14,51 @@
         <% else %>
           <tr>
             <th><!--Title--></th>
-            <th>
-              <div>Last week</div>
-              <%= last_week_dates_cell %>
-            </th>
-            <th>
-              <div>Previous week</div>
-              <%= previous_week_dates_cell %>
-            </th>
-            <th>
-              <div>Quarterly average</div>
-              <%= quarter_dates_cell %>
-            </th>
+            <% if section.daily? %>
+              <th>
+                <div>Yesterday</div>
+                <%= yesterday_dates_cell %>
+              </th>
+              <th>
+                <div>2 Days Ago</div>
+                <%= day_before_dates_cell %>
+              </th>
+              <th>
+                <div>1 Week Ago</div>
+                <%= week_ago_dates_cell %>
+              </th>
+            <% else %>
+              <th>
+                <div>Last week</div>
+                <%= last_week_dates_cell %>
+              </th>
+              <th>
+                <div>Previous week</div>
+                <%= previous_week_dates_cell %>
+              </th>
+              <th>
+                <div>Quarterly average</div>
+                <%= quarter_dates_cell %>
+              </th>
+            <% end %>
           </tr>
           <% section.metric_presenters.each do |metric| %>
             <tr>
               <th class="metric-title"><%= metric.title %></th>
-              <td>
-                <div><%= number_with_delimiter(metric.last_week) %></div>
-                <div><%= number_with_delimiter(metric.total) %> (total)</div>
-              </td>
-              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <% if section.daily? %>
+                <td>
+                  <div><%= number_with_delimiter(metric.yesterday) %> (total)</div>
+                </td>
+                <%= percent_change_cell(metric.yesterday, metric.days_ago(2)) %>
+                <%= percent_change_cell(metric.yesterday, metric.days_ago(7)) %>
+              <% else %>
+                <td>
+                  <div><%= number_with_delimiter(metric.last_week) %></div>
+                  <div><%= number_with_delimiter(metric.total) %> (total)</div>
+                </td>
+                <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
+                <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <% end %>
             </tr>
           <% end %>
         <% end %>

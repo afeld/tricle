@@ -16,8 +16,8 @@ module Tricle
         section
       end
 
-      def add_group(title=nil)
-        group = Tricle::Presenters::Group.new(title)
+      def add_group(title=nil, options = {})
+        group = Tricle::Presenters::Group.new(title, options)
         self.add_section(group)
       end
 

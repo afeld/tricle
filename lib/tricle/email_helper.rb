@@ -7,6 +7,10 @@ module Tricle
       Date.today.beginning_of_week.weeks_ago(n)
     end
 
+    def days_ago(n)
+      Date.today.beginning_of_day.days_ago(n)
+    end
+
     def format_date(date)
       date.strftime('%-m/%-d/%y')
     end
@@ -39,6 +43,22 @@ module Tricle
     def dates_cell(start_at, end_at)
       range = dates_range_str(start_at, end_at)
       %[<div class="date-range">(#{range})</div>].html_safe
+    end
+
+    def date_cell(dt)
+      %[<div class="date-range">(#{self.format_date(dt)})</div>].html_safe
+    end
+
+    def yesterday_dates_cell
+      date_cell(days_ago(1))
+    end
+
+    def day_before_dates_cell
+      date_cell(days_ago(2))
+    end
+
+    def week_ago_dates_cell
+      date_cell(days_ago(7))
     end
 
     def single_week_dates_cell(start_at)

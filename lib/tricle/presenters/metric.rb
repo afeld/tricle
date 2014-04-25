@@ -27,6 +27,10 @@ module Tricle
         self.days_ago(1)
       end
 
+      def day_before
+        self.days_ago(2)
+      end
+
       def weeks_ago(n)
         start_at = self.now.beginning_of_week.weeks_ago(n)
         end_at = start_at + 7.days

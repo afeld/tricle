@@ -10,13 +10,13 @@ describe Tricle::RangeData do
   end
 
   describe '#all_items' do
-    it "should return all the items" do
+    it "returns all the items" do
       rd.all_items.sort.should eq([5, 6, 7])
     end
   end
 
   describe '#items_for_range' do
-    it "should return the items for the days provided" do
+    it "returns the items for the days provided" do
       items = rd.items_for_range(11.days.ago, 3.days.ago)
       items.sort.should eq([5, 6])
     end
