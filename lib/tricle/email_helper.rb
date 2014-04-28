@@ -1,6 +1,7 @@
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
 require 'sparklines'
+require 'fog'
 
 module Tricle
   module EmailHelper
@@ -100,7 +101,7 @@ module Tricle
     end
 
     def last_quarter_sparkline(metric)
-      # daily_values and a smaller step size is used for a sparkline of
+      # uses a smaller step size in order to generate a sparkline of
       # the same length as the weekly ones, but without lost details
       values = metric.weekly_values(13)
       get_sparkline(values, "#{metric.title} last quarter", step: 15)
@@ -114,10 +115,31 @@ module Tricle
         line_color: '#4A8FED',
         step: options[:step] || 30
       )
-      attachment_title = "#{title.underscore}.png"
-      attachments.inline[attachment_title] = blob
-      attachment_url = attachments[attachment_title].url
+      # need randomization here b/c many metrics may have the same
+      # name, but should not share images
+      sparkline_title = "#{title.underscore}_v#{rand(999999)}.png"
+      attachment_url = store_sparkline(blob, sparkline_title)
       image_tag(attachment_url).html_safe
+    end
+
+    # either stores sparkline image in s3 or as an inline attachement
+    def store_sparkline(blob, filename)
+      if ENV['S3_ACCESS_KEY_ID']
+        bucket_name = ENV['S3_BUCKET'] || 'tricle'
+        s3 = ::Fog::Storage.new(
+          aws_access_key_id: ENV['S3_ACCESS_KEY_ID'],
+          aws_secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+          provider: "AWS"
+        )
+        timestamp = Date.today.strftime('%Y-%m-%d')
+        bucket = s3.directories.get(bucket_name)
+        file = bucket.files.create key: "sparklines/#{timestamp}/#{filename}", body: blob, acl: 'public-read'
+        file.public_url
+      else
+        # inline attachement
+        attachments.inline[filename] = blob
+        attachments[filename].url
+      end
     end
   end
 end
