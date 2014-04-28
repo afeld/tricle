@@ -197,6 +197,13 @@ if Rails.env.development?
 end
 ```
 
+##### With sparklines as inline attachments
+
+Unfortunately, the sparkline graphs (if displayed as inline attachments, as in the default) cannot be displayed by the preview pages powered by mailview, but they can be by email clients and by [mailcatcher](http://rubygems.org/gems/mailcatcher). To test send an email:
+* `gem install mailcatcher`
+* run `mailcatcher` to start the daemon, and watch the inbox at: http://localhost:1080/
+* send all emails with: `... SMTP_ADDRESS=localhost SMTP_PORT=1025 bundle exec rake tricle:emails:send`
+
 and navigate to [localhost:3000/mail_view](http://localhost:3000/mail_view).
 
 #### Standalone
@@ -206,6 +213,15 @@ bundle exec rake tricle:preview
 open http://localhost:8080
 ```
 
+## Sparklines
+
+Sparklines for each stat are by default included as attachments in the email, and displayed inline. If there are many metrics in an email, email clients like gmail may struggle to render all the images inline successfully on first load. An alternative is to provide S3 credentials to let tricle upload the sparklines to a bucket of your choosing. Use the following environment variables to do so:
+* `S3_BUCKET`, default: "tricle"
+* `S3_ACCESS_KEY_ID`
+* `S3_SECRET_ACCESS_KEY`
+
+The default location for each sparkline will be the path: `sparklines/year-month-day/filename` inside the `S3_BUCKET` specified.
+
 ## Deploying
 
 To send all Tricle emails, run
@@ -213,6 +229,9 @@ To send all Tricle emails, run
 ```bash
 rake tricle:emails:send
 ```
+
+To send a particular Tricle email, pass the Mailer classes as arguments to the same task separated by a colon (":")
+    * e.g.`... rake tricle:emails:send[MyTeamDashboard]`
 
 To set a speficic time zone, use the `TZ` environment variable (see the list [here](http://en.wikipedia.org/wiki/List_of_tz_database_time_zones)).
 
