@@ -9,7 +9,7 @@ module Tricle
       def initialize(title=nil, options = {})
         @title = title
         @metric_presenters = []
-        @daily = options[:daily] == true
+        @daily = options[:frequency] == :daily
       end
 
       def daily?

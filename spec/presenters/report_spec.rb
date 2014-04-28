@@ -19,7 +19,7 @@ describe Tricle::Presenters::Report do
   describe '#add_group' do
     it 'adds a new group and allows specifying a daily option' do
       report.sections.should eq([])
-      report.add_group('Daily Test', daily: true)
+      report.add_group('Daily Test', frequency: :daily)
       report.sections.size.should eq(1)
       report.sections.first.title.should eq('Daily Test')
       report.sections.first.should be_daily
