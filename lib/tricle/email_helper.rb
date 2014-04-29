@@ -109,7 +109,7 @@ module Tricle
 
     def get_sparkline(values, title, options = {})
       # http://bit.ly/1qnR55Y
-      blob = Sparklines.plot(values,
+      blob = Sparklines.plot(values.compact,
         dot_size: 4,
         height: 30,
         line_color: '#4A8FED',
