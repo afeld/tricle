@@ -48,8 +48,8 @@ module Tricle
         super(klass)
       end
 
-      def group(title)
-        self.report.add_group(title)
+      def group(title, options = {})
+        self.report.add_group(title, options)
         yield if block_given?
       end
 

@@ -6,9 +6,14 @@ module Tricle
     class Group < Section
       attr_reader :metric_presenters, :title
 
-      def initialize(title=nil)
+      def initialize(title=nil, options = {})
         @title = title
         @metric_presenters = []
+        @daily = options[:frequency] == :daily
+      end
+
+      def daily?
+        @daily
       end
 
       def add_metric(klass)
