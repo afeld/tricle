@@ -44,7 +44,7 @@
           </tr>
           <% section.metric_presenters.each do |metric| %>
             <tr>
-              <th class="metric-title"><%= metric.title %></th>
+              <th class="metric-title" rowspan="2"><%= metric.title %></th>
               <% if section.daily? %>
                 <td>
                   <div><%= number_with_delimiter(metric.yesterday) %> (total)</div>
@@ -60,6 +60,20 @@
                 <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
               <% end %>
             </tr>
+            <% unless section.daily? %>
+              <tr>
+                <td colspan="1">
+                  <%= last_week_sparkline(metric) %>
+                </td>
+                <td colspan="1">
+                  <%= previous_week_sparkline(metric) %>
+                </td>
+                <td colspan="1">
+                  <%= last_quarter_sparkline(metric) %>
+                </td>
+              </tr>
+              <tr class="separator"></tr>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>

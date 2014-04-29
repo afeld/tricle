@@ -41,9 +41,19 @@ module Tricle
         self.weeks_ago(1)
       end
 
-      def weeks_average(past_num_weeks)
+      def weekly_values(past_num_weeks)
         weeks_range = 1..past_num_weeks
-        total = weeks_range.reduce(0){|sum, n| sum + self.weeks_ago(n) }
+        weeks_range.map{|n| self.weeks_ago(n) }.reverse
+      end
+
+      def daily_values(past_num_days)
+        days_range = 1..past_num_days
+        days_range.map{|n| self.days_ago(n) }.reverse
+      end
+
+      def weeks_average(past_num_weeks)
+        values = self.weekly_values(past_num_weeks)
+        total = values.reduce(0, :+)
         total.to_f / past_num_weeks
       end
 
