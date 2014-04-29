@@ -71,7 +71,7 @@ module Tricle
     end
 
     def previous_week_sparkline(metric)
-      values = metric.daily_values(14)[6..-1]
+      values = metric.daily_values(14)[0..6]
       get_sparkline(values, "#{metric.title} prev week")
     end
 
