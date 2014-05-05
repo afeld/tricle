@@ -11,6 +11,12 @@ describe Tricle::EmailHelper do
   describe "#number_with_delimiter" do
     it "should put commas between every three digits" do
       helper.number_with_delimiter(1234567.89).should eq('1,234,567.89')
+      helper.number_with_delimiter(1234567).should eq('1,234,567')
+    end
+
+    it "should not put commas between every three digits of the decimal portion of non-integers" do
+      helper.number_with_delimiter(0.123456789).should eq('0.123456789')
+      helper.number_with_delimiter(1234.56789).should eq('1,234.56789')
     end
   end
 

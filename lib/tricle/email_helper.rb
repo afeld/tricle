@@ -13,7 +13,8 @@ module Tricle
 
     def number_with_delimiter(number)
       # from http://stackoverflow.com/a/11466770/358804
-      number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+      integer, decimal = number.to_s.split(".")
+      [integer.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse, decimal].compact.join('.')
     end
 
     def percent_change(new_val, old_val)
