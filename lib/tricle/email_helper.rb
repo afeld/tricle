@@ -11,9 +11,21 @@ module Tricle
       date.strftime('%-m/%-d/%y')
     end
 
+    def format_number(number)
+      number_with_delimiter((number.abs >= 100 ? number.round : sig_figs(number)))
+    end
+
     def number_with_delimiter(number)
       # from http://stackoverflow.com/a/11466770/358804
-      number.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse
+      integer, decimal = number.to_s.split(".")
+      [integer.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse, decimal].compact.join('.')
+    end
+
+    def sig_figs(number, num_sig_figs = 3)
+      # http://six-impossible.blogspot.com/2011/05/significant-digits-in-ruby-float.html
+      f = sprintf("%.#{num_sig_figs - 1}e", number).to_f
+      i = f.to_i # avoid
+      i == f && i.to_s.size > num_sig_figs ? i : f
     end
 
     def percent_change(new_val, old_val)
@@ -21,14 +33,14 @@ module Tricle
         new_val >= 0 ? '+' : '-'
       else
         fraction = (new_val - old_val) / old_val.to_f
-        sprintf('%+.1f%', fraction * 100.0)
+        (fraction >= 0 ? '+' : '').concat("#{sig_figs(fraction * 100.0)}%")
       end
     end
 
     def percent_change_cell(new_val, old_val)
       cls = (new_val >= old_val) ? 'positive' : 'negative'
       pct_str = percent_change(new_val, old_val)
-      old_val_str = number_with_delimiter(old_val.round)
+      old_val_str = format_number(old_val)
       %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val_str}</div></td>].html_safe
     end
 
