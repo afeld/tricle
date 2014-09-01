@@ -8,10 +8,9 @@ describe Tricle::Presenters::Group do
   describe '#add_metric' do
     it "should add a new metric instance" do
       group.add_metric(TestMetric)
-      expect(group.metric_presenters.size).to eq(1)
-      presenter = group.metric_presenters.first
-      expect(presenter).to be_a(Tricle::Presenters::Metric)
-      expect(presenter.metric).to be_a(TestMetric)
+      expect(group.metrics.size).to eq(1)
+      metric = group.metrics.first
+      expect(metric).to be_a(TestMetric)
     end
   end
 end

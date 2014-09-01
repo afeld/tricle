@@ -1,9 +1,12 @@
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
 require_relative 'abstract_method_error'
+require_relative 'aggregation'
 
 module Tricle
   class Metric
+    include Aggregation
+
     def better
       :higher
     end
