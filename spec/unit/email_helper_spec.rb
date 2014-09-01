@@ -90,6 +90,11 @@ describe Tricle::EmailHelper do
       expect(helper.percent_change(100_001_234, 100_000_000)).to eq('+0.00123%')
       expect(helper.percent_change(100_000_000, 100_001_234)).to eq('-0.00123%')
     end
+
+    it "should display 'no change' when unchanged" do
+      expect(helper.percent_change(100, 100)).to eq('No change')
+      expect(helper.percent_change(0, 0)).to eq('No change')
+    end
   end
 
   describe "#single_week_dates_cell" do

@@ -29,7 +29,9 @@ module Tricle
     end
 
     def percent_change(new_val, old_val)
-      if old_val == 0
+      if old_val == new_val
+        'No change'
+      elsif old_val == 0
         new_val >= 0 ? '+' : '-'
       else
         fraction = (new_val - old_val) / old_val.to_f
