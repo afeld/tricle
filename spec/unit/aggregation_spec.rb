@@ -1,42 +1,41 @@
 require 'spec_helper'
-require_relative '../../lib/tricle/presenters/metric'
+require_relative '../../lib/tricle/aggregation'
 
-describe Tricle::Presenters::Metric do
-  let(:presenter) { Tricle::Presenters::Metric.new(TestMetric) }
-  let(:metric) { presenter.metric }
+describe Tricle::Aggregation do
+  let(:metric) { TestMetric.new }
 
   describe '#days_ago' do
     it "should start and end at midnight" do
       expect(metric).to receive(:size_for_range).with(Time.new(2013, 7, 29), Time.new(2013, 7, 30))
-      presenter.days_ago(3)
+      metric.days_ago(3)
     end
   end
 
   describe '#yesterday' do
     it "should start and end at midnight" do
       expect(metric).to receive(:size_for_range).with(Time.new(2013, 7, 31), Time.new(2013, 8, 1))
-      presenter.yesterday
+      metric.yesterday
     end
   end
 
   describe '#weeks_ago' do
     it "should start and end on Monday" do
       expect(metric).to receive(:size_for_range).with(Time.new(2013, 7, 8), Time.new(2013, 7, 15))
-      presenter.weeks_ago(3)
+      metric.weeks_ago(3)
     end
   end
 
   describe '#last_week' do
     it "should start and end on Monday" do
       expect(metric).to receive(:size_for_range).with(Time.new(2013, 7, 22), Time.new(2013, 7, 29))
-      presenter.last_week
+      metric.last_week
     end
   end
 
   describe '#week_average_this_quarter' do
     it "should average the values provided by #size_for_range" do
       expect(metric).to receive(:size_for_range).exactly(13).times.and_return(1)
-      expect(presenter.week_average_this_quarter).to eq(1)
+      expect(metric.week_average_this_quarter).to eq(1)
     end
   end
 end
