@@ -11,8 +11,8 @@ describe Tricle::Metric do
     end
 
     it "should use the number of items by default" do
-      metric.stub(:items_for_range) { [1,2,3] }
-      metric.size_for_range(Time.now.yesterday, Time.now).should eq(3)
+      allow(metric).to receive(:items_for_range) { [1,2,3] }
+      expect(metric.size_for_range(Time.now.yesterday, Time.now)).to eq(3)
     end
   end
 end

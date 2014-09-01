@@ -8,13 +8,13 @@ describe TestMetric do
 
   describe '#weeks_ago' do
     it "should start and end on Monday" do
-      presenter.weeks_ago(3).should eq(51)
+      expect(presenter.weeks_ago(3)).to eq(51)
     end
   end
 
   describe '#last_week' do
     it "should start and end on Monday" do
-      presenter.last_week.should eq(62)
+      expect(presenter.last_week).to eq(62)
     end
   end
 end
