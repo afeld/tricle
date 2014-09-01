@@ -3,9 +3,6 @@ require_relative '../../lib/tricle/mailer'
 require_relative '../app/group_test_mailer'
 require_relative '../app/list_test_mailer'
 require_relative '../app/test_mailer'
-require_relative '../app/lower_is_better_mailer'
-require_relative '../app/higher_is_better_mailer'
-require_relative '../app/nothing_is_better_mailer'
 
 describe Tricle::Mailer do
   def deliver(klass)
@@ -32,8 +29,8 @@ describe Tricle::Mailer do
 
     it "should include the Metric values in the HTML part" do
       expect(markup).to include('Test Metric')
-      expect(markup).to match(/\b74\b/) # last week
-      expect(markup).to match(/\b806\b/) # total
+      expect(markup).to match(/\b62\b/) # last week
+      expect(markup).to match(/\b787\b/) # total
     end
 
     it "should link to the Issues page in the text part" do
@@ -55,35 +52,15 @@ describe Tricle::Mailer do
     it "should include the list title" do
       deliver(ListTestMailer)
       expect(markup).to include("Test Metric")
-      expect(markup).to include('74.0')
+      expect(markup).to include('62.0')
       expect(markup).not_to include('79.0')
-    end
-  end
-
-  describe 'cell class' do
-    it 'should default to higher is better' do
-      deliver(HigherIsBetterMailer)
-      markup.should include("positive")
-      markup.should_not include("negative")
-    end
-
-    it 'can specify lower is better' do
-      deliver(LowerIsBetterMailer)
-      markup.should include("negative")
-      markup.should_not include("positive")
-    end
-
-    it 'can specify that nothing is better or worse' do
-      deliver(NothingIsBetterMailer)
-      markup.should_not include("negative")
-      markup.should_not include("positive")
     end
   end
 
   describe '.send_all' do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
-      expect(ActionMailer::Base.deliveries.length).to eq(6)
+      expect(ActionMailer::Base.deliveries.length).to eq(3)
     end
   end
 end
