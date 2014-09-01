@@ -187,6 +187,22 @@ bundle exec rake tricle:preview
 open http://localhost:8080
 ```
 
+## Customizing
+
+### "Lower is better" metrics
+
+If you have a metric where a lower number is considered better, you'll want to override the `better` method so Tricle highlights your cells properly:
+
+```ruby
+class LowerIsBetterMailer < Tricle::Mailer
+  def better
+    :lower
+  end
+
+  ...
+end
+```
+
 ## Deploying
 
 To send all Tricle emails, run

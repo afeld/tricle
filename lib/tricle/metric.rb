@@ -4,6 +4,10 @@ require_relative 'abstract_method_error'
 
 module Tricle
   class Metric
+    def better
+      :higher
+    end
+
     def title
       self.class.name.titleize
     end
