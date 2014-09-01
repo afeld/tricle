@@ -5,11 +5,11 @@ require_relative '../../lib/tricle/mail_preview'
 describe Tricle::MailPreview do
   describe 'mailer methods' do
     it "should have methods corresponding to all mailers" do
-      Tricle::MailPreview.instance_methods(false).should include(:test_mailer)
+      expect(Tricle::MailPreview.instance_methods(false)).to include(:test_mailer)
     end
 
     it "should return a Mail::Message" do
-      Tricle::MailPreview.new.test_mailer.should be_a(Mail::Message)
+      expect(Tricle::MailPreview.new.test_mailer).to be_a(Mail::Message)
     end
   end
 end

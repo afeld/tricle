@@ -7,13 +7,13 @@ describe Tricle::Presenters::Report do
 
   describe '#add_metric' do
     it "should add a new group if none are present" do
-      report.sections.should eq([])
+      expect(report.sections).to eq([])
       report.add_metric(TestMetric)
-      report.sections.size.should eq(1)
+      expect(report.sections.size).to eq(1)
 
       presenters = report.sections.first.metric_presenters
-      presenters.size.should eq(1)
-      presenters.first.metric.should be_a(TestMetric)
+      expect(presenters.size).to eq(1)
+      expect(presenters.first.metric).to be_a(TestMetric)
     end
   end
 end
