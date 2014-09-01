@@ -4,7 +4,7 @@ gemspec
 
 group :development, :test do
   gem 'bundler', '~> 1.3'
-  gem 'byebug'
+  gem 'byebug', platforms: :mri_20
   gem 'guard', '~> 1.8'
   gem 'guard-rspec'
   gem 'rake'
