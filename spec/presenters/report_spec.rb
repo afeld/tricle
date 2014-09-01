@@ -11,9 +11,9 @@ describe Tricle::Presenters::Report do
       report.add_metric(TestMetric)
       expect(report.sections.size).to eq(1)
 
-      presenters = report.sections.first.metric_presenters
-      expect(presenters.size).to eq(1)
-      expect(presenters.first.metric).to be_a(TestMetric)
+      metrics = report.sections.first.metrics
+      expect(metrics.size).to eq(1)
+      expect(metrics.first).to be_a(TestMetric)
     end
   end
 end
