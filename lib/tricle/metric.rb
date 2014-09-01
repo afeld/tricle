@@ -4,8 +4,8 @@ require_relative 'abstract_method_error'
 
 module Tricle
   class Metric
-    def self.better
-      @better || :higher
+    def better
+      :higher
     end
 
     def title

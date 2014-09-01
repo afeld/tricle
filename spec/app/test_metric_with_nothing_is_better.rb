@@ -1,5 +1,7 @@
 require_relative 'test_metric'
 
 class TestMetricWithNothingIsBetter < TestMetric
-  @better = :nothing
+  def better
+    :nothing
+  end
 end

@@ -1,5 +1,7 @@
 require_relative 'test_metric'
 
 class TestMetricWithLowerIsBetter < TestMetric
-  @better = :lower
+  def better
+    :lower
+  end
 end

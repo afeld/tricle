@@ -10,7 +10,7 @@ module Tricle
       end
 
       def better
-        self.metric.class.better
+        self.metric.better
       end
 
       def title
