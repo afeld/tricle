@@ -1,3 +1,5 @@
+require 'active_support/concern'
+
 module Tricle
   module Aggregation
     extend ActiveSupport::Concern
