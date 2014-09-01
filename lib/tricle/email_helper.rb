@@ -37,8 +37,14 @@ module Tricle
       end
     end
 
-    def percent_change_cell(new_val, old_val)
-      cls = (new_val >= old_val) ? 'positive' : 'negative'
+    def percent_change_cell(new_val, old_val, better)
+      cls = if better == :higher
+        (new_val >= old_val) ? 'positive' : 'negative'
+      elsif better == :lower
+        (new_val >= old_val) ? 'negative' : 'positive'
+      else
+        ''
+      end
       pct_str = percent_change(new_val, old_val)
       old_val_str = format_number(old_val)
       %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val_str}</div></td>].html_safe

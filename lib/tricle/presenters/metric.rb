@@ -9,6 +9,10 @@ module Tricle
         @now = Time.now
       end
 
+      def better
+        self.metric.class.better
+      end
+
       def title
         self.metric.title
       end
