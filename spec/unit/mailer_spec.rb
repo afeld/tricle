@@ -10,7 +10,7 @@ require_relative '../app/nothing_is_better_mailer'
 describe Tricle::Mailer do
   def deliver(klass)
     klass.email.deliver
-    ActionMailer::Base.deliveries.length.should eq(1)
+    expect(ActionMailer::Base.deliveries.length).to eq(1)
   end
 
   let(:message) { ActionMailer::Base.deliveries.last }
@@ -22,41 +22,41 @@ describe Tricle::Mailer do
     end
 
     it "should respect all the options in the 'default hash'" do
-      message.to.should eq(['recipient1@test.com', 'recipient2@test.com'])
-      message.from.should eq(['sender@test.com'])
+      expect(message.to).to eq(['recipient1@test.com', 'recipient2@test.com'])
+      expect(message.from).to eq(['sender@test.com'])
     end
 
     it "should set the subject based on the class name" do
-      message.subject.should eq("Your Test Mailer")
+      expect(message.subject).to eq("Your Test Mailer")
     end
 
     it "should include the Metric values in the HTML part" do
-      markup.should include('Test Metric')
-      markup.should match(/\b74\b/) # last week
-      markup.should match(/\b806\b/) # total
+      expect(markup).to include('Test Metric')
+      expect(markup).to match(/\b74\b/) # last week
+      expect(markup).to match(/\b806\b/) # total
     end
 
     it "should link to the Issues page in the text part" do
       source = message.text_part.body.to_s
-      source.should include('github.com/artsy/tricle')
+      expect(source).to include('github.com/artsy/tricle')
     end
   end
 
   describe '.group' do
     it "should include the group title" do
       deliver(GroupTestMailer)
-      markup.should include("Test Group 1")
-      markup.should include("Test Group 2")
-      markup.should include("Test Metric")
+      expect(markup).to include("Test Group 1")
+      expect(markup).to include("Test Group 2")
+      expect(markup).to include("Test Metric")
     end
   end
 
   describe '.list' do
     it "should include the list title" do
       deliver(ListTestMailer)
-      markup.should include("Test Metric")
-      markup.should include('74.0')
-      markup.should_not include('79.0')
+      expect(markup).to include("Test Metric")
+      expect(markup).to include('74.0')
+      expect(markup).not_to include('79.0')
     end
   end
 
@@ -83,7 +83,7 @@ describe Tricle::Mailer do
   describe '.send_all' do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
-      ActionMailer::Base.deliveries.length.should eq(6)
+      expect(ActionMailer::Base.deliveries.length).to eq(6)
     end
   end
 end
