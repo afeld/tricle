@@ -15,12 +15,12 @@ module Tricle
       self.items_for_range(start_at, end_at).size
     end
 
-    def total
+    def items_for_range(start_at, end_at)
       raise Tricle::AbstractMethodError.new
     end
 
-    def items_for_range(start_at, end_at)
-      raise Tricle::AbstractMethodError.new
+    def total?
+      self.respond_to?(:total)
     end
   end
 end
