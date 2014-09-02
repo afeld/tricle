@@ -70,4 +70,17 @@ describe Tricle::Mailer do
       expect(ActionMailer::Base.deliveries.length).to eq(4)
     end
   end
+
+  describe '.send_all_if_sunday' do
+    it "shouldn't do anything if not a Sunday" do
+      expect(Tricle::Mailer).to_not receive(:send_all)
+      Tricle::Mailer.send_all_if_sunday
+    end
+
+    it "should send if it's a Sunday" do
+      Timecop.freeze(Time.now - 4.days)
+      expect(Tricle::Mailer).to receive(:send_all)
+      Tricle::Mailer.send_all_if_sunday
+    end
+  end
 end
