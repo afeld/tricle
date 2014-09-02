@@ -20,3 +20,12 @@ To see a live preview with dummy data:
 bundle exec rake tricle:preview
 open http://localhost:8080
 ```
+
+or
+
+```bash
+cd app
+bundle
+rails server
+open http://localhost:3000/rails/mailers/test_mailer/email
+```

@@ -25,6 +25,7 @@ class TestMetricWithNoTotal < Tricle::Metric
 
   def size_for_range(start_at, end_at)
     self.items_for_range(start_at, end_at).reduce(&:+)
+    rand(10)
   end
 
   def items_for_range(start_at, end_at)
