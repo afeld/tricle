@@ -12,7 +12,7 @@ This gem can be used within an existing project (e.g. a Rails app), or standalon
 
 ```ruby
 # Gemfile
-gem 'tricle', '~> 0.1.0'
+gem 'tricle', '~> 0.2.0'
 
 # Rakefile
 require 'tricle/tasks'
