@@ -7,5 +7,4 @@ gemspec path: '../'
 gem 'rails', path: '../../rails-dev-box/rails'
 
 gem 'spring',        group: :development
-gem 'sqlite3'
 gem 'timecop'
