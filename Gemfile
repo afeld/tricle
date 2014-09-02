@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
+  gem 'appraisal'
   gem 'bundler'
   gem 'byebug', platforms: :mri_20
   gem 'guard', '~> 2.6'

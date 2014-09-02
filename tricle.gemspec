@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "actionmailer", "~> 4.0"
-  spec.add_dependency "activesupport", "~> 4.0"
-  spec.add_dependency "mail_view", "~> 1.0"
+  spec.add_dependency "actionmailer", ">= 3.2"
+  spec.add_dependency "activesupport", ">= 3.2"
+  spec.add_dependency "mail_view", "~> 2.0"
   spec.add_dependency "nokogiri", "~> 1.6"
   spec.add_dependency "premailer", "~> 1.7"
   spec.add_dependency "rack", "~> 1.1"

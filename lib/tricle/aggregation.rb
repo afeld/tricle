@@ -14,7 +14,7 @@ module Tricle
     end
 
     def days_ago(n)
-      start_at = self.now.beginning_of_day.days_ago(n)
+      start_at = self.now.beginning_of_day.ago(n.days)
       end_at = start_at + 1.day
       self.size_for_range(start_at, end_at)
     end
