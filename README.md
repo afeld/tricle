@@ -233,6 +233,4 @@ TZ=UTC rake tricle:emails:send
 1. Add a "job" to run `rake tricle:emails:send_if_sunday` daily.
     * Scheduler only supports a maximum of daily tasks, hence needing to use a special task.
 
-### Cron Setup
-
-TODO
+You can trigger the email(s) manually for testing with `heroku run rake tricle:emails:send`.
