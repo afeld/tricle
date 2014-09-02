@@ -8,6 +8,7 @@ group :development, :test do
   gem 'byebug', platforms: :mri_20
   gem 'guard-rspec'
   gem 'guard', '~> 2.6'
+  gem 'rails'
   gem 'rake'
   gem 'rspec', '~> 3.0'
   gem 'ruby_gntp'
