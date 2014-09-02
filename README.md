@@ -222,7 +222,7 @@ TZ=UTC rake tricle:emails:send
 
 1. Deploy the application.
     * If this is a standalone app, you won't need a `web` process.
-1. Enable an [add-on for email delivery](https://addons.heroku.com/?q=email%20deliver), and .
+1. Enable an [add-on for email delivery](https://addons.heroku.com/?q=email%20deliver), and [configure](#installation) ActionMailer to send via that provider.
 1. Enable [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler).
 
     ```bash
