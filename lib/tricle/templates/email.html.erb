@@ -27,13 +27,13 @@
               <%= quarter_dates_cell %>
             </th>
           </tr>
-          <% section.metric_presenters.each do |metric| %>
+          <% section.metrics.each do |metric| %>
             <tr>
               <th class="metric-title"><%= metric.title %></th>
               <td>
-                <div><%= number_with_delimiter(metric.last_week) %></div>
+                <div><%= format_number(metric.last_week) %></div>
                 <% if metric.total? %>
-                  <div><%= number_with_delimiter(metric.total) %> (total)</div>
+                  <div><%= format_number(metric.total) %> (total)</div>
                 <% end %>
               </td>
               <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>

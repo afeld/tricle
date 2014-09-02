@@ -101,6 +101,8 @@ class NewUsers < Tricle::Metric
 end
 ```
 
+If you would like finer-grain optimization, the methods included from the [`Aggregation`](lib/tricle/arregation.rb) mixin can be overridden.
+
 ### Mailers
 
 Mailers specify how a particular set of Metrics should be sent.  You can define one or multiple, to send different metrics to different groups of people.
