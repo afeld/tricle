@@ -36,12 +36,12 @@ td div:first-child {
   font-size: 20px;
 }
 
-.positive {
+.good {
   background-color: #e4ffea;
   color: green;
 }
 
-.negative {
+.bad {
   background-color: #ffe3e4;
   color: #c21717;
 }

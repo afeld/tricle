@@ -36,8 +36,8 @@
                   <div><%= format_number(metric.total) %> (total)</div>
                 <% end %>
               </td>
-              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2)) %>
-              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter) %>
+              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better) %>
+              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better) %>
             </tr>
           <% end %>
         <% end %>

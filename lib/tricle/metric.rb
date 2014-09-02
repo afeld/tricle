@@ -7,6 +7,10 @@ module Tricle
   class Metric
     include Aggregation
 
+    def better
+      :higher
+    end
+
     def title
       self.class.name.titleize
     end

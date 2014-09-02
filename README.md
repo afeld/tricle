@@ -103,6 +103,22 @@ end
 
 If you would like finer-grain optimization, the methods included from the [`Aggregation`](lib/tricle/arregation.rb) mixin can be overridden.
 
+#### "Lower is better" metrics
+
+By default, Tricle highlights numbers that increased in green, and those that decreased in red. If you have a metric where a *lower* number is considered better, you'll want to override the `#better` method so Tricle highlights your cells properly:
+
+```ruby
+class LowerIsBetterMetric < Tricle::Metric
+  def better
+    :lower
+  end
+
+  ...
+end
+```
+
+You can also return `:none`, and none of your cells for that metric will be highlighted green or red.
+
 ### Mailers
 
 Mailers specify how a particular set of Metrics should be sent.  You can define one or multiple, to send different metrics to different groups of people.
