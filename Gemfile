@@ -9,10 +9,8 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard', '~> 2.6'
   gem 'rake'
-  gem 'rmagick', '~> 2.13.2'
   gem 'rspec', '~> 3.0'
   gem 'ruby_gntp'
   gem 'shotgun'
-  gem 'sparklines', '~> 0.5.2'
   gem 'timecop', '~> 0.7'
 end
