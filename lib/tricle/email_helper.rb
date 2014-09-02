@@ -41,9 +41,9 @@ module Tricle
 
     def percent_change_cell(new_val, old_val, better)
       cls = if better == :higher
-        (new_val >= old_val) ? 'positive' : 'negative'
+        (new_val >= old_val) ? 'good' : 'bad'
       elsif better == :lower
-        (new_val >= old_val) ? 'negative' : 'positive'
+        (new_val >= old_val) ? 'bad' : 'good'
       else
         ''
       end

@@ -99,16 +99,16 @@ describe Tricle::EmailHelper do
 
   describe '#percent_change_cell' do
     it "should be positive with positive change and better = :higher" do
-      expect(helper.percent_change_cell(4, 2, :higher)).to match('positive')
+      expect(helper.percent_change_cell(4, 2, :higher)).to match('good')
     end
 
     it "should be negative with positive change and better = :lower" do
-      expect(helper.percent_change_cell(4, 2, :lower)).to match('negative')
+      expect(helper.percent_change_cell(4, 2, :lower)).to match('bad')
     end
 
     it "should not be positive or negative with positive change and better = :none" do
-      expect(helper.percent_change_cell(4, 2, :none)).to_not match('positive')
-      expect(helper.percent_change_cell(4, 2, :none)).to_not match('negative')
+      expect(helper.percent_change_cell(4, 2, :none)).to_not match('good')
+      expect(helper.percent_change_cell(4, 2, :none)).to_not match('bad')
     end
   end
 
