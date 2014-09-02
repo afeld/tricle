@@ -72,7 +72,7 @@ module Tricle
       end
 
       def send_all_if_sunday
-        if Time.now.wday == 0
+        if Time.now.sunday?
           self.send_all
         else
           puts "Skipping send, because it's not a Sunday."
