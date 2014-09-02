@@ -164,6 +164,22 @@ end
 
 The subject line will be based on the Mailer class name.
 
+#### "Lower is better" metrics
+
+If you have a metric where a lower number is considered better, you'll want to override the `better` method so Tricle highlights your cells properly:
+
+```ruby
+class LowerIsBetterMailer < Tricle::Mailer
+  def better
+    :lower
+  end
+
+  ...
+end
+```
+
+You can also return `:none`, and none of your cells will be highlighted green or red.
+
 ### Previewing
 
 Since you'd probably like to preview your mailers before sending them, set up the `Tricle::MailPreview` Rack app (which uses [MailView](https://github.com/37signals/mail_view)).
@@ -187,22 +203,6 @@ and navigate to [localhost:3000/mail_view](http://localhost:3000/mail_view).
 ```bash
 bundle exec rake tricle:preview
 open http://localhost:8080
-```
-
-## Customizing
-
-### "Lower is better" metrics
-
-If you have a metric where a lower number is considered better, you'll want to override the `better` method so Tricle highlights your cells properly:
-
-```ruby
-class LowerIsBetterMailer < Tricle::Mailer
-  def better
-    :lower
-  end
-
-  ...
-end
 ```
 
 ## Deploying
