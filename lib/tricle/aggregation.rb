@@ -14,7 +14,7 @@ module Tricle
     end
 
     def days_ago(n)
-      start_at = self.now.beginning_of_day.days_ago(n)
+      start_at = self.now.beginning_of_day.ago(n.days)
       end_at = start_at + 1.day
       self.size_for_range(start_at, end_at)
     end
@@ -39,8 +39,8 @@ module Tricle
     end
 
     def weeks_average(past_num_weeks)
-      weeks_range = 1..past_num_weeks
-      total = weeks_range.reduce(0){|sum, n| sum + self.weeks_ago(n) }
+      values = self.weekly_values(past_num_weeks)
+      total = values.reduce(0, :+)
       total.to_f / past_num_weeks
     end
 

@@ -5,7 +5,7 @@ require 'sparklines'
 module Tricle
   module EmailHelper
     def weeks_ago(n)
-      Date.today.beginning_of_week.weeks_ago(n)
+      Date.today.beginning_of_week.ago(n.weeks)
     end
 
     def format_date(date)
@@ -40,8 +40,19 @@ module Tricle
       end
     end
 
-    def percent_change_cell(new_val, old_val)
-      cls = (new_val >= old_val) ? 'positive' : 'negative'
+    def percent_change_class(new_val, old_val, better)
+      case better
+      when :higher
+        (new_val >= old_val) ? 'good' : 'bad'
+      when :lower
+        (new_val >= old_val) ? 'bad' : 'good'
+      else
+        ''
+      end
+    end
+
+    def percent_change_cell(new_val, old_val, better)
+      cls = self.percent_change_class(new_val, old_val, better)
       pct_str = percent_change(new_val, old_val)
       old_val_str = format_number(old_val)
       %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val_str}</div></td>].html_safe

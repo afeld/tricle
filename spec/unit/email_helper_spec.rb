@@ -97,6 +97,21 @@ describe Tricle::EmailHelper do
     end
   end
 
+  describe '#percent_change_cell' do
+    it "should be positive with positive change and better = :higher" do
+      expect(helper.percent_change_cell(4, 2, :higher)).to match('good')
+    end
+
+    it "should be negative with positive change and better = :lower" do
+      expect(helper.percent_change_cell(4, 2, :lower)).to match('bad')
+    end
+
+    it "should not be positive or negative with positive change and better = :none" do
+      expect(helper.percent_change_cell(4, 2, :none)).to_not match('good')
+      expect(helper.percent_change_cell(4, 2, :none)).to_not match('bad')
+    end
+  end
+
   describe "#single_week_dates_cell" do
     it "should not include the last day of the week" do
       start_at = Time.new(2013, 7, 22) # a Monday
