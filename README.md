@@ -6,8 +6,6 @@ Automated metrics reporting via email.  It's datastore-agnostic, so you can quer
 
 ## Installation
 
-### Gem
-
 This gem can be used within an existing project (e.g. a Rails app), or standalone.
 
 ```ruby
@@ -219,6 +217,21 @@ To set a speficic time zone, use the `TZ` environment variable (see the list [he
 ```bash
 TZ=UTC rake tricle:emails:send
 ```
+
+### Heroku
+
+1. Deploy the application.
+    * If this is a standalone app, you won't need a `web` process.
+1. Enable an [add-on for email delivery](https://addons.heroku.com/?q=email), and .
+1. Enable [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler).
+
+    ```bash
+    heroku addons:add scheduler:standard
+    heroku addons:open scheduler
+    ```
+
+1. Add a "job" to run `rake tricle:emails:send_if_sunday` daily.
+    * Scheduler only supports a maximum of daily tasks, hence needing to use a special task.
 
 ### Cron Setup
 
