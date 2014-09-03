@@ -190,6 +190,11 @@ class IntelligenceBrief < Tricle::Mailer
 
   metric NewUsers, matching_email: '@gmail.com'
 
+  # or for a list...
+  list NewUsers, matching_email: '@gmail.com' do |item|
+    ...
+  end
+
 end
 ```
 
