@@ -16,11 +16,11 @@ module Tricle
     end
 
     def better
-      :higher
+      @options[:better] || :higher
     end
 
     def title
-      self.class.name.titleize
+      @options[:title] || self.class.name.titleize
     end
 
     def size_for_range(start_at, end_at)
