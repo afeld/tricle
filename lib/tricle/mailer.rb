@@ -53,8 +53,8 @@ module Tricle
         yield if block_given?
       end
 
-      def metric(klass)
-        self.report.add_metric(klass)
+      def metric(klass, opts = {})
+        self.report.add_metric(klass, opts)
       end
 
       def list(klass, &block)

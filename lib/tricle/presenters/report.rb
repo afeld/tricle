@@ -21,14 +21,14 @@ module Tricle
         self.add_section(group)
       end
 
-      def add_metric(klass)
+      def add_metric(klass, opts = {})
         last_section = self.sections.last
         unless last_section.is_a?(Tricle::Presenters::Group)
           last_section = self.add_group
         end
 
         # TODO don't assume they want to add this metric to the last group?
-        last_section.add_metric(klass)
+        last_section.add_metric(klass, opts)
       end
 
       def add_list(klass, &block)

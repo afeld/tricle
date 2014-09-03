@@ -7,6 +7,14 @@ module Tricle
   class Metric
     include Aggregation
 
+    attr_reader :now
+
+    def initialize(opts = {})
+      # TODO allow Time to be passed in so it can be frozen
+      @now = Time.now
+      @options = opts
+    end
+
     def better
       :higher
     end
