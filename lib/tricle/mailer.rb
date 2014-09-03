@@ -57,8 +57,8 @@ module Tricle
         self.report.add_metric(klass, opts)
       end
 
-      def list(klass, &block)
-        self.report.add_list(klass, &block)
+      def list(klass, opts = {}, &block)
+        self.report.add_list(klass, opts, &block)
       end
 
       def send_all
