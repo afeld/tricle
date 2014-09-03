@@ -4,13 +4,13 @@ module Tricle
   class List < Section
     attr_reader :block, :metric
 
-    def initialize(klass, &block)
-      @metric = klass.new
+    def initialize(klass, opts = {}, &block)
+      @metric = klass.new(opts)
       @block = block
     end
 
     def title
-      self.metric.title
+      self.metric.options[:title] || self.metric.title
     end
 
     def items_markup(start_at, end_at)

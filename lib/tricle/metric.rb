@@ -7,12 +7,19 @@ module Tricle
   class Metric
     include Aggregation
 
+    attr_reader :now, :options
+
+    def initialize(opts = {})
+      @now = opts[:now] || Time.now
+      @options = opts
+    end
+
     def better
-      :higher
+      options[:better] || :higher
     end
 
     def title
-      self.class.name.titleize
+      options[:title] || self.class.name.titleize
     end
 
     def size_for_range(start_at, end_at)

@@ -10,8 +10,8 @@ module Tricle
         @metrics = []
       end
 
-      def add_metric(klass)
-        self.metrics << klass.new
+      def add_metric(klass, opts = {})
+        self.metrics << klass.new(opts)
       end
     end
   end

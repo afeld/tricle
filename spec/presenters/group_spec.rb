@@ -12,5 +12,11 @@ describe Tricle::Presenters::Group do
       metric = group.metrics.first
       expect(metric).to be_a(TestMetric)
     end
+
+    it "should pass options to the metric" do
+      group.add_metric(TestMetric, foo: 'bar')
+      metric = group.metrics.first
+      expect(metric.instance_variable_get(:@options)[:foo]).to eq 'bar'
+    end
   end
 end
