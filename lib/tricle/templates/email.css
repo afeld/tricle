@@ -28,6 +28,10 @@ td {
   border: 1px solid #c7c7c7;
 }
 
+.separator {
+  height: 10px;
+}
+
 .list-item {
   text-align: left;
 }

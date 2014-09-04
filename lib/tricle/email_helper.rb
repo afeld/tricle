@@ -1,5 +1,7 @@
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
+require 'sparklines'
+require 'fog'
 
 module Tricle
   module EmailHelper
@@ -86,6 +88,58 @@ module Tricle
       start_at = self.weeks_ago(1).to_time
       end_at = start_at + 7.days
       list.items_markup(start_at, end_at).html_safe
+    end
+
+    def last_week_sparkline(metric)
+      values = metric.daily_values(7)
+      get_sparkline(values, "#{metric.title} last week")
+    end
+
+    def previous_week_sparkline(metric)
+      values = metric.daily_values(14)[0..6]
+      get_sparkline(values, "#{metric.title} prev week")
+    end
+
+    def last_quarter_sparkline(metric)
+      # uses a smaller step size in order to generate a sparkline of
+      # the same length as the weekly ones, but without lost details
+      values = metric.weekly_values(13)
+      get_sparkline(values, "#{metric.title} last quarter", step: 15)
+    end
+
+    def get_sparkline(values, title, options = {})
+      # http://bit.ly/1qnR55Y
+      blob = Sparklines.plot(values.compact,
+        dot_size: 4,
+        height: 30,
+        line_color: '#4A8FED',
+        step: options[:step] || 30
+      )
+      # need randomization here b/c many metrics may have the same
+      # name, but should not share images
+      sparkline_title = "#{title.underscore}_v#{rand(999999)}.png"
+      attachment_url = store_sparkline(blob, sparkline_title)
+      image_tag(attachment_url).html_safe
+    end
+
+    # either stores sparkline image in s3 or as an inline attachement
+    def store_sparkline(blob, filename)
+      if ENV['S3_ACCESS_KEY_ID']
+        bucket_name = ENV['S3_BUCKET'] || 'tricle'
+        s3 = ::Fog::Storage.new(
+          aws_access_key_id: ENV['S3_ACCESS_KEY_ID'],
+          aws_secret_access_key: ENV['S3_SECRET_ACCESS_KEY'],
+          provider: "AWS"
+        )
+        timestamp = Date.today.strftime('%Y-%m-%d')
+        bucket = s3.directories.get(bucket_name)
+        file = bucket.files.create key: "sparklines/#{timestamp}/#{filename}", body: blob, acl: 'public-read'
+        file.public_url
+      else
+        # inline attachement
+        attachments.inline[filename] = blob
+        attachments[filename].url
+      end
     end
   end
 end
