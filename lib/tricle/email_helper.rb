@@ -1,6 +1,5 @@
 require 'active_support/core_ext/date/calculations'
 require 'active_support/core_ext/numeric/time'
-require 'sparklines'
 
 module Tricle
   module EmailHelper
@@ -90,18 +89,9 @@ module Tricle
     end
 
     def sparkline(metric)
-      # http://bit.ly/1qnR55Y
       values = metric.weekly_values(13)
-      blob = Sparklines.plot(values,
-        dot_size: 4,
-        height: 30,
-        line_color: '#4A8FED',
-        step: 30
-      )
-      attachment_title = "#{metric.title.underscore}.png"
-      attachments.inline[attachment_title] = blob
-      attachment_url = attachments[attachment_title].url
-      image_tag(attachment_url).html_safe
+      attachment_url = "https://sparklines.herokuapp.com/api/v1.png?values=#{values.join(',')}"
+      image_tag(attachment_url, alt: 'sparkline').html_safe
     end
   end
 end
