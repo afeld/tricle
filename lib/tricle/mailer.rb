@@ -4,6 +4,7 @@ require 'premailer'
 
 require_relative 'email_helper'
 require_relative 'presenters/report'
+require_relative 'time'
 
 
 module Tricle
@@ -71,18 +72,9 @@ module Tricle
         puts "Done."
       end
 
-      def current_day_of_week
-        Time.now.strftime('%A').downcase.to_sym
-      end
-
-      def beginning_of_week
-        # Rails >= 4.0.2
-        # http://apidock.com/rails/v4.0.2/Date/beginning_of_week/class
-        Date.try(:beginning_of_week) || :monday
-      end
-
       def send_all_if_beginning_of_week
-        if self.current_day_of_week == self.beginning_of_week
+        time = Tricle::Time.new
+        if time.beginning_of_week?
           self.send_all
         else
           puts "Skipping send, because it's not the beginning of the week."
