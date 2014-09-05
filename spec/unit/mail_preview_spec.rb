@@ -9,7 +9,8 @@ describe Tricle::MailPreview do
     end
 
     it "should return a Mail::Message" do
-      expect(Tricle::MailPreview.new.test_mailer).to be_a(Mail::Message)
+      mailer = Tricle::MailPreview.new.test_mailer
+      expect(mailer.message).to be_a(Mail::Message)
     end
   end
 end
