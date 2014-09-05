@@ -5,8 +5,8 @@ require_relative '../../lib/tricle/range_data'
 class TestMetricWithNoTotal < Tricle::Metric
   attr_accessor :data_by_start_on
 
-  def initialize
-    super
+  def initialize(*args)
+    super(*args)
     self.load_data
   end
 

@@ -12,7 +12,7 @@ This gem can be used within an existing project (e.g. a Rails app), or standalon
 
 ```ruby
 # Gemfile
-gem 'tricle', '~> 0.1.0'
+gem 'tricle', '~> 0.2.0'
 
 # Rakefile
 require 'tricle/tasks'
@@ -180,6 +180,23 @@ end
 ```
 
 The subject line will be based on the Mailer class name.
+
+#### Passing options to a Metric
+
+Sometimes, you'll want to initialize a Metric with specific options. If you pass a hash as a second argument to the mailer's `metric` method, the Metric will be initialized with an `@options` instance variable.
+
+```ruby
+class IntelligenceBrief < Tricle::Mailer
+
+  metric NewUsers, matching_email: '@gmail.com'
+
+  # or for a list...
+  list NewUsers, matching_email: '@gmail.com' do |item|
+    ...
+  end
+
+end
+```
 
 ### Previewing
 

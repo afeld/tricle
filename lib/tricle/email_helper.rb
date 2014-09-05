@@ -45,7 +45,7 @@ module Tricle
       when :higher
         (new_val >= old_val) ? 'good' : 'bad'
       when :lower
-        (new_val >= old_val) ? 'bad' : 'good'
+        (new_val > old_val) ? 'bad' : 'good'
       else
         ''
       end
