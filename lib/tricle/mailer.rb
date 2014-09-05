@@ -79,7 +79,7 @@ module Tricle
         if self.current_day_of_week == Date.beginning_of_week
           self.send_all
         else
-          puts "Skipping send, because it's not a Sunday."
+          puts "Skipping send, because it's not the beginning of the week."
         end
       end
     end
