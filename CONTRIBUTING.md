@@ -27,5 +27,5 @@ or
 bundle
 cd app
 rails server
-open http://localhost:3000/rails/mailers/test_mailer/email
+open http://localhost:3000/rails/mailers/
 ```
