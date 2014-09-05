@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../../lib/tricle/mailer'
 require_relative '../app/group_test_mailer'
 require_relative '../app/list_test_mailer'
+require_relative '../app/list_test_mailer_with_options'
 require_relative '../app/no_total_test_mailer'
 require_relative '../app/test_mailer'
 
@@ -62,12 +63,17 @@ describe Tricle::Mailer do
       expect(markup).to include('62.0')
       expect(markup).not_to include('79.0')
     end
+
+    it "should pass options" do
+      deliver(ListTestMailerWithOptions)
+      expect(markup).to include("TheNewTitle")
+    end
   end
 
   describe '.send_all' do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
-      expect(ActionMailer::Base.deliveries.length).to eq(4)
+      expect(ActionMailer::Base.deliveries.length).to eq(5)
     end
   end
 

@@ -4,15 +4,6 @@ module Tricle
   module Aggregation
     extend ActiveSupport::Concern
 
-    included do
-      attr_reader :now
-
-      def initialize
-        # TODO allow Time to be passed in so it can be frozen
-        @now = Tricle::Time.new
-      end
-    end
-
     def days_ago(n)
       start_at = self.now.beginning_of_day.days_ago(n)
       end_at = start_at + 1.day
