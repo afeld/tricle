@@ -26,7 +26,7 @@ ActionMailer::Base.smtp_settings = {
   # ...
 }
 
-# Optional: Override the start day of the reports.
+# Optional: Override the start day of the reports (Rails >= 4.0.3 only)
 # http://api.rubyonrails.org/classes/Date.html#method-i-beginning_of_week-3D
 Date.beginning_of_week = :monday
 ```
