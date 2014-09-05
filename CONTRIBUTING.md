@@ -24,8 +24,8 @@ open http://localhost:8080
 or
 
 ```bash
-cd app
 bundle
+cd app
 rails server
 open http://localhost:3000/rails/mailers/test_mailer/email
 ```
