@@ -12,15 +12,23 @@ This gem can be used within an existing project (e.g. a Rails app), or standalon
 # Gemfile
 gem 'tricle', '~> 0.2.0'
 
+
 # Rakefile
+require 'your/tricle/subclasses'
 require 'tricle/tasks'
 
+
 # your/config/file.rb
+
 # unless you already have ActionMailer set up
 ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.smtp_settings = {
   # ...
 }
+
+# Optional: Override the start day of the reports.
+# http://api.rubyonrails.org/classes/Date.html#method-i-beginning_of_week-3D
+Date.beginning_of_week = :monday
 ```
 
 See [the ActionMailer guide](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) for configuration details.  Finally, execute:
@@ -230,7 +238,9 @@ TZ=UTC rake tricle:emails:send
     heroku addons:open scheduler
     ```
 
-1. Add a "job" to run `rake tricle:emails:send_if_sunday` daily.
-    * Scheduler only supports a maximum of daily tasks, hence needing to use a special task.
+1. Add a "job".
+    * For a report sent once per day, use the command from [Deploying](#deploying).
+    * For a report sent once per week, use `rake tricle:emails:send_after_beginning_of_week` daily.
+        * Heroku Scheduler only supports a maximum of daily tasks, hence needing to use a special task.
 
 You can trigger the email(s) manually for testing with `heroku run rake tricle:emails:send`.

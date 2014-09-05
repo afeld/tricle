@@ -71,8 +71,12 @@ module Tricle
         puts "Done."
       end
 
-      def send_all_if_sunday
-        if Time.now.sunday?
+      def current_day_of_week
+        Time.now.strftime('%A').downcase.to_sym
+      end
+
+      def send_all_if_beginning_of_week
+        if self.current_day_of_week == Date.beginning_of_week
           self.send_all
         else
           puts "Skipping send, because it's not a Sunday."

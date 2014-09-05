@@ -71,16 +71,16 @@ describe Tricle::Mailer do
     end
   end
 
-  describe '.send_all_if_sunday' do
-    it "shouldn't do anything if not a Sunday" do
+  describe '.send_all_if_beginning_of_week' do
+    it "shouldn't do anything if not the beginning of the week" do
       expect(Tricle::Mailer).to_not receive(:send_all)
-      Tricle::Mailer.send_all_if_sunday
+      Tricle::Mailer.send_all_if_beginning_of_week
     end
 
-    it "should send if it's a Sunday" do
-      Timecop.freeze(Time.now - 4.days)
+    it "should send if it's the beginning of the week" do
+      Timecop.freeze(Time.now - 3.days) # Monday
       expect(Tricle::Mailer).to receive(:send_all)
-      Tricle::Mailer.send_all_if_sunday
+      Tricle::Mailer.send_all_if_beginning_of_week
     end
   end
 end
