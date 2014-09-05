@@ -89,7 +89,6 @@ module Tricle
     end
 
     def sparkline(metric)
-      # http://bit.ly/1qnR55Y
       values = metric.weekly_values(13)
       attachment_url = "http://sparklines.herokuapp.com/api/v1.png?values=#{values.join(',')}"
       image_tag(attachment_url, alt: 'sparkline').html_safe
