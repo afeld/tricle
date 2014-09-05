@@ -87,5 +87,11 @@ module Tricle
       end_at = start_at + 7.days
       list.items_markup(start_at, end_at).html_safe
     end
+
+    def sparkline(metric)
+      values = metric.weekly_values(13)
+      attachment_url = "https://sparklines.herokuapp.com/api/v1.png?values=#{values.join(',')}"
+      image_tag(attachment_url, alt: 'sparkline').html_safe
+    end
   end
 end

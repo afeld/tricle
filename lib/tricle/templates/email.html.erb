@@ -29,7 +29,7 @@
           </tr>
           <% section.metrics.each do |metric| %>
             <tr>
-              <th class="metric-title"><%= metric.title %></th>
+              <th class="metric-title" rowspan="2"><%= metric.title %></th>
               <td>
                 <div><%= format_number(metric.last_week) %></div>
                 <% if metric.total? %>
@@ -39,6 +39,12 @@
               <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better) %>
               <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better) %>
             </tr>
+            <tr>
+              <td colspan="3">
+                <%= sparkline(metric) %>
+              </td>
+            </tr>
+            <tr class="separator"></tr>
           <% end %>
         <% end %>
       <% end %>
