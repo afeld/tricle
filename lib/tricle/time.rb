@@ -28,9 +28,13 @@ module Tricle
 
     class << self
       def beginning_of_week
-        # Rails >= 4.0.2
-        # http://apidock.com/rails/v4.0.2/Date/beginning_of_week/class
-        Date.try(:beginning_of_week) || :monday
+        if Date.respond_to?(:beginning_of_week)
+          # Rails >= 4.0.2
+          # http://apidock.com/rails/v4.0.2/Date/beginning_of_week/class
+          Date.beginning_of_week
+        else
+          :monday
+        end
       end
     end
   end
