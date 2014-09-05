@@ -67,7 +67,7 @@ describe Tricle::Mailer do
   describe '.send_all' do
     it "should .deliver all defined mailers" do
       Tricle::Mailer.send_all
-      expect(ActionMailer::Base.deliveries.length).to eq(4)
+      expect(ActionMailer::Base.deliveries.length).to eq(5)
     end
   end
 end
