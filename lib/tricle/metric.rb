@@ -10,7 +10,7 @@ module Tricle
     attr_reader :now, :options
 
     def initialize(opts = {})
-      @now = opts[:now] || Time.now
+      @now = Tricle::Time.new(opts[:now])
       @options = opts
     end
 

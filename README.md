@@ -6,23 +6,29 @@ Automated metrics reporting via email.  It's datastore-agnostic, so you can quer
 
 ## Installation
 
-### Gem
-
 This gem can be used within an existing project (e.g. a Rails app), or standalone.
 
 ```ruby
 # Gemfile
 gem 'tricle', '~> 0.2.0'
 
+
 # Rakefile
+require 'your/tricle/subclasses'
 require 'tricle/tasks'
 
+
 # your/config/file.rb
+
 # unless you already have ActionMailer set up
 ActionMailer::Base.raise_delivery_errors = true
 ActionMailer::Base.smtp_settings = {
   # ...
 }
+
+# Optional: Override the start day of the reports (Rails >= 4.0.3 only)
+# http://api.rubyonrails.org/classes/Date.html#method-i-beginning_of_week-3D
+Date.beginning_of_week = :monday
 ```
 
 See [the ActionMailer guide](http://guides.rubyonrails.org/action_mailer_basics.html#action-mailer-configuration) for configuration details.  Finally, execute:
@@ -237,6 +243,21 @@ To set a speficic time zone, use the `TZ` environment variable (see the list [he
 TZ=UTC rake tricle:emails:send
 ```
 
-### Cron Setup
+### Heroku
 
-TODO
+1. Deploy the application.
+    * If this is a standalone app, you won't need a `web` process.
+1. Enable an [add-on for email delivery](https://addons.heroku.com/?q=email%20deliver), and [configure](#installation) ActionMailer to send via that provider.
+1. Enable [Heroku Scheduler](https://devcenter.heroku.com/articles/scheduler).
+
+    ```bash
+    heroku addons:add scheduler:standard
+    heroku addons:open scheduler
+    ```
+
+1. Add a "job".
+    * For a report sent once per day, use the command from [Deploying](#deploying).
+    * For a report sent once per week, use `rake tricle:emails:send_after_beginning_of_week` daily.
+        * Heroku Scheduler only supports a maximum of daily tasks, hence needing to use a special task.
+
+You can trigger the email(s) manually for testing with `heroku run rake tricle:emails:send`.

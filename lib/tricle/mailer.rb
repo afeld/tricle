@@ -4,6 +4,7 @@ require 'premailer'
 
 require_relative 'email_helper'
 require_relative 'presenters/report'
+require_relative 'time'
 
 
 module Tricle
@@ -69,6 +70,15 @@ module Tricle
           klass.email.deliver
         end
         puts "Done."
+      end
+
+      def send_all_if_beginning_of_week
+        time = Tricle::Time.new
+        if time.beginning_of_week?
+          self.send_all
+        else
+          puts "Skipping send, because it's not the beginning of the week."
+        end
       end
     end
   end
