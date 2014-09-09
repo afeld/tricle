@@ -15,29 +15,29 @@
           <tr>
             <th><!--Title--></th>
             <th>
-              <div>Last week</div>
-              <%= last_week_dates_cell %>
+              <div>Quarterly average</div>
+              <%= quarter_dates_cell %>
             </th>
             <th>
               <div>Previous week</div>
               <%= previous_week_dates_cell %>
             </th>
             <th>
-              <div>Quarterly average</div>
-              <%= quarter_dates_cell %>
+              <div>Last week</div>
+              <%= last_week_dates_cell %>
             </th>
           </tr>
           <% section.metrics.each do |metric| %>
             <tr>
               <th class="metric-title" rowspan="2"><%= metric.title %></th>
+              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better) %>
+              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better) %>
               <td>
                 <div><%= format_number(metric.last_week) %></div>
                 <% if metric.total? %>
                   <div><%= format_number(metric.total) %> (total)</div>
                 <% end %>
               </td>
-              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better) %>
-              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better) %>
             </tr>
             <tr>
               <td colspan="3">
