@@ -32,6 +32,13 @@ describe Tricle::Aggregation do
     end
   end
 
+  describe '#weekly_values' do
+    it "should return the values by week ascending" do
+      expect(metric).to receive(:weeks_ago) {|n| n }.exactly(5).times
+      expect(metric.weekly_values(5)).to eq([5,4,3,2,1])
+    end
+  end
+
   describe '#week_average_this_quarter' do
     it "should average the values provided by #size_for_range" do
       expect(metric).to receive(:size_for_range).exactly(13).times.and_return(1)

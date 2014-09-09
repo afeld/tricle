@@ -25,7 +25,7 @@ module Tricle
     end
 
     def weekly_values(past_num_weeks)
-      weeks_range = 1..past_num_weeks
+      weeks_range = past_num_weeks.downto(1)
       weeks_range.map{|n| self.weeks_ago(n) }
     end
 
