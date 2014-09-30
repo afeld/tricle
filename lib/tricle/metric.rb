@@ -14,6 +14,31 @@ module Tricle
       @options = opts
     end
 
+    def inspect
+      if total?
+        print "Total: "
+        puts total
+      end
+
+      print "Size for last week: "
+      puts size_for_range(@now.time - 7.days, @now.time)
+
+      items = begin
+        items_for_range(@now.time - 7.days, @now.time)
+      rescue Tricle::AbstractMethodError
+        nil
+      end
+
+      if items
+        print "List for last week: "
+        items.each do |item|
+          puts "- #{item}"
+        end
+      end
+
+      return
+    end
+
     def better
       options[:better] || :higher
     end
