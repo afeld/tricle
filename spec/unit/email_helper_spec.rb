@@ -67,6 +67,13 @@ describe Tricle::EmailHelper do
       expect(helper.format_number(0.00123456789)).to eq('0.00123')
       expect(helper.format_number(-0.00123456789)).to eq('-0.00123')
     end
+
+    it "can include units" do
+      expect(helper.format_number(0.00123456789, 'juice')).to eq('0.00123 juices')
+      expect(helper.format_number(1.0, 'juice')).to eq('1.0 juice')
+      expect(helper.format_number(-1, 'juice')).to eq('-1.0 juice')
+      expect(helper.format_number(-1, 'juice')).to eq('-1.0 juice')
+    end
   end
 
   describe "#percent_change" do
@@ -99,16 +106,16 @@ describe Tricle::EmailHelper do
 
   describe '#percent_change_cell' do
     it "should be positive with positive change and better = :higher" do
-      expect(helper.percent_change_cell(4, 2, :higher)).to match('good')
+      expect(helper.percent_change_cell(4, 2, :higher, nil)).to match('good')
     end
 
     it "should be negative with positive change and better = :lower" do
-      expect(helper.percent_change_cell(4, 2, :lower)).to match('bad')
+      expect(helper.percent_change_cell(4, 2, :lower, nil)).to match('bad')
     end
 
     it "should not be positive or negative with positive change and better = :none" do
-      expect(helper.percent_change_cell(4, 2, :none)).to_not match('good')
-      expect(helper.percent_change_cell(4, 2, :none)).to_not match('bad')
+      expect(helper.percent_change_cell(4, 2, :none, nil)).to_not match('good')
+      expect(helper.percent_change_cell(4, 2, :none, nil)).to_not match('bad')
     end
   end
 

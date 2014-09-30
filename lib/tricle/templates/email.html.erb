@@ -30,10 +30,10 @@
           <% section.metrics.each do |metric| %>
             <tr>
               <th class="metric-title" rowspan="2"><%= metric.title %></th>
-              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better) %>
-              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better) %>
+              <%= percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better, metric.unit) %>
+              <%= percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better, metric.unit) %>
               <td>
-                <div><%= format_number(metric.last_week) %></div>
+                <div><%= format_number(metric.last_week, metric.unit) %></div>
                 <% if metric.total? %>
                   <div><%= format_number(metric.total) %> (total)</div>
                 <% end %>

@@ -3,6 +3,8 @@ require 'active_support/core_ext/numeric/time'
 
 module Tricle
   module EmailHelper
+    include ActiveSupport::Inflector
+
     def weeks_ago(n)
       Date.today.beginning_of_week.ago(n.weeks)
     end
@@ -11,8 +13,9 @@ module Tricle
       date.strftime('%-m/%-d/%y')
     end
 
-    def format_number(number)
-      number_with_delimiter((number.abs >= 100 ? number.round : sig_figs(number)))
+    def format_number(number, unit = nil)
+      number_with_delimiter((number.abs >= 100 ? number.round : sig_figs(number))) +
+      (unit ? ' ' + unit.pluralize(number.abs) : '')
     end
 
     def number_with_delimiter(number)
@@ -50,10 +53,10 @@ module Tricle
       end
     end
 
-    def percent_change_cell(new_val, old_val, better)
+    def percent_change_cell(new_val, old_val, better, unit)
       cls = self.percent_change_class(new_val, old_val, better)
       pct_str = percent_change(new_val, old_val)
-      old_val_str = format_number(old_val)
+      old_val_str = format_number(old_val, unit)
       %[<td class="#{cls}"><div>#{pct_str}</div><div>#{old_val_str}</div></td>].html_safe
     end
 
