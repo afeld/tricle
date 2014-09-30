@@ -39,29 +39,9 @@ describe Tricle::Mailer do
       source = message.text_part.body.to_s
       expect(source).to include('github.com/artsy/tricle')
     end
-  end
 
-  describe 'sparklines' do
-    context 'with default configuration' do
-      before do
-        Tricle.class_variable_set(:@@configuration, nil)
-        deliver(TestMailer)
-      end
-
-      it "is included" do
-        expect(markup).to include('sparklines.herokuapp.com')
-      end
-    end
-
-    context 'with configuration override' do
-      before do
-        Tricle.configuration.sparklines = false
-        deliver(TestMailer)
-      end
-
-      it "is excluded" do
-        expect(markup).to_not include('sparklines.herokuapp.com')
-      end
+    it "includes sparklines by default" do
+      expect(markup).to include('sparklines.herokuapp.com')
     end
   end
 
