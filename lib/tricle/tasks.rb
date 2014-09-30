@@ -10,6 +10,12 @@ namespace :tricle do
     Rack::Server.start app: Tricle::MailPreview
   end
 
+  task :console do
+    require 'irb'
+    ARGV.clear
+    IRB.start
+  end
+
   namespace :emails do
     desc "Send all emails"
     task :send do

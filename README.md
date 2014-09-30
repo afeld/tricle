@@ -229,6 +229,10 @@ bundle exec rake tricle:preview
 open http://localhost:8080
 ```
 
+#### On the command line
+
+Each Metric implements the `#inspect` method, which will output the total, size for last week, and items for last week. You can use the `rake tricle:console` task, which will automatically open an IRB session with your metric classes `require`'d.
+
 ## Deploying
 
 To send all Tricle emails, run
