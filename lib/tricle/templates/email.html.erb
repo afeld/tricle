@@ -39,11 +39,13 @@
                 <% end %>
               </td>
             </tr>
-            <tr>
-              <td colspan="3">
-                <%= sparkline(metric) %>
-              </td>
-            </tr>
+            <% if metric.sparkline? %>
+              <tr>
+                <td colspan="3">
+                  <%= sparkline(metric) %>
+                </td>
+              </tr>
+            <% end %>
             <tr class="separator"></tr>
           <% end %>
         <% end %>

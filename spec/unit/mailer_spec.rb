@@ -41,6 +41,30 @@ describe Tricle::Mailer do
     end
   end
 
+  describe 'sparklines' do
+    context 'with default configuration' do
+      before do
+        Tricle.class_variable_set(:@@configuration, nil)
+        deliver(TestMailer)
+      end
+
+      it "is included" do
+        expect(markup).to include('sparklines.herokuapp.com')
+      end
+    end
+
+    context 'with configuration override' do
+      before do
+        Tricle.configuration.sparklines = false
+        deliver(TestMailer)
+      end
+
+      it "is excluded" do
+        expect(markup).to_not include('sparklines.herokuapp.com')
+      end
+    end
+  end
+
   it "should exclude the total if not defined" do
     deliver(NoTotalTestMailer)
     expect(markup).to_not include('total')

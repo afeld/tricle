@@ -14,6 +14,14 @@ module Tricle
       @options = opts
     end
 
+    def sparkline?
+      if options.key?(:sparkline)
+        options[:sparkline]
+      else
+        Tricle.configuration.sparklines
+      end
+    end
+
     def better
       options[:better] || :higher
     end
