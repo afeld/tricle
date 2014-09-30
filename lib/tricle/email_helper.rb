@@ -14,8 +14,8 @@ module Tricle
     end
 
     def format_number(number, unit = nil)
-      number_with_delimiter((number.abs >= 100 ? number.round : sig_figs(number))) +
-      (unit ? ' ' + unit.pluralize(number.abs) : '')
+      number_with_delimiter(if number.abs >= 100 then number.round else sig_figs(number) end) +
+      (if unit then ' ' + unit.pluralize(number.abs) else '' end)
     end
 
     def number_with_delimiter(number)
