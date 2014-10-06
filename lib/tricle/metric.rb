@@ -22,6 +22,10 @@ module Tricle
       end
     end
 
+    def unit
+      options[:unit]
+    end
+
     def better
       options[:better] || :higher
     end
