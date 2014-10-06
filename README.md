@@ -229,6 +229,16 @@ bundle exec rake tricle:preview
 open http://localhost:8080
 ```
 
+### Global Configuration
+
+To set global configuration options, in an initializer:
+
+```ruby
+Tricle.configure do |c|
+  c.sparklines = false # default: true
+end
+```
+
 ## Deploying
 
 To send all Tricle emails, run
