@@ -77,37 +77,40 @@ class MyMetric < Tricle::Metric
 end
 ```
 
-ActiveRecord example:
+If you would like finer-grain optimization, the methods included from the [`Aggregation`](lib/tricle/arregation.rb) mixin can be overridden.
+
+### ActiveRecord Metrics
+
+You can inherit from [`Tricle::ActiveRecordMetric`](lib/tricle/active_record_metric.rb) for even easier setup. By default, Tricle looks for records with a `created_at` timestamp between the `start_at` and `end_at` times.
 
 ```ruby
 # app/metrics/new_users.rb
-class NewUsers < Tricle::Metric
+class NewUsers < Tricle::ActiveRecordMetric
 
-  def size_for_range(start_at, end_at)
-    self.items_for_range(start_at, end_at).count
-  end
-
-  def total
-    self.users.count
-  end
-
-  def items_for_range(start_at, end_at)
-    self.users.where('created_at >= ? AND created_at < ?', start_at, end_at)
-  end
-
-
-  private
-
-  # You can add whatever helper methods in that class that you need.
-  def users
-    # non-deleted Users
+  # Apply any default scopes you need
+  def items
     User.where(deleted_at: nil)
   end
 
 end
 ```
 
-If you would like finer-grain optimization, the methods included from the [`Aggregation`](lib/tricle/arregation.rb) mixin can be overridden.
+You can also override the `time_column` method to split the time intervals based on that value. For example, to see records that have been updated:
+
+```ruby
+# app/metrics/new_users.rb
+class NewUsers < Tricle::ActiveRecordMetric
+
+  def items
+    User.where(deleted_at: nil)
+  end
+
+  def column
+    'updated_at'
+  end
+
+end
+```
 
 #### "Lower is better" metrics
 
