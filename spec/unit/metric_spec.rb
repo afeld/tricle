@@ -15,4 +15,21 @@ describe Tricle::Metric do
       expect(metric.size_for_range(Time.now.yesterday, Time.now)).to eq(3)
     end
   end
+
+  describe '#sparkline?' do
+    it 'defaults to Tricle.configuration' do
+      expect(Tricle).to receive_message_chain(:configuration, :sparklines).
+        and_return(false)
+
+      expect(metric.sparkline?).to eq false
+    end
+
+    context 'with options override' do
+      let(:sparkline_metric) { Tricle::Metric.new(sparkline: true) }
+
+      it 'ignores Tricle.configuration' do
+        expect(sparkline_metric.sparkline?).to eq true
+      end
+    end
+  end
 end

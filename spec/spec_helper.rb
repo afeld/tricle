@@ -15,6 +15,8 @@ require_relative 'config/timecop'
 # TODO find a less heavy-handed way of handling this
 reset_time
 
+require 'tricle'
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.run_all_when_everything_filtered = true

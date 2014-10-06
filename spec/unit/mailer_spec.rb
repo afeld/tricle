@@ -39,6 +39,10 @@ describe Tricle::Mailer do
       source = message.text_part.body.to_s
       expect(source).to include('github.com/artsy/tricle')
     end
+
+    it "includes sparklines by default" do
+      expect(markup).to include('sparklines.herokuapp.com')
+    end
   end
 
   it "should exclude the total if not defined" do
