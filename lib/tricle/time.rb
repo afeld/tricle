@@ -32,6 +32,10 @@ module Tricle
       self.time.beginning_of_week
     end
 
+    def beginning_of_month
+      self.time.beginning_of_month
+    end
+
     ######################
 
     class << self

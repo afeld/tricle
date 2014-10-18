@@ -6,15 +6,15 @@ module Tricle
     include ActiveSupport::Inflector
 
     def days_ago(n)
-      Date.today.beginning_of_week.ago(n.days)
+      Date.today.beginning_of_day.advance(days: -n)
     end
 
     def weeks_ago(n)
-      Date.today.beginning_of_week.ago(n.weeks)
+      Date.today.beginning_of_week.advance(weeks: -n)
     end
 
     def months_ago(n)
-      Date.today.beginning_of_week.ago(n.months)
+      Date.today.beginning_of_month.advance(months: -n)
     end
 
     def format_date(date)
@@ -90,7 +90,7 @@ module Tricle
     end
 
     def single_month_dates_cell(start_at)
-      dates_cell(start_at, start_at.end_of_mnonth)
+      dates_cell(start_at, start_at.end_of_month)
     end
 
     def frequency
@@ -213,13 +213,13 @@ module Tricle
     end
 
     def sparkline(metric)
-      values =case frequency
+      values = case frequency
       when :daily
         metric.daily_values(7)
       when :weekly
         metric.weekly_values(13)
       when :monthly
-        metric.monthly_values(13)
+        metric.monthly_values(12)
       end
 
       attachment_url = "https://sparklines.herokuapp.com/api/v1.png?values=#{values.join(',')}"

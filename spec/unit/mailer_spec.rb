@@ -82,23 +82,50 @@ describe Tricle::Mailer do
   end
 
   describe '.send_all' do
-    it "shouldn't do anything if not the beginning of the week" do
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-        and_return(false)
+    context 'frequency = weekly' do
+      it "shouldn't do anything if not the beginning of the week" do
+        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+          and_return(false)
 
-      expect(Tricle::Mailer).to receive(:send_mailers).with([])
-      Tricle::Mailer.send_all
+        expect(Tricle::Mailer).to receive(:send_mailers).with([])
+        Tricle::Mailer.send_all
+      end
+
+      it "should send if it's the beginning of the week" do
+        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+          and_return(true)
+
+        expect(Tricle::Mailer).to receive(:send_mailers).with(
+          Tricle::Mailer.descendants
+        )
+
+        Tricle::Mailer.send_all
+      end
     end
 
-    it "should send if it's the beginning of the week" do
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-        and_return(true)
+    context 'frequency = monthly' do
+      before do
+        allow(Tricle::Mailer).to receive(:frequency).and_return(:monthly)
+      end
 
-      expect(Tricle::Mailer).to receive(:send_mailers).with(
-        Tricle::Mailer.descendants
-      )
+      it "shouldn't do anything if not the beginning of the month" do
+        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
+          and_return(false)
 
-      Tricle::Mailer.send_all
+        expect(Tricle::Mailer).to receive(:send_mailers).with([])
+        Tricle::Mailer.send_all
+      end
+
+      it "should send if it's the beginning of the month" do
+        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
+          and_return(true)
+
+        expect(Tricle::Mailer).to receive(:send_mailers).with(
+          Tricle::Mailer.descendants
+        )
+
+        Tricle::Mailer.send_all
+      end
     end
   end
 end

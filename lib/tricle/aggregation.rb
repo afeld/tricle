@@ -17,8 +17,8 @@ module Tricle
     end
 
     def months_ago(n)
-      start_at = self.now.beginning_of_month.ago(n.months)
-      end_at = start_at + 1.month
+      start_at = self.now.beginning_of_month.advance(months: -n)
+      end_at = start_at.advance(months: 1)
       self.size_for_range(start_at, end_at)
     end
 
