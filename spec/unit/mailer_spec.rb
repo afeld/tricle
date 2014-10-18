@@ -56,6 +56,17 @@ describe Tricle::Mailer do
       expect(markup).to include('2 days ago')
       expect(markup).to include('Yesterday')
     end
+
+    it 'includes the correct data' do
+      expect(markup).to include('14.1')
+      expect(markup).to include('20.0')
+      expect(markup).to include('11.0')
+    end
+
+    it 'includes the correct averages' do
+      expect(markup).to include('-22.2')
+      expect(markup).to include('-45.0')
+    end
   end
 
   describe 'monthly email' do
@@ -66,6 +77,17 @@ describe Tricle::Mailer do
     it 'includes the correct cell headers' do
       expect(markup).to include('Previous month')
       expect(markup).to include('Last month')
+    end
+
+    it 'includes the correct data' do
+      expect(markup).to include('241')
+      expect(markup).to include('200')
+      expect(markup).to include('429')
+    end
+
+    it 'includes the correct averages' do
+      expect(markup).to include('77.8')
+      expect(markup).to include('114.0')
     end
   end
 
