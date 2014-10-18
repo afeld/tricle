@@ -10,8 +10,12 @@ class TestMetricWithNoTotal < Tricle::Metric
     self.load_data
   end
 
+  def fixture_filename
+    'weeks.csv'
+  end
+
   def load_data
-    filename = File.join(File.dirname(__FILE__), '..', 'fixtures', 'weeks.csv')
+    filename = File.join(File.dirname(__FILE__), '..', 'fixtures', fixture_filename)
     data = CSV.read(filename)
 
     self.data_by_start_on = Tricle::RangeData.new

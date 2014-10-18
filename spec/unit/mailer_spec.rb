@@ -5,6 +5,8 @@ require_relative '../app/list_test_mailer'
 require_relative '../app/list_test_mailer_with_options'
 require_relative '../app/no_total_test_mailer'
 require_relative '../app/test_mailer'
+require_relative '../app/daily_test_mailer'
+require_relative '../app/monthly_test_mailer'
 
 describe Tricle::Mailer do
   def deliver(klass)
@@ -45,6 +47,28 @@ describe Tricle::Mailer do
     end
   end
 
+  describe 'daily email' do
+    before do
+      deliver(DailyTestMailer)
+    end
+
+    it 'includes the correct cell headers' do
+      expect(markup).to include('2 days ago')
+      expect(markup).to include('Yesterday')
+    end
+  end
+
+  describe 'monthly email' do
+    before do
+      deliver(MonthlyTestMailer)
+    end
+
+    it 'includes the correct cell headers' do
+      expect(markup).to include('Previous month')
+      expect(markup).to include('Last month')
+    end
+  end
+
   it "should exclude the total if not defined" do
     deliver(NoTotalTestMailer)
     expect(markup).to_not include('total')
@@ -76,56 +100,47 @@ describe Tricle::Mailer do
 
   describe '.send_all_now' do
     it "should .deliver all defined mailers" do
-      Tricle::Mailer.send_all_now
-      expect(ActionMailer::Base.deliveries.length).to eq(5)
+      expect {
+        Tricle::Mailer.send_all_now
+      }.to change { ActionMailer::Base.deliveries.length }.by(7)
     end
   end
 
   describe '.send_all' do
-    context 'frequency = weekly' do
-      it "shouldn't do anything if not the beginning of the week" do
-        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-          and_return(false)
+    it 'sends daily emails' do
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+        and_return(false)
 
-        expect(Tricle::Mailer).to receive(:send_mailers).with([])
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
+        and_return(false)
+
+      expect {
         Tricle::Mailer.send_all
-      end
-
-      it "should send if it's the beginning of the week" do
-        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-          and_return(true)
-
-        expect(Tricle::Mailer).to receive(:send_mailers).with(
-          Tricle::Mailer.descendants
-        )
-
-        Tricle::Mailer.send_all
-      end
+      }.to change { ActionMailer::Base.deliveries.length }.by(1)
     end
 
-    context 'frequency = monthly' do
-      before do
-        allow(Tricle::Mailer).to receive(:frequency).and_return(:monthly)
-      end
+    it 'sends weekly emails' do
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+        and_return(true)
 
-      it "shouldn't do anything if not the beginning of the month" do
-        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
-          and_return(false)
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
+        and_return(false)
 
-        expect(Tricle::Mailer).to receive(:send_mailers).with([])
+      expect {
         Tricle::Mailer.send_all
-      end
+      }.to change { ActionMailer::Base.deliveries.length }.by(6)
+    end
 
-      it "should send if it's the beginning of the month" do
-        allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
-          and_return(true)
+    it 'sends monthly emails' do
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+        and_return(true)
 
-        expect(Tricle::Mailer).to receive(:send_mailers).with(
-          Tricle::Mailer.descendants
-        )
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
+        and_return(true)
 
+      expect {
         Tricle::Mailer.send_all
-      end
+      }.to change { ActionMailer::Base.deliveries.length }.by(7)
     end
   end
 end

@@ -1,5 +1,5 @@
 require_relative '../../lib/tricle/mailer'
-require_relative 'random_test_metric'
+require_relative 'monthly_test_metric'
 
 class MonthlyTestMailer < Tricle::Mailer
   default(
@@ -9,5 +9,5 @@ class MonthlyTestMailer < Tricle::Mailer
 
   self.frequency = :monthly
 
-  metric RandomTestMetric
+  metric MonthlyTestMetric
 end
