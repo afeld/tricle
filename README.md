@@ -141,6 +141,8 @@ class MyMailer < Tricle::Mailer
     # ...
   )
 
+  self.frequency = :daily # options are :daily, :weekly (default), and :monthly
+
   metric MyMetric1
   metric MyMetric2
   # ...
