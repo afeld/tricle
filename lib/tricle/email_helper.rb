@@ -5,8 +5,16 @@ module Tricle
   module EmailHelper
     include ActiveSupport::Inflector
 
+    def days_ago(n)
+      Date.today.beginning_of_week.ago(n.days)
+    end
+
     def weeks_ago(n)
       Date.today.beginning_of_week.ago(n.weeks)
+    end
+
+    def months_ago(n)
+      Date.today.beginning_of_week.ago(n.months)
     end
 
     def format_date(date)
@@ -61,7 +69,11 @@ module Tricle
     end
 
     def dates_range_str(start_at, end_at)
-      "#{ self.format_date(start_at) } - #{ self.format_date(end_at) }"
+      if end_at
+        "#{ self.format_date(start_at) } - #{ self.format_date(end_at) }"
+      else
+        self.format_date(start_at)
+      end
     end
 
     def dates_cell(start_at, end_at)
@@ -69,30 +81,147 @@ module Tricle
       %[<div class="date-range">(#{range})</div>].html_safe
     end
 
+    def single_day_dates_cell(start_at)
+      dates_cell(start_at, nil)
+    end
+
     def single_week_dates_cell(start_at)
       dates_cell(start_at, start_at.end_of_week)
     end
 
-    def last_week_dates_cell
-      single_week_dates_cell(weeks_ago(1))
+    def single_month_dates_cell(start_at)
+      dates_cell(start_at, start_at.end_of_mnonth)
     end
 
-    def previous_week_dates_cell
-      single_week_dates_cell(weeks_ago(2))
+    def frequency
+      self.mailer.frequency
     end
 
-    def quarter_dates_cell
-      dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
+    def old_dates_cell
+      case frequency
+      when :daily
+        dates_cell(days_ago(7), days_ago(1).end_of_day)
+      when :weekly
+        dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
+      when :monthly
+        dates_cell(months_ago(12), months_ago(1).end_of_month)
+      end
+    end
+
+    def previous_dates_cell
+      case frequency
+      when :daily
+        single_day_dates_cell(days_ago(2))
+      when :weekly
+        single_week_dates_cell(weeks_ago(2))
+      when :monthly
+        single_month_dates_cell(months_ago(2))
+      end
+    end
+
+    def current_dates_cell
+      case frequency
+      when :daily
+        single_day_dates_cell(days_ago(1))
+      when :weekly
+        single_week_dates_cell(weeks_ago(1))
+      when :monthly
+        single_month_dates_cell(months_ago(1))
+      end
+    end
+
+    def old_dates_cell_header
+      case frequency
+      when :daily
+        'Weekly average'
+      when :weekly
+        'Quarterly average'
+      when :monthly
+        'Yearly average'
+      end
+    end
+
+    def previous_dates_cell_header
+      case frequency
+      when :daily
+        '2 days ago'
+      when :weekly
+        'Previous week'
+      when :monthly
+        'Previous month'
+      end
+    end
+
+    def current_dates_cell_header
+      case frequency
+      when :daily
+        'Yesterday'
+      when :weekly
+        'Last week'
+      when :monthly
+        'Last month'
+      end
+    end
+
+    def old_data_cell(metric)
+      case frequency
+      when :daily
+        percent_change_cell(metric.yesterday, metric.day_average_this_week, metric.better, metric.unit)
+      when :weekly
+        percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better, metric.unit)
+      when :monthly
+        percent_change_cell(metric.last_month, metric.month_average_this_year, metric.better, metric.unit)
+      end
+    end
+
+    def previous_data_cell(metric)
+      case frequency
+      when :daily
+        percent_change_cell(metric.yesterday, metric.days_ago(2), metric.better, metric.unit)
+      when :weekly
+        percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better, metric.unit)
+      when :monthly
+        percent_change_cell(metric.last_month, metric.months_ago(2), metric.better, metric.unit)
+      end
+    end
+
+    def current_number(metric)
+      case frequency
+      when :daily
+        format_number(metric.yesterday, metric.unit)
+      when :weekly
+        format_number(metric.last_week, metric.unit)
+      when :monthly
+        format_number(metric.last_month, metric.unit)
+      end
     end
 
     def list_markup(list)
-      start_at = self.weeks_ago(1).to_time
-      end_at = start_at + 7.days
+      case frequency
+      when :daily
+        start_at = self.days_ago(1).to_time
+        end_at = start_at + 1.day
+      when :weekly
+        start_at = self.weeks_ago(1).to_time
+        end_at = start_at + 7.days
+      when :monthly
+        start_at = self.months_ago(1).to_time
+        end_at = start_at + 1.month
+      end
+
       list.items_markup(start_at, end_at).html_safe
     end
 
     def sparkline(metric)
-      values = metric.weekly_values(13)
+      values =case frequency
+      when :daily
+        metric.daily_values(7)
+      when :weekly
+        metric.weekly_values(13)
+      when :monthly
+        metric.monthly_values(13)
+      end
+
       attachment_url = "https://sparklines.herokuapp.com/api/v1.png?values=#{values.join(',')}"
       image_tag(attachment_url, alt: 'sparkline').html_safe
     end
