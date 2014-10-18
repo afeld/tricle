@@ -10,7 +10,7 @@ module Tricle
     end
 
     def weeks_ago(n)
-      Date.today.beginning_of_week.advance(weeks: -n)
+      Date.today.beginning_of_week.ago(n.weeks)
     end
 
     def months_ago(n)
