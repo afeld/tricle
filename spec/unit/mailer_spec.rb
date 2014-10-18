@@ -74,23 +74,31 @@ describe Tricle::Mailer do
     end
   end
 
-  describe '.send_all' do
+  describe '.send_all_now' do
     it "should .deliver all defined mailers" do
-      Tricle::Mailer.send_all
+      Tricle::Mailer.send_all_now
       expect(ActionMailer::Base.deliveries.length).to eq(5)
     end
   end
 
-  describe '.send_all_if_beginning_of_week' do
+  describe '.send_all' do
     it "shouldn't do anything if not the beginning of the week" do
-      expect(Tricle::Mailer).to_not receive(:send_all)
-      Tricle::Mailer.send_all_if_beginning_of_week
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+        and_return(false)
+
+      expect(Tricle::Mailer).to receive(:send_mailers).with([])
+      Tricle::Mailer.send_all
     end
 
     it "should send if it's the beginning of the week" do
-      Timecop.freeze(Time.now - 3.days) # Monday
-      expect(Tricle::Mailer).to receive(:send_all)
-      Tricle::Mailer.send_all_if_beginning_of_week
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+        and_return(true)
+
+      expect(Tricle::Mailer).to receive(:send_mailers).with(
+        Tricle::Mailer.descendants
+      )
+
+      Tricle::Mailer.send_all
     end
   end
 end
