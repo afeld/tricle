@@ -120,49 +120,31 @@ describe Tricle::Mailer do
     end
   end
 
-  describe '.send_all_now' do
-    it "should .deliver all defined mailers" do
+  describe '.send_at_period' do
+    it "should .deliver only mailers for the correct period" do
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
+        and_return(false)
+
+      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
+        and_return(false)
+
       expect {
-        Tricle::Mailer.send_all_now
-      }.to change { ActionMailer::Base.deliveries.length }.by(7)
+        Tricle::Mailer.send_at_period
+      }.to change { ActionMailer::Base.deliveries.length }.by(1)
     end
   end
 
   describe '.send_all' do
-    it 'sends daily emails' do
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-        and_return(false)
-
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
-        and_return(false)
-
-      expect {
-        Tricle::Mailer.send_all
-      }.to change { ActionMailer::Base.deliveries.length }.by(1)
-    end
-
-    it 'sends weekly emails' do
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-        and_return(true)
-
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
-        and_return(false)
-
-      expect {
-        Tricle::Mailer.send_all
-      }.to change { ActionMailer::Base.deliveries.length }.by(6)
-    end
-
-    it 'sends monthly emails' do
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_week?).
-        and_return(true)
-
-      allow_any_instance_of(Tricle::Time).to receive(:beginning_of_month?).
-        and_return(true)
-
+    it 'sends all mailers' do
       expect {
         Tricle::Mailer.send_all
       }.to change { ActionMailer::Base.deliveries.length }.by(7)
+    end
+
+    it 'sends a filtered segment of mailers' do
+      expect {
+        Tricle::Mailer.send_all(:week)
+      }.to change { ActionMailer::Base.deliveries.length }.by(5)
     end
   end
 end

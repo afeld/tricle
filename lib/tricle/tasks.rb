@@ -16,11 +16,21 @@ namespace :tricle do
       Tricle::Mailer.send_all
     end
 
-    # Backwards-compatibility
-    task send_after_beginning_of_week: [:send]
+    task :daily do
+      Tricle::Mailer.send(:day)
+    end
 
-    task :send_now do
-      Tricle::Mailer.send_now
+    task :weekly do
+      Tricle::Mailer.send(:week)
+    end
+
+    task :monthly do
+      Tricle::Mailer.send(:month)
+    end
+
+    # needed for Heroku Scheduler, whose most infrequent option is daily
+    task :send_at_period do
+      Tricle::Mailer.send_at_period
     end
   end
 end

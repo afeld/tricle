@@ -75,13 +75,16 @@ module Tricle
         end
       end
 
-      # run daily
-      def send_all
+      def send_at_period
         send_mailers(Tricle::Mailer.descendants.select(&:send_today?))
       end
 
-      def send_all_now
-        send_mailers(Tricle::Mailer.descendants)
+      def send_all(with_period = nil)
+        klasses = Tricle::Mailer.descendants.select do |klass|
+          !with_period || (klass.period == with_period)
+        end
+
+        send_mailers(klasses)
       end
 
       private

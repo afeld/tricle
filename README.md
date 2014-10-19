@@ -249,10 +249,20 @@ end
 To send all Tricle emails, run
 
 ```bash
-rake tricle:emails:send_now
+rake tricle:emails:send # sends all emails
 ```
 
-To send at the appropriate `period`, schedule the `rake tricle:emails:send` task to run *daily*. 
+or 
+
+```bash
+rake tricle:emails:daily # sends emails with period = :day
+```
+
+To set a speficic time zone, use the `TZ` environment variable (see the list [here](http://en.wikipedia.org/wiki/List_of_tz_database_time_zones)).
+
+```bash
+TZ=UTC rake tricle:emails:send
+```
 
 ### Heroku
 
