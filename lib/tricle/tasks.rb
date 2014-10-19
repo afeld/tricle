@@ -32,5 +32,8 @@ namespace :tricle do
     task :send_at_period do
       Tricle::Mailer.send_at_period
     end
+
+    # Backwards-compatibility
+    task send_after_beginning_of_week: [:send_at_period]
   end
 end
