@@ -141,7 +141,7 @@ class MyMailer < Tricle::Mailer
     # ...
   )
 
-  self.frequency = :daily # options are :daily, :weekly (default), and :monthly
+  self.period = :day # options are :day, :week (default), and :month
 
   metric MyMetric1
   metric MyMetric2
@@ -252,7 +252,7 @@ To send all Tricle emails, run
 rake tricle:emails:send_now
 ```
 
-To send at the appropriate `frequency`, schedule the `rake tricle:emails:send` task to run *daily*. 
+To send at the appropriate `period`, schedule the `rake tricle:emails:send` task to run *daily*. 
 
 ### Heroku
 

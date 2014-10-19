@@ -11,8 +11,8 @@ module Tricle
     include ActiveSupport::DescendantsTracker
 
     class_attribute :report
-    class_attribute :frequency
-    self.frequency = :weekly # or :daily, :monthly
+    class_attribute :period
+    self.period = :week # or :day, :month
     helper Tricle::EmailHelper
     self.view_paths = File.dirname(__FILE__)
 
@@ -65,12 +65,12 @@ module Tricle
       def send_today?
         time = Tricle::Time.new
 
-        case self.frequency
-        when :daily
+        case self.period
+        when :day
           true
-        when :weekly
+        when :week
           time.beginning_of_week?
-        when :monthly
+        when :month
           time.beginning_of_month?
         end
       end

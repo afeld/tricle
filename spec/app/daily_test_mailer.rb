@@ -7,7 +7,7 @@ class DailyTestMailer < Tricle::Mailer
     from: 'sender@test.com'
   )
 
-  self.frequency = :daily
+  self.period = :day
 
   metric DailyTestMetric
 end

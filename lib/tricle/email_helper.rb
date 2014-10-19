@@ -93,118 +93,118 @@ module Tricle
       dates_cell(start_at, start_at.end_of_month)
     end
 
-    def frequency
-      self.mailer.frequency
+    def period
+      self.mailer.period
     end
 
     def old_dates_cell
-      case frequency
-      when :daily
+      case period
+      when :day
         dates_cell(days_ago(7), days_ago(1).end_of_day)
-      when :weekly
+      when :week
         dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
-      when :monthly
+      when :month
         dates_cell(months_ago(12), months_ago(1).end_of_month)
       end
     end
 
     def previous_dates_cell
-      case frequency
-      when :daily
+      case period
+      when :day
         single_day_dates_cell(days_ago(2))
-      when :weekly
+      when :week
         single_week_dates_cell(weeks_ago(2))
-      when :monthly
+      when :month
         single_month_dates_cell(months_ago(2))
       end
     end
 
     def current_dates_cell
-      case frequency
-      when :daily
+      case period
+      when :day
         single_day_dates_cell(days_ago(1))
-      when :weekly
+      when :week
         single_week_dates_cell(weeks_ago(1))
-      when :monthly
+      when :month
         single_month_dates_cell(months_ago(1))
       end
     end
 
     def old_dates_cell_header
-      case frequency
-      when :daily
+      case period
+      when :day
         'Weekly average'
-      when :weekly
+      when :week
         'Quarterly average'
-      when :monthly
+      when :month
         'Yearly average'
       end
     end
 
     def previous_dates_cell_header
-      case frequency
-      when :daily
+      case period
+      when :day
         '2 days ago'
-      when :weekly
+      when :week
         'Previous week'
-      when :monthly
+      when :month
         'Previous month'
       end
     end
 
     def current_dates_cell_header
-      case frequency
-      when :daily
+      case period
+      when :day
         'Yesterday'
-      when :weekly
+      when :week
         'Last week'
-      when :monthly
+      when :month
         'Last month'
       end
     end
 
     def old_data_cell(metric)
-      case frequency
-      when :daily
+      case period
+      when :day
         percent_change_cell(metric.yesterday, metric.day_average_this_week, metric.better, metric.unit)
-      when :weekly
+      when :week
         percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better, metric.unit)
-      when :monthly
+      when :month
         percent_change_cell(metric.last_month, metric.month_average_this_year, metric.better, metric.unit)
       end
     end
 
     def previous_data_cell(metric)
-      case frequency
-      when :daily
+      case period
+      when :day
         percent_change_cell(metric.yesterday, metric.days_ago(2), metric.better, metric.unit)
-      when :weekly
+      when :week
         percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better, metric.unit)
-      when :monthly
+      when :month
         percent_change_cell(metric.last_month, metric.months_ago(2), metric.better, metric.unit)
       end
     end
 
     def current_number(metric)
-      case frequency
-      when :daily
+      case period
+      when :day
         format_number(metric.yesterday, metric.unit)
-      when :weekly
+      when :week
         format_number(metric.last_week, metric.unit)
-      when :monthly
+      when :month
         format_number(metric.last_month, metric.unit)
       end
     end
 
     def list_markup(list)
-      case frequency
-      when :daily
+      case period
+      when :day
         start_at = self.days_ago(1).to_time
         end_at = start_at + 1.day
-      when :weekly
+      when :week
         start_at = self.weeks_ago(1).to_time
         end_at = start_at + 7.days
-      when :monthly
+      when :month
         start_at = self.months_ago(1).to_time
         end_at = start_at + 1.month
       end
@@ -213,12 +213,12 @@ module Tricle
     end
 
     def sparkline(metric)
-      values = case frequency
-      when :daily
+      values = case period
+      when :day
         metric.daily_values(7)
-      when :weekly
+      when :week
         metric.weekly_values(13)
-      when :monthly
+      when :month
         metric.monthly_values(12)
       end
 

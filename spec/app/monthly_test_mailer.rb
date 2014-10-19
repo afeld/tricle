@@ -7,7 +7,7 @@ class MonthlyTestMailer < Tricle::Mailer
     from: 'sender@test.com'
   )
 
-  self.frequency = :monthly
+  self.period = :month
 
   metric MonthlyTestMetric
 end
