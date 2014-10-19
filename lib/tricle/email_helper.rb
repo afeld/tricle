@@ -5,16 +5,48 @@ module Tricle
   module EmailHelper
     include ActiveSupport::Inflector
 
-    def days_ago(n)
-      Date.today.beginning_of_day.advance(days: -n)
+    def num_durations
+      case period
+      when :day
+        7 # week
+      when :week
+        13 # quarter
+      when :month
+        12 # year
+      end
     end
 
-    def weeks_ago(n)
-      Date.today.beginning_of_week.ago(n.weeks)
+    def periods_ago(n)
+      case period
+      when :day
+        Date.today.beginning_of_day.advance(days: -n)
+      when :week
+        Date.today.beginning_of_week.ago(n.weeks)
+      when :month
+        Date.today.beginning_of_month.advance(months: -n)
+      end
     end
 
-    def months_ago(n)
-      Date.today.beginning_of_month.advance(months: -n)
+    def end_of_period(beginning)
+      case period
+      when :day
+        beginning.end_of_day
+      when :week
+        beginning.end_of_week
+      when :month
+        beginning.end_of_month
+      end
+    end
+
+    def add_periods(time, n)
+      case period
+      when :day
+        time + n.days
+      when :week
+        time + n.weeks
+      when :month
+        time + n.months
+      end
     end
 
     def format_date(date)
@@ -98,36 +130,21 @@ module Tricle
     end
 
     def old_dates_cell
-      case period
-      when :day
-        dates_cell(days_ago(7), days_ago(1).end_of_day)
-      when :week
-        dates_cell(weeks_ago(13), weeks_ago(1).end_of_week)
-      when :month
-        dates_cell(months_ago(12), months_ago(1).end_of_month)
-      end
+      dates_cell periods_ago(num_durations), end_of_period(periods_ago(1))
     end
 
     def previous_dates_cell
-      case period
-      when :day
-        single_day_dates_cell(days_ago(2))
-      when :week
-        single_week_dates_cell(weeks_ago(2))
-      when :month
-        single_month_dates_cell(months_ago(2))
-      end
+      dates_cell(
+        periods_ago(2),
+        if period == :day then nil else end_of_period(periods_ago(2)) end
+      )
     end
 
     def current_dates_cell
-      case period
-      when :day
-        single_day_dates_cell(days_ago(1))
-      when :week
-        single_week_dates_cell(weeks_ago(1))
-      when :month
-        single_month_dates_cell(months_ago(1))
-      end
+      dates_cell(
+        periods_ago(1),
+        if period == :day then nil else end_of_period(periods_ago(1)) end
+      )
     end
 
     def old_dates_cell_header
@@ -164,64 +181,32 @@ module Tricle
     end
 
     def old_data_cell(metric)
-      case period
-      when :day
-        percent_change_cell(metric.yesterday, metric.day_average_this_week, metric.better, metric.unit)
-      when :week
-        percent_change_cell(metric.last_week, metric.week_average_this_quarter, metric.better, metric.unit)
-      when :month
-        percent_change_cell(metric.last_month, metric.month_average_this_year, metric.better, metric.unit)
-      end
+      percent_change_cell metric.periods_ago(period, 1),
+                          metric.range_average(period, num_durations),
+                          metric.better,
+                          metric.unit
     end
 
     def previous_data_cell(metric)
-      case period
-      when :day
-        percent_change_cell(metric.yesterday, metric.days_ago(2), metric.better, metric.unit)
-      when :week
-        percent_change_cell(metric.last_week, metric.weeks_ago(2), metric.better, metric.unit)
-      when :month
-        percent_change_cell(metric.last_month, metric.months_ago(2), metric.better, metric.unit)
-      end
+      percent_change_cell metric.periods_ago(period, 1),
+                          metric.periods_ago(period, 2),
+                          metric.better,
+                          metric.unit
     end
 
     def current_number(metric)
-      case period
-      when :day
-        format_number(metric.yesterday, metric.unit)
-      when :week
-        format_number(metric.last_week, metric.unit)
-      when :month
-        format_number(metric.last_month, metric.unit)
-      end
+      format_number metric.periods_ago(period, 1),
+                    metric.unit
     end
 
     def list_markup(list)
-      case period
-      when :day
-        start_at = self.days_ago(1).to_time
-        end_at = start_at + 1.day
-      when :week
-        start_at = self.weeks_ago(1).to_time
-        end_at = start_at + 7.days
-      when :month
-        start_at = self.months_ago(1).to_time
-        end_at = start_at + 1.month
-      end
-
+      start_at = self.periods_ago(1).to_time
+      end_at = add_periods(start_at, 1)
       list.items_markup(start_at, end_at).html_safe
     end
 
     def sparkline(metric)
-      values = case period
-      when :day
-        metric.daily_values(7)
-      when :week
-        metric.weekly_values(13)
-      when :month
-        metric.monthly_values(12)
-      end
-
+      values = metric.range_values(period, num_durations)
       attachment_url = "https://sparklines.herokuapp.com/api/v1.png?values=#{values.join(',')}"
       image_tag(attachment_url, alt: 'sparkline').html_safe
     end
