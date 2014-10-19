@@ -19,11 +19,11 @@ module Tricle
     def periods_ago(n)
       case period
       when :day
-        Date.today.beginning_of_day.advance(days: -n)
+        Date.today.beginning_of_day.ago(n.days)
       when :week
         Date.today.beginning_of_week.ago(n.weeks)
       when :month
-        Date.today.beginning_of_month.advance(months: -n)
+        Date.today.beginning_of_month.advance(months: -n) # for old ActiveSupport
       end
     end
 
@@ -41,11 +41,11 @@ module Tricle
     def add_periods(time, n)
       case period
       when :day
-        time + n.days
+        time.advance(days: n)
       when :week
-        time + n.weeks
+        time.advance(weeks: n)
       when :month
-        time + n.months
+        time.advance(months: n)
       end
     end
 
