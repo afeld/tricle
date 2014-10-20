@@ -141,6 +141,8 @@ class MyMailer < Tricle::Mailer
     # ...
   )
 
+  self.period = :day # options are :day, :week (default), and :month
+
   metric MyMetric1
   metric MyMetric2
   # ...
@@ -247,7 +249,13 @@ end
 To send all Tricle emails, run
 
 ```bash
-rake tricle:emails:send
+rake tricle:emails:send # sends all emails
+```
+
+or 
+
+```bash
+rake tricle:emails:daily # sends emails with period = :day
 ```
 
 To set a speficic time zone, use the `TZ` environment variable (see the list [here](http://en.wikipedia.org/wiki/List_of_tz_database_time_zones)).

@@ -10,8 +10,16 @@ module Tricle
       self.time.strftime('%A').downcase.to_sym
     end
 
+    def day_of_month
+      self.time.strftime('%-d').to_i
+    end
+
     def beginning_of_week?
       self.day_of_week == self.class.beginning_of_week
+    end
+
+    def beginning_of_month?
+      self.day_of_month == 1
     end
 
     ## delegate methods ##
@@ -22,6 +30,10 @@ module Tricle
 
     def beginning_of_week
       self.time.beginning_of_week
+    end
+
+    def beginning_of_month
+      self.time.beginning_of_month
     end
 
     ######################

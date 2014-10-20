@@ -6,17 +6,17 @@ require_relative 'email_helper'
 require_relative 'presenters/report'
 require_relative 'time'
 
-
 module Tricle
   class Mailer < ActionMailer::Base
     include ActiveSupport::DescendantsTracker
 
     class_attribute :report
+    class_attribute :period
+    self.period = :week # or :day, :month
     helper Tricle::EmailHelper
     self.view_paths = File.dirname(__FILE__)
 
     CSS = File.read(File.join(File.dirname(__FILE__), 'templates', 'email.css')).freeze
-
 
     def subject
       "Your #{self.class.name.titleize}"
@@ -62,23 +62,40 @@ module Tricle
         self.report.add_list(klass, opts, &block)
       end
 
-      def send_all
-        mailers = Tricle::Mailer.descendants
+      def send_today?
+        time = Tricle::Time.new
+
+        case self.period
+        when :day
+          true
+        when :week
+          time.beginning_of_week?
+        when :month
+          time.beginning_of_month?
+        end
+      end
+
+      def send_at_period
+        send_mailers(Tricle::Mailer.descendants.select(&:send_today?))
+      end
+
+      def send_all(with_period = nil)
+        klasses = Tricle::Mailer.descendants.select do |klass|
+          !with_period || (klass.period == with_period)
+        end
+
+        send_mailers(klasses)
+      end
+
+      private
+
+      def send_mailers(mailers)
         puts "Sending #{mailers.size} emails..."
         mailers.each do |klass|
           puts "Sending #{klass.name}..."
           klass.email.deliver
         end
         puts "Done."
-      end
-
-      def send_all_if_beginning_of_week
-        time = Tricle::Time.new
-        if time.beginning_of_week?
-          self.send_all
-        else
-          puts "Skipping send, because it's not the beginning of the week."
-        end
       end
     end
   end
