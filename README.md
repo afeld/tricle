@@ -1,6 +1,9 @@
 # Tricle [![Build Status]](https://travis-ci.org/afeld/tricle) [![Code Climate]](https://codeclimate.com/github/afeld/tricle) [![Gem Version]](http://badge.fury.io/rb/tricle)
 
-Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need.  See [here](https://github.com/afeld/tricle-afeld) for an example implementation ([live demo](http://tricle.afeld.me/weekly_metrics)). Uses [sparkle](https://github.com/afeld/sparkle) for generating sparklines.
+Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need. Uses [sparkle](https://github.com/afeld/sparkle) for generating sparklines. Example implementations:
+
+* [github.com/afeld/tricle-afeld](https://github.com/afeld/tricle-afeld) ([live demo](http://tricle.afeld.me/weekly_metrics))
+* [github.com/dobtco/metrics](https://github.com/dobtco/metrics)
 
 ![screenshot](screenshot.png)
 
@@ -252,7 +255,7 @@ To send all Tricle emails, run
 rake tricle:emails:send # sends all emails
 ```
 
-or 
+or
 
 ```bash
 rake tricle:emails:daily # sends emails with period = :day
