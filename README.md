@@ -108,7 +108,7 @@ class NewUsers < Tricle::ActiveRecordMetric
     User.where(deleted_at: nil)
   end
 
-  def column
+  def time_column
     'updated_at'
   end
 
