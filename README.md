@@ -13,7 +13,7 @@ This gem can be used within an existing project (e.g. a Rails app), or standalon
 
 ```ruby
 # Gemfile
-gem 'tricle', '~> 0.2.0'
+gem 'tricle'
 
 
 # Rakefile
@@ -224,7 +224,7 @@ require 'tricle/mail_preview'
 
 # config/routes.rb
 if Rails.env.development?
-  mount MailPreview => 'mail_view'
+  mount Tricle::MailPreview => 'mail_view'
 end
 ```
 
