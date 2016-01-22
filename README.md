@@ -3,7 +3,6 @@
 Automated metrics reporting via email.  It's datastore-agnostic, so you can query SQL, MongoDB, external APIs, etc. to generate the stats you need. Uses [sparkle](https://github.com/afeld/sparkle) for generating sparklines. Example implementations:
 
 * [github.com/afeld/tricle-afeld](https://github.com/afeld/tricle-afeld) ([live demo](http://tricle.afeld.me/weekly_metrics))
-* [github.com/dobtco/metrics](https://github.com/dobtco/metrics)
 
 ![screenshot](screenshot.png)
 
